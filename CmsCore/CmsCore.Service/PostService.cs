@@ -12,6 +12,7 @@ namespace CmsCore.Service
     {
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Post> GetPosts();
+        IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count);
         Post GetPost(long id);
 
         void CreatePost(Post post);
@@ -30,6 +31,25 @@ namespace CmsCore.Service
             this.unitOfWork = unitOfWork;
         }
         #region IPostService Members
+        public IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count)
+        {
+            string[] categories;
+            if (categoryNames == "")
+            {
+                categories = new string[0];
+            }
+            else
+            {
+                categories = categoryNames.Split(',');
+            }
+            
+            for (var i = 0; i < categories.Length; i++)
+            {
+                categories[i] = categories[i].Trim().ToLower();
+            }
+            var posts = postRepository.GetPostsByCategoryNames(categories, count);
+            return posts;
+        }
         public IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
         {
             var posts = postRepository.Search(search, sortColumnIndex, sortDirection, displayStart, displayLength, out totalRecords, out totalDisplayRecords);

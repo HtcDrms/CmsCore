@@ -57,8 +57,23 @@ namespace CmsCore.Web
             // repositories
             services.AddTransient<IPageRepository, PageRepository>();
             services.AddTransient<IMenuRepository, MenuRepository>();
-            services.AddTransient<IMenuItemRepository, MenuItemRepository>();
+            services.AddTransient<ITemplateRepository, TemplateRepository>();
             services.AddTransient<IMenuLocationRepository, MenuLocationRepository>();
+            services.AddTransient<IPostCategoryRepository, PostCategoryRepository>();
+            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IMenuItemRepository, MenuItemRepository>();
+            services.AddTransient<IWidgetRepository, WidgetRepository>();
+            services.AddTransient<ISectionRepository, SectionRepository>();
+            services.AddTransient<ISettingRepository, SettingRepository>();
+            services.AddTransient<IRedirectRepository, RedirectRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddTransient<ILinkRepository, LinkRepository>();
+            services.AddTransient<ILinkCategoryRepository, LinkCategoryRepository>();
+            services.AddTransient<IMediaRepository, MediaRepository>();
+            services.AddTransient<ILanguageRepository, LanguageRepository>();
+            services.AddTransient<IFormRepository, FormRepository>();
+            services.AddTransient<IFormFieldRepository, FormFieldRepository>();
 
 
             // services
@@ -66,7 +81,24 @@ namespace CmsCore.Web
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IMenuLocationService, MenuLocationService>();
+            services.AddTransient<ITemplateService, TemplateService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IPostCategoryService, PostCategoryService>();
             services.AddTransient<IMenuItemService, MenuItemService>();
+            services.AddTransient<IWidgetService, WidgetService>();
+            services.AddTransient<ISectionService, SectionService>();
+            services.AddTransient<ISettingService, SettingService>();
+            services.AddTransient<IRedirectService, RedirectService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<ILinkService, LinkService>();
+            services.AddTransient<ILinkCategoryService, LinkCategoryService>();
+            services.AddTransient<IMediaService, MediaService>();
+            services.AddTransient<ILanguageService, LanguageService>();
+            services.AddTransient<IFormService, FormService>();
+            services.AddTransient<IFormFieldService, FormFieldService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

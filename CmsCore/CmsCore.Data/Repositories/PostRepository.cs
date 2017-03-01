@@ -13,7 +13,17 @@ namespace CmsCore.Data.Repositories
     
         public PostRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
+        public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count)
+        {
+            if (categories.Length > 0) { 
+                return (from pc in DbContext.PostPostCategories join p in DbContext.Posts on pc.PostId equals p.Id join c in DbContext.PostCategories on pc.PostCategoryId equals c.Id where (categories.Length > 0 ? categories.Contains(c.Name.ToLower()): true) orderby p.AddedDate descending select p).Take(count).ToList();
+            }
+            else
+            {
+                return (from p in DbContext.Posts orderby p.AddedDate descending select p).Take(count).ToList();
+            }
 
+        }
         public IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
         {
             search = search.Trim();
@@ -120,6 +130,7 @@ namespace CmsCore.Data.Repositories
     public interface IPostRepository : IRepository<Post>
     {
         Post GetPostBySlug(string slug);
+        IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count);
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
 }

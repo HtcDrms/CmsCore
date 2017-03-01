@@ -66,7 +66,10 @@ video {
   transition: 1s opacity;
   
 }
-
+.btn {
+    text-transform:capitalize;
+}
+#homeSlider2 .slider-item > div {padding-top:120px;}
 li.accordion {
     background-color: #eee;
     color: #444;

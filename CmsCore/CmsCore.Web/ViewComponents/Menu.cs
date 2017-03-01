@@ -21,13 +21,13 @@ namespace CmsCore.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(string menuLocation)
         {
             
-            var items = GetItems(menuLocation);
+            var items = await GetItems(menuLocation);
             return View(items);
         }
-        private List<MenuItem> GetItems(string menuLocation)
+        private Task<List<MenuItem>> GetItems(string menuLocation)
         {
             CmsCore.Model.Entities.Menu menu = menuService.GetMenuByLocationName(menuLocation);
-            return menu.MenuItems.ToList();
+            return Task.FromResult(menu.MenuItems.ToList());
         }
     }
 }
