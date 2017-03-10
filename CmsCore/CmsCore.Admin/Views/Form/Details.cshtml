@@ -166,6 +166,7 @@
         $.post("/FormField/UpdateFormFieldPosition", {
             position1:selValue1, text1:selText, position2:selValue2, text2:listbox.options[selIndex].text, Id:formId
         }, function (data) {
+            location.reload();
         }
     )}
 

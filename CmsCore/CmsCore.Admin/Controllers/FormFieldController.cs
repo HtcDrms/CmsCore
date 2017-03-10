@@ -39,8 +39,10 @@ namespace CmsCore.Admin.Controllers
                 frm.FormId = (long)formField.FormId;
                 frm.Value = formField.Value;
                 frm.Required = formField.Required;
-                frm.Position = formField.Position;
                 frm.Name = formField.Name;
+
+                var formfields = formService.GetFormFieldsByFormId((long)formField.FormId);
+                frm.Position = formfields.Count + 1;
 
                 frm.AddedBy = User.Identity.Name ?? "User";
                 frm.AddedDate = DateTime.Now;
