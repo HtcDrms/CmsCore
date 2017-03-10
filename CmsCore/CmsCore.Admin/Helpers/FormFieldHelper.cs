@@ -35,7 +35,7 @@ namespace CmsCore.Admin.Helpers
                     textbox.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        textbox.Attributes.Add("placeholder", formField.Value.ToString());
+                        textbox.Attributes.Add("value", formField.Value.ToString());
                     }
                     textbox.Attributes.Add("data-val", "true");
                     textbox.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
@@ -45,7 +45,7 @@ namespace CmsCore.Admin.Helpers
                     output.Content.SetContent(formField.Name);
                     if (formField.Value != null)
                     {
-                        textbox.Attributes.Add("placeholder", formField.Value.ToString());
+                        textbox.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -75,7 +75,7 @@ namespace CmsCore.Admin.Helpers
                     textboxArea.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        textboxArea.Attributes.Add("placeholder", formField.Value.ToString());
+                        textboxArea.Attributes.Add("value", formField.Value.ToString());
                     }
                     textboxArea.Attributes.Add("data-val", "true");
                     textboxArea.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
@@ -85,7 +85,7 @@ namespace CmsCore.Admin.Helpers
                     output.Content.SetContent(formField.Name);
                     if (formField.Value != null)
                     {
-                        textboxArea.Attributes.Add("placeholder", formField.Value.ToString());
+                        textboxArea.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -234,7 +234,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        email.Attributes.Add("placeholder", formField.Value.ToString());
+                        email.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -270,7 +270,7 @@ namespace CmsCore.Admin.Helpers
                     email.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        email.Attributes.Add("placeholder", formField.Value.ToString());
+                        email.Attributes.Add("value", formField.Value.ToString());
                     }
                     email.Attributes.Add("data-val", "true");
                     email.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
@@ -280,7 +280,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        email.Attributes.Add("placeholder", formField.Value.ToString());
+                        email.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -406,7 +406,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        date.Attributes.Add("placeholder", formField.Value.ToString());
+                        date.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -442,7 +442,7 @@ namespace CmsCore.Admin.Helpers
                     url.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        url.Attributes.Add("placeholder", formField.Value.ToString());
+                        url.Attributes.Add("value", formField.Value.ToString());
                     }
                     url.Attributes.Add("data-val", "true");
                     url.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
@@ -452,7 +452,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        url.Attributes.Add("placeholder", formField.Value.ToString());
+                        url.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -488,7 +488,7 @@ namespace CmsCore.Admin.Helpers
                     number.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        number.Attributes.Add("placeholder", formField.Value.ToString());
+                        number.Attributes.Add("value", formField.Value.ToString());
                     }
                     number.Attributes.Add("data-val", "true");
                     number.Attributes.Add("data-val-required", "Lütfen geçerli bir değer giriniz.");
@@ -498,7 +498,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        number.Attributes.Add("placeholder", formField.Value.ToString());
+                        number.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {
@@ -533,7 +533,7 @@ namespace CmsCore.Admin.Helpers
                     time.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        time.Attributes.Add("placeholder", formField.Value.ToString());
+                        time.Attributes.Add("value", formField.Value.ToString());
                     }
 
                     time.Attributes.Add("data-val", "true");
@@ -543,7 +543,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        time.Attributes.Add("placeholder", formField.Value.ToString());
+                        time.Attributes.Add("value", formField.Value.ToString());
                     }
                     else
                     {

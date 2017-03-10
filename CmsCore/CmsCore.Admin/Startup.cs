@@ -87,6 +87,7 @@ namespace CmsCore.Admin
             services.AddTransient<IFormRepository, FormRepository>();
             services.AddTransient<IFormFieldRepository, FormFieldRepository>();
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+            services.AddTransient<IFeedbackValueRepository, FeedbackValueRepository>();
 
 
             // services
@@ -112,6 +113,7 @@ namespace CmsCore.Admin
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IFormFieldService, FormFieldService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<IFeedbackValueService, FeedbackValueService>();
 
         }
 

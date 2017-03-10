@@ -13,19 +13,27 @@
 
     </div>
 </div>
-<div class="row">
-</div>
+<br />
 <div class="row">
     <div class="col-md-12">
         <div class="portlet light bordered">
-            <div class="portlet-title">
-                <text>Closing Description</text>
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <text>Closing Description</text>
+                </div>
+                <div class="form-group">
+                    @Html.Raw(ViewBag.Form.ClosingDescription)<br />
+                </div>
+                <div class="portlet-title">
+                    <text>Google Analytic Code</text>
+                </div>
+                <div class="form-group">
+                    @Html.Raw(ViewBag.Form.GoogleAnalyticsCode)<br />
+                </div>
             </div>
-            
-            @Html.Raw(ViewBag.Form.ClosingDescription)<br />
-            @Html.Raw(ViewBag.Form.GoogleAnalyticsCode)<br />
-            
-            <a asp-controller="Form" asp-action="Index" class="btn btn-success">Back To Index</a>
+            <div class="form-group">
+                <a asp-controller="FeedBack" asp-action="Index" class="btn btn-success">Back To Index</a>
+            </div>
         </div>
     </div>
 </div>
