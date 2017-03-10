@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170306102524_FormField-Inttolong")]
+    partial class FormFieldInttolong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -65,66 +66,6 @@ namespace CmsCore.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.Feedback", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<int?>("FormId");
-
-                    b.Property<string>("FormName");
-
-                    b.Property<string>("IP");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<DateTime>("SentDate");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.FeedbackValue", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<long>("FeedbackId");
-
-                    b.Property<int>("FieldType");
-
-                    b.Property<int?>("FormFieldId");
-
-                    b.Property<string>("FormFieldName");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<int>("Position");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FeedbackId");
-
-                    b.ToTable("FeedbackValues");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Form", b =>
@@ -943,13 +884,6 @@ namespace CmsCore.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.FeedbackValue", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.Feedback", "Feedback")
-                        .WithMany("FeedbackValues")
-                        .HasForeignKey("FeedbackId");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Form", b =>

@@ -2,41 +2,50 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Helpers
 {
-    public static class FieldTypeHelpers
+    [HtmlTargetElement("formField", TagStructure = TagStructure.NormalOrSelfClosing)]
+    public class FormFieldHelper : TagHelper
     {
-        public static HtmlString FieldTypeFor(this HtmlHelper helper, FormField formField, bool required, bool read_only)
+        public FormField formField { get; set; }
+        public bool required { get; set; }
+        public bool read_only { get; set; }
+        public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (formField.FieldType.ToString() == "smallText")
+
+            output.TagMode = TagMode.StartTagAndEndTag;
+            output.TagName = "div";
+            // output.Attributes.SetAttribute("class", "form-control");
+
+            if (formField.FieldType == FieldType.fullName || formField.FieldType == FieldType.smallText)
             {
-                TagBuilder text = new TagBuilder("text");
-                text.InnerHtml.SetContent(formField.Name);
-                text.Attributes.Add("class", "form-controller");
                 TagBuilder textbox = new TagBuilder("input");
                 textbox.Attributes.Add("type", "text");
                 textbox.Attributes.Add("name", formField.Name);
                 if (required == true)
                 {
-                    text.InnerHtml.SetContent(formField.Name + "(*)");
+                    output.Content.SetContent(formField.Name + "(*)");
                     textbox.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        textbox.Attributes.Add("value", formField.Value.ToString());
+                        textbox.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     textbox.Attributes.Add("data-val", "true");
                     textbox.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
                 }
                 else
                 {
+                    output.Content.SetContent(formField.Name);
                     if (formField.Value != null)
                     {
-                        textbox.Attributes.Add("value", formField.Value.ToString());
+                        textbox.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -49,51 +58,58 @@ namespace CmsCore.Admin.Helpers
                 {
                     textbox.Attributes.Add("readonly", "readonly");
                 }
-                return new HtmlString(text.ToString() + "</br>" + textbox.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                textbox.WriteTo(writer, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent("<br/>" + writer.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "largeText")
+            else if (formField.FieldType == FieldType.largeText)
             {
-                TagBuilder text = new TagBuilder("text");
-                text.InnerHtml.SetContent(formField.Name);
-                TagBuilder textarea = new TagBuilder("textarea");
+                TagBuilder textboxArea = new TagBuilder("textarea");
+                textboxArea.Attributes.Add("type", "text");
+                textboxArea.Attributes.Add("name", formField.Name);
                 if (required == true)
                 {
-                    text.InnerHtml.SetContent(formField.Name + "(*)");
-                    textarea.Attributes.Add("required", "required");
+                    output.Content.SetContent(formField.Name + "(*)");
+                    textboxArea.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        textarea.Attributes.Add("value", formField.Value.ToString());
-                        textarea.InnerHtml.SetContent(formField.Value.ToString());
+                        textboxArea.Attributes.Add("placeholder", formField.Value.ToString());
                     }
-                    textarea.Attributes.Add("data-val", "true");
-                    textarea.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
+                    textboxArea.Attributes.Add("data-val", "true");
+                    textboxArea.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
                 }
                 else
                 {
+                    output.Content.SetContent(formField.Name);
                     if (formField.Value != null)
                     {
-                        textarea.Attributes.Add("value", formField.Value.ToString());
-                        textarea.InnerHtml.SetContent(formField.Value.ToString());
+                        textboxArea.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
-                        textarea.Attributes.Add("value", "");
+                        textboxArea.Attributes.Add("value", "");
                     }
                 }
-                textarea.Attributes.Add("class", "form-control spinner valid");
-                textarea.Attributes.Add("width", "100%");
-                textarea.Attributes.Add("name", formField.Name);
+                textboxArea.MergeAttribute("class", "form-control spinner");
+                textboxArea.Attributes.Add("width", "100%");
                 if (read_only == true)
                 {
-                    textarea.Attributes.Add("readonly", "readonly");
+                    textboxArea.Attributes.Add("readonly", "readonly");
                 }
-                return new HtmlString(text.ToString() + "</br>" + textarea.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                textboxArea.WriteTo(writer, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent("<br/>" + writer.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "singleChoice")
+            else if (formField.FieldType == FieldType.singleChoice)
             {
-                TagBuilder text = new TagBuilder("text");
-                text.InnerHtml.SetContent(formField.Name);
+
                 TagBuilder list = new TagBuilder("select");
+
+                list.Attributes.Add("name", formField.Name);
                 var items = formField.Value.Split(',');
                 string element = "";
                 foreach (var item in items)
@@ -103,74 +119,63 @@ namespace CmsCore.Admin.Helpers
                         if (item.ToString().Remove(3, item.Length - 3) == "(+)")
                         {
                             TagBuilder singlechoice = new TagBuilder("option");
-                            singlechoice.Attributes.Add("class", "form-controller");
                             singlechoice.Attributes.Add("value", item.ToString().Remove(0, 3));
                             singlechoice.Attributes.Add("selected", "selected");
                             singlechoice.InnerHtml.SetHtmlContent(item.ToString().Remove(0, 3));
-                            element += singlechoice.ToString() + "</br>";
+                            var single = new System.IO.StringWriter();
+                            singlechoice.WriteTo(single, HtmlEncoder.Default);
+                            element += single.ToString() + "<br/>";
                         }
                         else
                         {
                             TagBuilder singlechoice = new TagBuilder("option");
-                            singlechoice.Attributes.Add("class", "form-controller");
                             singlechoice.Attributes.Add("value", item);
                             singlechoice.InnerHtml.SetHtmlContent(item);
-                            element += singlechoice.ToString() + "</br>";
+                            var single = new System.IO.StringWriter();
+                            singlechoice.WriteTo(single, HtmlEncoder.Default);
+                            element += single.ToString() + "<br/>";
                         }
                     }
                     else
                     {
                         TagBuilder singlechoice = new TagBuilder("option");
-                        singlechoice.Attributes.Add("class", "form-controller");
                         singlechoice.Attributes.Add("value", item);
                         singlechoice.InnerHtml.SetHtmlContent(item);
-                        element += singlechoice.ToString() + "</br>";
+                        var single = new System.IO.StringWriter();
+                        singlechoice.WriteTo(single, HtmlEncoder.Default);
+                        element += single.ToString() + "<br/>";
                     }
                 }
                 list.InnerHtml.SetHtmlContent(element);
-
                 if (required == true)
                 {
                     list.Attributes.Add("required", "required");
-                    if (formField.Value != null)
-                    {
-                        list.Attributes.Add("value", formField.Value.ToString());
-                    }
                     list.Attributes.Add("data-val", "true");
                     list.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
-                }
-                else
-                {
-                    if (formField.Value != null)
-                    {
-                        list.Attributes.Add("value", formField.Value.ToString());
-                    }
-                    else
-                    {
-                        list.Attributes.Add("value", "");
-                    }
                 }
                 if (read_only == true)
                 {
                     list.Attributes.Add("disabled", "disabled");
                 }
-                list.Attributes.Add("class", "form-controller");
-                list.Attributes.Add("name", formField.Name);
-                return new HtmlString(text.ToString() + "</br>" + list.ToString() + "</br>");
+                list.Attributes.Add("class", "form-control");
+                
+                var writer = new System.IO.StringWriter();
+                list.WriteTo(writer, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent("<br/>" + writer.ToString() + "<br/>");
+
             }
-            else if (formField.FieldType.ToString() == "multipleChoice")
+            else if (formField.FieldType == FieldType.multipleChoice)
             {
-                TagBuilder text = new TagBuilder("text");
-                text.InnerHtml.SetContent(formField.Name);
                 var items = formField.Value.Split(',');
-                string element = text.ToString() + "</br>";
+                string element = "<br/>";
                 int i = 0;
                 foreach (var item in items)
                 {
                     i++;
                     TagBuilder multiplechoice = new TagBuilder("input");
                     multiplechoice.Attributes.Add("type", "checkbox");
-                    multiplechoice.Attributes.Add("class", "form-controller");
+                    multiplechoice.Attributes.Add("class", "");
                     multiplechoice.Attributes.Add("name", formField.Name + i.ToString());
                     if (item.ToString().Length > 3)
                     {
@@ -189,17 +194,22 @@ namespace CmsCore.Admin.Helpers
                     else
                     {
                         multiplechoice.Attributes.Add("value", item);
+                        multiplechoice.Attributes.Add("style", "margin-right:10px;");
                         multiplechoice.InnerHtml.SetHtmlContent(item);
                     }
                     if (read_only == true)
                     {
                         multiplechoice.Attributes.Add("disabled", "disabled");
                     }
-                    element += multiplechoice.ToString() + "</br>";
+
+                    var multi = new System.IO.StringWriter();
+                    multiplechoice.WriteTo(multi, HtmlEncoder.Default);
+                    element += multi.ToString() + "<br/>";
                 }
-                return new HtmlString(element + "</br>");
+                element = formField.Name + element;
+                output.PostContent.SetHtmlContent("<br/>" + element.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "email")
+            else if (formField.FieldType == FieldType.email)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -224,7 +234,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        email.Attributes.Add("value", formField.Value.ToString());
+                        email.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -237,9 +247,62 @@ namespace CmsCore.Admin.Helpers
                 }
                 email.Attributes.Add("width", "100%");
                 email.Attributes.Add("name", formField.Name);
-                return new HtmlString(text.ToString() + "</br>" + email.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                email.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                text.WriteTo(writer2, HtmlEncoder.Default);
+                output.PostContent.SetHtmlContent(writer2.ToString() + "<br/>" + writer.ToString() + "<br/>");
+
             }
-            else if (formField.FieldType.ToString() == "file")
+            else if (formField.FieldType == FieldType.telephone)
+            {
+                TagBuilder text = new TagBuilder("text");
+                text.InnerHtml.SetContent(formField.Name);
+                //var items = formInfo.Value.Split(',');
+                TagBuilder email = new TagBuilder("input");
+                email.Attributes.Add("type", "tel");
+                email.Attributes.Add("class", "form-control spinner");
+                if (required == true)
+                {
+                    text.InnerHtml.SetContent(formField.Name + "(*)");
+                    email.Attributes.Add("required", "required");
+                    if (formField.Value != null)
+                    {
+                        email.Attributes.Add("placeholder", formField.Value.ToString());
+                    }
+                    email.Attributes.Add("data-val", "true");
+                    email.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
+                    email.Attributes.Add("data-val-phone", "Lütfen geçerli bir telefon numarası giriniz.");
+                }
+                else
+                {
+                    if (formField.Value != null)
+                    {
+                        email.Attributes.Add("placeholder", formField.Value.ToString());
+                    }
+                    else
+                    {
+                        email.Attributes.Add("value", "");
+                    }
+                }
+                if (read_only == true)
+                {
+                    email.Attributes.Add("readonly", "readonly");
+                }
+                email.Attributes.Add("width", "100%");
+                email.Attributes.Add("name", formField.Name);
+
+                var writer = new System.IO.StringWriter();
+                email.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                text.WriteTo(writer2, HtmlEncoder.Default);
+                output.PostContent.SetHtmlContent(writer2.ToString() + "<br/>" + writer.ToString() + "<br/>");
+
+            }
+            else if (formField.FieldType == FieldType.file)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -266,22 +329,29 @@ namespace CmsCore.Admin.Helpers
                         file.Attributes.Add("value", "");
                     }
                 }
-                file.Attributes.Add("class", "form-controller");
                 file.Attributes.Add("name", "upload");
-                return new HtmlString(text.ToString() + "</br>" + file.ToString() + "</br> Dosyanın uzantısı.doc,.docx,.pdf,.rtf,.jpg,.gif,.png olmalıdır.");
+
+                var writer = new System.IO.StringWriter();
+                file.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                text.WriteTo(writer2, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent(writer2.ToString() + "<br/>" + writer.ToString() + "<br/> Dosyanın uzantısı .doc, .docx, .pdf, .rtf, .jpg, .gif, .png olmalıdır.");
+
             }
-            else if (formField.FieldType.ToString() == "radioButtons")
+            else if (formField.FieldType == FieldType.radioButtons)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
+                string element = "";
                 var items = formField.Value.Split(',');
-                string element = text.ToString() + "</br>";
                 foreach (var item in items)
                 {
                     TagBuilder singlechoice = new TagBuilder("input");
                     singlechoice.Attributes.Add("type", "radio");
-                    singlechoice.Attributes.Add("class", "form-controller");
                     singlechoice.Attributes.Add("name", formField.Name);
+                    singlechoice.Attributes.Add("style", "margin-right:10px;");
                     if (item.ToString().Length > 3)
                     {
                         if (item.ToString().Remove(3, item.Length - 3) == "(+)")
@@ -305,11 +375,17 @@ namespace CmsCore.Admin.Helpers
                     {
                         singlechoice.Attributes.Add("disabled", "disabled");
                     }
-                    element += singlechoice.ToString() + "</br>";
+
+                    var writer2 = new System.IO.StringWriter();
+                    singlechoice.WriteTo(writer2, HtmlEncoder.Default);
+
+                    element += writer2.ToString() + "<br/>";
                 }
-                return new HtmlString(element + "</br>");
+                var writer = new System.IO.StringWriter();
+                text.WriteTo(writer, HtmlEncoder.Default);
+                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + element.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "datePicker")
+            else if (formField.FieldType == FieldType.datePicker)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -330,7 +406,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        date.Attributes.Add("value", formField.Value.ToString());
+                        date.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -343,9 +419,15 @@ namespace CmsCore.Admin.Helpers
                 {
                     date.Attributes.Add("readonly", "readonly");
                 }
-                return new HtmlString(text.ToString() + "</br>" + date.ToString() + "</br>");
+                var writer = new System.IO.StringWriter();
+                text.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                date.WriteTo(writer2, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + writer2.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "urlWebSite")
+            else if (formField.FieldType == FieldType.urlWebSite)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -360,7 +442,7 @@ namespace CmsCore.Admin.Helpers
                     url.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        url.Attributes.Add("value", formField.Value.ToString());
+                        url.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     url.Attributes.Add("data-val", "true");
                     url.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
@@ -370,7 +452,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        url.Attributes.Add("value", formField.Value.ToString());
+                        url.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -384,9 +466,17 @@ namespace CmsCore.Admin.Helpers
                 url.Attributes.Add("width", "100%");
                 url.Attributes.Add("class", "form-control spinner");
                 url.Attributes.Add("name", formField.Name);
-                return new HtmlString(text.ToString() + "</br>" + url.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                text.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                url.WriteTo(writer2, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + writer2.ToString() + "<br/>");
+
             }
-            else if (formField.FieldType.ToString() == "numberValue")
+            else if (formField.FieldType == FieldType.numberValue)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -398,7 +488,7 @@ namespace CmsCore.Admin.Helpers
                     number.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        number.Attributes.Add("value", formField.Value.ToString());
+                        number.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     number.Attributes.Add("data-val", "true");
                     number.Attributes.Add("data-val-required", "Lütfen geçerli bir değer giriniz.");
@@ -408,7 +498,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        number.Attributes.Add("value", formField.Value.ToString());
+                        number.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -422,9 +512,16 @@ namespace CmsCore.Admin.Helpers
                 number.Attributes.Add("class", "form-control spinner");
                 number.Attributes.Add("width", "100%");
                 number.Attributes.Add("name", formField.Name);
-                return new HtmlString(text.ToString() + "</br>" + number.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                text.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                number.WriteTo(writer2, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + writer2.ToString() + "<br/>");
             }
-            else if (formField.FieldType.ToString() == "timeValue")
+            else if (formField.FieldType == FieldType.timeValue)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
@@ -436,7 +533,7 @@ namespace CmsCore.Admin.Helpers
                     time.Attributes.Add("required", "required");
                     if (formField.Value != null)
                     {
-                        time.Attributes.Add("value", formField.Value.ToString());
+                        time.Attributes.Add("placeholder", formField.Value.ToString());
                     }
 
                     time.Attributes.Add("data-val", "true");
@@ -446,7 +543,7 @@ namespace CmsCore.Admin.Helpers
                 {
                     if (formField.Value != null)
                     {
-                        time.Attributes.Add("value", formField.Value.ToString());
+                        time.Attributes.Add("placeholder", formField.Value.ToString());
                     }
                     else
                     {
@@ -461,11 +558,17 @@ namespace CmsCore.Admin.Helpers
                 }
                 time.Attributes.Add("class", "form-control spinner");
                 time.Attributes.Add("name", formField.Name);
-                return new HtmlString(text.ToString() + "</br>" + time.ToString() + "</br>");
+
+                var writer = new System.IO.StringWriter();
+                text.WriteTo(writer, HtmlEncoder.Default);
+
+                var writer2 = new System.IO.StringWriter();
+                time.WriteTo(writer2, HtmlEncoder.Default);
+                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + writer2.ToString() + "<br/>");
             }
             else
             {
-                return new HtmlString("");
+                output.PostContent.SetHtmlContent("");
             }
         }
     }

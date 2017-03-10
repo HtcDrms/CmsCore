@@ -7176,6 +7176,18 @@
   },
   "tools": {
     ".NETCoreApp,Version=v1.0": {
+      "Microsoft.EntityFrameworkCore.Tools/1.1.0-preview4-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "1.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/_._": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Tools.DotNet/1.1.0-preview4-final": {
         "type": "package",
         "dependencies": {
@@ -7193,6 +7205,7 @@
   },
   "projectFileToolGroups": {
     ".NETCoreApp,Version=v1.0": [
+      "Microsoft.EntityFrameworkCore.Tools >= 1.1.0-preview4-final",
       "Microsoft.EntityFrameworkCore.Tools.DotNet >= 1.1.0-preview4-final"
     ]
   }

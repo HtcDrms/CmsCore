@@ -1,0 +1,31 @@
+﻿@using CmsCore.Admin.Helpers
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Index","Form")">Formlar</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>Kapanış Mesajı</span>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+
+    </div>
+</div>
+<div class="row">
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <text>Closing Description</text>
+            </div>
+            
+            @Html.Raw(ViewBag.Form.ClosingDescription)<br />
+            @Html.Raw(ViewBag.Form.GoogleAnalyticsCode)<br />
+            
+            <a asp-controller="Form" asp-action="Index" class="btn btn-success">Back To Index</a>
+        </div>
+    </div>
+</div>

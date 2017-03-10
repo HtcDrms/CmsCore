@@ -26,9 +26,11 @@ namespace CmsCore.Data
         public DbSet<LinkCategory> LinkCategories { get; set; }
         public DbSet<Media> Medias { get; set; }
         public DbSet<Language> Languages { get; set; }
-
         public DbSet<Form> Forms { get; set; }
         public DbSet<FormField> FormFields { get; set; }
+        public DbSet<Feedback> Feedbacks { get;set; }
+        public DbSet<FeedbackValue> FeedbackValues { get; set; }
+        
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -59,6 +61,9 @@ namespace CmsCore.Data
             new LinkCategoryBuilder(builder.Entity<LinkCategory>());
             new MediaBuilder(builder.Entity<Media>());
             new LanguageBuilder(builder.Entity<Language>());
+            new FormFieldBuilder(builder.Entity<FormField>());
+            new FormBuilder(builder.Entity<Form>());
+            new FeedbackValueBuilder(builder.Entity<FeedbackValue>());
 
             
         }

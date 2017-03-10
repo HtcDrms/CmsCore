@@ -1,8 +1,8 @@
-﻿@model KariyerPortali.Admin.ViewModels.FormFieldViewModel
-    @using KariyerPortali.Admin.Helpers
+﻿@model FormFieldViewModel
+@using CmsCore.Admin.Helpers
 <!DOCTYPE html>
 <meta charset="utf-8" />
-<title>@ViewBag.Title-@Html.Translate("Kariyer Portalı")</title>
+<title>@ViewBag.Title-CMS Core</title>
 <br />
 <style>
     textarea {
@@ -13,11 +13,11 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="@Url.Action("Index","Form")">@Html.Translate("Formlar")</a>
+            <a href="@Url.Action("Index","Form")">Formlar</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>@Html.Translate("Form Alanı Detayı")</span>
+            <span>Form Alanı Detayı</span>
         </li>
     </ul>
     <div class="page-toolbar">
@@ -31,52 +31,65 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase">@Html.Translate("Form Alanı Detayı")</span>
+                    <span class="caption-subject bold uppercase">Form Alanı Detayı</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.FormId)
+                    @Html.HiddenFor(model => model.Name)
+                    @Html.HiddenFor(model => model.Position)
+                    @Html.HiddenFor(model => model.Required)
+                    @Html.HiddenFor(model => model.Value)
+                    @Html.HiddenFor(model => model.ModifiedBy)
+                    @Html.HiddenFor(model => model.ModifiedDate)
+                    @Html.HiddenFor(model => model.AddedBy)
+                    @Html.HiddenFor(model => model.AddedDate)
+                    @Html.HiddenFor(model => model.FieldType)
                 </div>
             </div>
             <div class="row">
-                    <div class="col-md-12 ">
-                        <!-- BEGIN SAMPLE FORM PORTLET-->
-                        <div class="portlet light bordered">
-
-                            <!--İLAN VERİLİŞ TARİHİ O AN ALINACAK-->
-
-
-
-                            <div class="portlet-body form">
-
-                                <div class="form-body">
-                                    <div class="form-group">
-                                        @Html.DisplayFor(model => model.Description)
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.DisplayFor(model => model.FormType)
-                                    </div>
+                <div class="col-md-12 ">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light bordered">
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <text class="col-sm-1">Name </text>
+                                    @Html.DisplayFor(model => model.Name)
                                 </div>
                                 <div class="form-group">
+                                    <text class="col-sm-1">Position </text>
+                                    @Html.DisplayFor(model => model.Position)
+                                </div>
+                                <div class="form-group">
+                                    <text class="col-sm-1">Required </text>
+                                    @Html.DisplayFor(model => model.Required)
+                                </div>
+                                <div class="form-group">
+                                    <text class="col-sm-1">Form </text>
+                                    @ViewBag.Form
+                                </div>
+                                <div class="form-group">
+                                    <text class="col-sm-1">Field Type </text>
+                                    @Html.DisplayFor(model => model.FieldType)
+                                </div>
+                                <div class="form-group">
+                                    <text class="col-sm-1">Value </text>
                                     @Html.DisplayFor(model => model.Value)
                                 </div>
                                 <div class="form-group">
                                 </div>
                             </div>
+                           
+                            
                         </div>
                     </div>
-                        <input type="submit" value="@Html.Translate("Ekle")" />
-                        <!-- END SAMPLE FORM PORTLET-->
-                        <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <input type="submit" class="btn btn-success" asp-action="Index" asp-controller="FormField" value="Back To Index" />
+                </div>
             </div>
-
         </div>
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-
-

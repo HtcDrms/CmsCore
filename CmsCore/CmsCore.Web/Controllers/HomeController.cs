@@ -33,7 +33,7 @@ namespace CmsCore.Web.Controllers
             // get home page
             var homePage = pageService.GetPageBySlug("anasayfa");
             PageViewModel pageVM = new PageViewModel();
-            pageVM.Id = homePage.Id;
+            pageVM.Id = homePage.Id==null?0:homePage.Id;
             pageVM.Title = homePage.Title;
             pageVM.Slug = homePage.Slug;
             pageVM.Body = homePage.Body;

@@ -30,6 +30,7 @@ namespace CmsCore.Admin.Controllers
             if (ModelState.IsValid){
                 var frm = new Form();
                 frm.Id = form.Id;
+                frm.LanguageId = 1;// sonra sayfadan verilecek.
                 frm.FormName = form.FormName;
                 frm.Description = form.Description;
                 frm.ClosingDescription = form.ClosingDescription;
@@ -47,6 +48,7 @@ namespace CmsCore.Admin.Controllers
         public ActionResult Details(long id){
             var frm = formService.GetForm(id);
             if (frm != null){
+                formService.SaveForm();
                 ViewBag.FormFields = new List<FormField>(formService.GetFormFieldsByFormId(id));
                 var formViewModel = new FormViewModel();
                 formViewModel.Id = frm.Id;
@@ -118,9 +120,20 @@ namespace CmsCore.Admin.Controllers
         }
 
         public ActionResult Delete(long id)
-        {                            
-            formService.DeleteForm(id);
-            formService.SaveForm();
+        {
+            var frm = formService.GetForm(id);
+            if (frm != null)
+            {
+                var frmfield = formService.GetFormFieldsByFormId(frm.Id);
+                foreach (var item in frmfield)
+                {
+                    formFieldService.DeleteFormField(item.Id);
+                }
+                formFieldService.SaveFormField();
+                formService.DeleteForm(id);
+                formService.SaveForm();
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
         public ActionResult AjaxHandler(jQueryDataTableParamModel param)
