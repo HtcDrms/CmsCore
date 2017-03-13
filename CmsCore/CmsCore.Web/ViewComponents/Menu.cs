@@ -27,7 +27,13 @@ namespace CmsCore.Web.ViewComponents
         private Task<List<MenuItem>> GetItems(string menuLocation)
         {
             CmsCore.Model.Entities.Menu menu = menuService.GetMenuByLocationName(menuLocation);
-            return Task.FromResult(menu.MenuItems.ToList());
+            if (menu != null && menu.MenuItems != null) { 
+                return Task.FromResult(menu.MenuItems.ToList());
+            } else
+            {
+                return Task.FromResult(new List<MenuItem>());
+            }
         }
     }
 }
+ 
