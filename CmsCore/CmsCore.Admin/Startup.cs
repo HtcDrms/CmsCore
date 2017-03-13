@@ -16,6 +16,7 @@ using CmsCore.Data.Infrastructure;
 using CmsCore.Data.Repositories;
 using CmsCore.Admin.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+//using static CmsCore.Service.FeedbackService;
 
 namespace CmsCore.Admin
 {
@@ -85,6 +86,8 @@ namespace CmsCore.Admin
             services.AddTransient<ILanguageRepository, LanguageRepository>();
             services.AddTransient<IFormRepository, FormRepository>();
             services.AddTransient<IFormFieldRepository, FormFieldRepository>();
+            services.AddTransient<IFeedbackRepository, FeedbackRepository>();
+            services.AddTransient<IFeedbackValueRepository, FeedbackValueRepository>();
 
 
             // services
@@ -109,6 +112,8 @@ namespace CmsCore.Admin
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IFormFieldService, FormFieldService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<IFeedbackValueService, FeedbackValueService>();
 
         }
 

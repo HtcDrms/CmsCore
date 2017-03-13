@@ -38,17 +38,17 @@ namespace CmsCore.Service
         }
         public IEnumerable<Form> GetForms()
         {
-            var forms = formRepository.GetAll("FormField");
+            var forms = formRepository.GetAll(); // içerde FormField yazıyordu
             return forms;
         }
         public Form GetForm(long id)
         {
-            var form = formRepository.GetById(id);
+            var form = formRepository.GetById(id,"FormFields");
             return form;
         }
         public List<FormField> GetFormFieldsByFormId(long id)
         {
-            Form form = formRepository.GetById(id);
+            Form form = formRepository.GetById(id,"FormFields");
             return form.FormFields.OrderBy(c => c.Position).ToList();
         }
         public void CreateForm(Form form)

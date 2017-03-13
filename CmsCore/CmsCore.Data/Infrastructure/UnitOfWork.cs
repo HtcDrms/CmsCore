@@ -21,7 +21,16 @@ namespace CmsCore.Data.Infrastructure
 
         public void Commit()
         {
-            DbContext.SaveChanges();
+            try
+            {
+                DbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
     }
 }

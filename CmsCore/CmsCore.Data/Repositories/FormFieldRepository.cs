@@ -1,5 +1,6 @@
 ﻿using CmsCore.Data.Infrastructure;
 using CmsCore.Model.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace CmsCore.Data.Repositories
     {
         public FormFieldRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
-        public IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
+        public IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out long totalRecords, out long totalDisplayRecords)
         {
             search = search.Trim();
             var searchWords = search.Split(' ');
 
 
-            var query = this.DbContext.FormFields.AsQueryable();
+            var query = this.DbContext.FormFields.AsQueryable().Include("Form");
             foreach (string sSearch in searchWords)
             {
                 if (sSearch != null && sSearch != "")
@@ -38,19 +39,22 @@ namespace CmsCore.Data.Repositories
                 switch (sortColumnIndex)
                 {
                     case 1:
-                        filteredFormFields = filteredFormFields.OrderBy(c => c.Name);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Id);
                         break;
                     case 2:
-                        filteredFormFields = filteredFormFields.OrderBy(c => c.FieldType.ToString());
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Name);
                         break;
                     case 3:
-                        filteredFormFields = filteredFormFields.OrderBy(c => c.Required);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.FieldType.ToString());
                         break;
                     case 4:
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Required);
+                        break;
+                    case 5:
                         filteredFormFields = filteredFormFields.OrderBy(c => c.Form.FormName);
                         break;
                     default:
-                        filteredFormFields = filteredFormFields.OrderBy(c => c.Name);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Id);
                         break;
                 }
             }
@@ -60,19 +64,22 @@ namespace CmsCore.Data.Repositories
                 {
 
                     case 1:
-                        filteredFormFields = filteredFormFields.OrderByDescending(c => c.Name);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Id);
                         break;
                     case 2:
-                        filteredFormFields = filteredFormFields.OrderByDescending(c => c.FieldType.ToString());
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Name);
                         break;
                     case 3:
-                        filteredFormFields = filteredFormFields.OrderByDescending(c => c.Required);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.FieldType.ToString());
                         break;
                     case 4:
-                        filteredFormFields = filteredFormFields.OrderByDescending(c => c.Form.FormName);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Required);
+                        break;
+                    case 5:
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Form.FormName);
                         break;
                     default:
-                        filteredFormFields = filteredFormFields.OrderByDescending(c => c.Name);
+                        filteredFormFields = filteredFormFields.OrderBy(c => c.Id);
                         break;
                 }
             }
@@ -90,6 +97,6 @@ namespace CmsCore.Data.Repositories
     }
     public interface IFormFieldRepository : IRepository<FormField>
     {
-        IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
+        IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out long totalRecords, out long totalDisplayRecords);
     }
 }

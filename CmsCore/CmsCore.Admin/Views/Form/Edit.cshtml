@@ -1,10 +1,10 @@
-﻿@model KariyerPortali.Admin.ViewModels.FormViewModel
-    @using KariyerPortali.Admin.Helpers
+﻿@model FormViewModel
+@using CmsCore.Admin.Helpers
 <!DOCTYPE html>
 <meta charset="utf-8" />
-<title>@ViewBag.Title-@Html.Translate("Kariyer Portalı")</title>
+<title>@ViewBag.Title-CMS Core</title>
 <br />
-<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <style>
     textarea {
         max-width: 100%;
@@ -14,11 +14,11 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="@Url.Action("Index","Form")">@Html.Translate("Formlar")</a>
+            <a href="@Url.Action("Index","Form")">Formlar</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
-            <span>@Html.Translate("Form Düzenle")</span>
+            <span>Form Düzenle</span>
         </li>
     </ul>
     <div class="page-toolbar">
@@ -32,7 +32,7 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase">@Html.Translate("Form Düzenle")</span>
+                    <span class="caption-subject bold uppercase">Form Düzenle</span>
                 </div>
             </div>
             <div class="row">
@@ -55,24 +55,24 @@
 
                             <div class="portlet-body form">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(model => model.FormId)
+                                @Html.HiddenFor(model => model.Id)
                                 <div class="form-body">
                                     <div class="form-group">
                                         <text>Form İsmi Giriniz:</text><br />
-                                        @Html.TextBoxFor(model => model.FormName)
+                                        @Html.TextBoxFor(model => model.FormName,new {@class="form-control" })
                                         @Html.ValidationMessageFor(model => model.FormName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="form-group">
-                                        <text>@Html.Translate("E-posta adresi giriniz:")</text><br />
-                                        <text>@Html.Translate("To:")</text><br />@Html.TextBoxFor(model => model.Email_to)<br />
-                                        @Html.ValidationMessageFor(model => model.Email_cc, "", new { @class = "text-danger" })<br />
-                                        <text>@Html.Translate("cc:")</text><br />@Html.TextBoxFor(model => model.Email_cc)<br />
-                                        @Html.ValidationMessageFor(model => model.Email_cc, "", new { @class = "text-danger" })<br />
-                                        <text>@Html.Translate("bcc:")</text><br />@Html.TextBoxFor(model => model.Email_bcc)<br />
-                                        @Html.ValidationMessageFor(model => model.Email_bcc, "", new { @class = "text-danger" })<br />
+                                        <text>E-posta adresi giriniz:</text><br />
+                                        <text>To:</text><br />@Html.TextBoxFor(model => model.EmailTo, new { @class = "form-control" })<br />
+                                        @Html.ValidationMessageFor(model => model.EmailTo, "", new { @class = "text-danger" })<br />
+                                        <text>cc:</text><br />@Html.TextBoxFor(model => model.EmailCc, new { @class = "form-control" })<br />
+                                        @Html.ValidationMessageFor(model => model.EmailCc, "", new { @class = "text-danger" })<br />
+                                        <text>bcc:</text><br />@Html.TextBoxFor(model => model.EmailBcc, new { @class = "form-control" })<br />
+                                        @Html.ValidationMessageFor(model => model.EmailBcc, "", new { @class = "text-danger" })<br />
                                     </div>
                                     <div class="form-group">
-                                        <text>@Html.Translate("Açıklama Giriniz:")</text>
+                                        <text>Açıklama Giriniz:</text>
                                         @Html.TextAreaFor(model => model.Description, new { @tabindex = "4", @class = "form-control spinner", autofocus = "autofocus" })
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                         <script>
@@ -80,7 +80,7 @@
                                         </script>
                                     </div>
                                     <div class="form-group">
-                                        <text>@Html.Translate("Kapanış Mesajı Giriniz:")</text>
+                                        <text>Kapanış Mesajı Giriniz:</text>
                                         @Html.TextAreaFor(model => model.ClosingDescription, new { @tabindex = "5", @class = "form-control spinner"})
                                         @Html.ValidationMessageFor(model => model.ClosingDescription, "", new { @class = "text-danger" })
                                         <script>
@@ -89,16 +89,17 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <text>@Html.Translate("Google Analytics:")</text>
+                                            <text>Google Analytics:</text>
                                             @Html.TextAreaFor(model => model.GoogleAnalyticsCode, new { @tabindex = "6", @class = "form-control spinner"})
                                             @Html.ValidationMessageFor(model => model.GoogleAnalyticsCode, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <input type="submit" value="Save" class="btn btn-success" />
                         </div>
 
-                        <input type="submit" value="Kaydet" />
+                        
                         <!-- END SAMPLE FORM PORTLET-->
                         <!-- BEGIN SAMPLE FORM PORTLET-->
                     </div>
@@ -107,7 +108,5 @@
         </div>
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
 

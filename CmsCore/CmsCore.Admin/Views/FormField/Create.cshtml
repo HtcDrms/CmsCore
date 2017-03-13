@@ -1,5 +1,5 @@
 ﻿@model FormFieldViewModel
-  
+
 <!DOCTYPE html>
 <meta charset="utf-8" />
 <title>@ViewBag.Title-Kariyer Portalı</title>
@@ -13,7 +13,7 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="@Url.Action("Index","Form")">Formlar")</a>
+            <a href="@Url.Action("Index","Form")">Formlar</a>
             <i class="fa fa-circle"></i>
         </li>
         <li>
@@ -31,66 +31,63 @@
             <div class="portlet-title">
                 <div class="caption font-dark">
                     <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase">Yeni Form Alanı")</span>
+                    <span class="caption-subject bold uppercase">Yeni Form Alanı</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    
+
                 </div>
             </div>
             <div class="row">
-                @using (Html.BeginForm())
-                {
+                <form asp-controller="FormField" asp-action="Create" method="post">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.AntiForgeryToken()
                     <div class="col-md-12 ">
-                        <!-- BEGIN SAMPLE FORM PORTLET-->
                         <div class="portlet light bordered">
-
-                            <!--İLAN VERİLİŞ TARİHİ O AN ALINACAK-->
-
-
-
                             <div class="portlet-body form">
-                                
                                 <div class="form-body">
                                     <div class="form-group">
+                                        <text>Name:</text>
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
                                         <text>Form Seçiniz:</text><br />
-                                        @Html.DropDownList("FormId", (SelectList)ViewBag.Forms, "Seçiniz", new { @tabindex = "1", @class = "form-control", @selected="FormId"})
+                                        @Html.DropDownList("FormId", (IEnumerable<SelectListItem>)ViewBag.Forms, "Seçiniz", new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.FormId, "", new { @class = "text-danger" })
                                     </div>
-                                    
-                                    @*<div class="form-group">
-                                        <text>Form Alanı Tipi Seçiniz:</text>
-                                        @Html.EnumDropDownListFor(model => model.FieldType,"Seçiniz", new { @tabindex = "3", @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.FieldType, "", new { @class = "text-danger" })
-                                    </div>*@
                                     <div class="form-group">
-                                        <text>Zorunlu Alan</text>
-                                        @Html.CheckBoxFor(model => model.Required, new { @tabindex = "4", @class = "form-control spinner" })
-                                        @Html.ValidationMessageFor(model => model.Required, "", new { @class = "text-danger" })
+                                        <text>Form Alanı Tipi Seçiniz:</text>
+                                        @*@Html.EnumDropDownListFor(model => model.FieldType, "Seçiniz", new { @tabindex = "3", @class = "form-control" })*@
+                                        <select asp-for="FieldType" class="form-control" asp-items="Html.GetEnumSelectList<FieldType>()">
+                                            >
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.FieldType, "", new { @class = "text-danger" })
                                     </div>
+                                    <div class="form-group">
+                                        <text>Zorunlu Alan:</text>
+                                        @Html.CheckBoxFor(model => model.Required, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Required, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="form-group">
                                         <text>Varsayılan Değer Giriniz:</text>
-                                        @Html.TextBoxFor(model => model.Value, new { @tabindex = "5", @class = "form-control spinner" })
+                                        @Html.TextBoxFor(model => model.Value, new { @tabindex = "5", @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-success" />
+                                        <input type="submit" value="Cancel" class="btn btn-default" asp-controller="FormField" asp-action="Index" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="Ekle"/>
-                        <!-- END SAMPLE FORM PORTLET-->
-                        <!-- BEGIN SAMPLE FORM PORTLET-->
-                }
                     </div>
-
+                </form>
             </div>
+
         </div>
     </div>
+</div>
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")*@
 }

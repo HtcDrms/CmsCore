@@ -10,9 +10,9 @@ namespace CmsCore.Service
 {
     public interface IFormFieldService
     {
-        IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
+        IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out long totalRecords, out long totalDisplayRecords);
         IEnumerable<FormField> GetFormFields();
-        FormField GetForms(long id);
+        Form GetForms(long id);
         FormField GetFormField(long id);
         void CreateFormField(FormField formField);
         void UpdateFormField(FormField formField);
@@ -26,12 +26,14 @@ namespace CmsCore.Service
     {
         private readonly IFormFieldRepository formFieldRepository;
         private readonly IUnitOfWork unitOfWork;
-        public FormFieldService(IFormFieldRepository formFieldRepository, IUnitOfWork unitOfWork)
+        private readonly IFormService formService;
+        public FormFieldService(IFormFieldRepository formFieldRepository, IUnitOfWork unitOfWork, IFormService formService)
         {
             this.formFieldRepository = formFieldRepository;
             this.unitOfWork = unitOfWork;
+            this.formService = formService;
         }
-        public IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
+        public IEnumerable<FormField> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out long totalRecords, out long totalDisplayRecords)
         {
             var formFields = formFieldRepository.Search(search, sortColumnIndex, sortDirection, displayStart, displayLength, out totalRecords, out totalDisplayRecords);
 
@@ -39,13 +41,13 @@ namespace CmsCore.Service
         }
         public IEnumerable<FormField> GetFormFields()
         {
-            var formFields = formFieldRepository.GetAll("FormType");
+            var formFields = formFieldRepository.GetAll();
             return formFields;
         }
-        public FormField GetForms(long id)
+        public Form GetForms(long id)
         {
-            var formfield = formFieldRepository.Get(f => f.Form.Id == id);
-            return formfield;
+            var form = formService.GetForm(id);
+            return form;
         }
 
         public FormField GetFormField(long id)

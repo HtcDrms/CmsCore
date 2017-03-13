@@ -14,7 +14,7 @@ namespace CmsCore.Admin.Models
         public int Position { get; set; }
 
         public FieldType FieldType { get; set; }
-
+        
         public long? FormId { get; set; }
         public virtual Form Form { get; set; }
     }
