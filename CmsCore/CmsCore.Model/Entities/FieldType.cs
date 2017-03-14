@@ -19,7 +19,7 @@ namespace CmsCore.Model.Entities
         [Display(Name = @"Metin Alanı")]
         largeText = 5,
         [Display(Name = @"Açılır Menü")]
-        singleChoice = 6,
+        dropdownMenu = 6,
         [Display(Name = @"Onay Kutusu")]
         checkbox = 7,
         [Display(Name = @"Dosya Yükleme")]

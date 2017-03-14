@@ -104,7 +104,7 @@ namespace CmsCore.Admin.Helpers
 
                 output.PostContent.SetHtmlContent("<br/>" + writer.ToString() + "<br/>");
             }
-            else if (formField.FieldType == FieldType.singleChoice)
+            else if (formField.FieldType == FieldType.dropdownMenu)
             {
                 TagBuilder text = new TagBuilder("text");
                 text.InnerHtml.SetContent(formField.Name);
