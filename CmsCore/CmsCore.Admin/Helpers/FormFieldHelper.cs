@@ -106,9 +106,9 @@ namespace CmsCore.Admin.Helpers
             }
             else if (formField.FieldType == FieldType.singleChoice)
             {
-
+                TagBuilder text = new TagBuilder("text");
+                text.InnerHtml.SetContent(formField.Name);
                 TagBuilder list = new TagBuilder("select");
-
                 list.Attributes.Add("name", formField.Name);
                 var items = formField.Value.Split(',');
                 string element = "";
@@ -162,11 +162,15 @@ namespace CmsCore.Admin.Helpers
                 var writer = new System.IO.StringWriter();
                 list.WriteTo(writer, HtmlEncoder.Default);
 
-                output.PostContent.SetHtmlContent("<br/>" + writer.ToString() + "<br/>");
+                var writer2 = new System.IO.StringWriter();
+                text.WriteTo(writer2, HtmlEncoder.Default);
+
+                output.PostContent.SetHtmlContent(writer2.ToString()+"<br/>" + writer.ToString() + "<br/>");
 
             }
-            else if (formField.FieldType == FieldType.multipleChoice)
+            else if (formField.FieldType == FieldType.checkbox)
             {
+                
                 var items = formField.Value.Split(',');
                 string element = "<br/>";
                 int i = 0;
@@ -207,6 +211,7 @@ namespace CmsCore.Admin.Helpers
                     element += multi.ToString() + "<br/>";
                 }
                 element = formField.Name + element;
+                
                 output.PostContent.SetHtmlContent("<br/>" + element.ToString() + "<br/>");
             }
             else if (formField.FieldType == FieldType.email)

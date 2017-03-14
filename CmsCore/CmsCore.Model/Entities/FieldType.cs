@@ -18,13 +18,13 @@ namespace CmsCore.Model.Entities
         smallText = 4,
         [Display(Name = @"Metin Alanı")]
         largeText = 5,
-        [Display(Name = @"Tek Seçim")]
+        [Display(Name = @"Açılır Menü")]
         singleChoice = 6,
-        [Display(Name = @"Çoklu Seçim")]
-        multipleChoice = 7,
+        [Display(Name = @"Onay Kutusu")]
+        checkbox = 7,
         [Display(Name = @"Dosya Yükleme")]
         file = 8,
-        [Display(Name = @"Seçenek Düğmeleri")]
+        [Display(Name = @"Radyo Düğmeleri")]
         radioButtons = 9,
         [Display(Name = @"Takvim")]
         datePicker = 10,
