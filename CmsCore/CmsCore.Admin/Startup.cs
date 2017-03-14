@@ -57,7 +57,7 @@ namespace CmsCore.Admin
 
             services.Configure<AppSettings>(mySetting =>
             {
-                mySetting.AssetsUrl = "http://assets.bilgikoleji.com/";
+                mySetting.AssetsUrl = "http://localhost:61645/";
                 mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
             });
 
@@ -88,7 +88,8 @@ namespace CmsCore.Admin
             services.AddTransient<IFormFieldRepository, FormFieldRepository>();
             services.AddTransient<IFeedbackRepository, FeedbackRepository>();
             services.AddTransient<IFeedbackValueRepository, FeedbackValueRepository>();
-
+            services.AddTransient<ISlideRepository, SlideRepository>();
+            services.AddTransient<ISliderRepository, SliderRepository>();
 
             // services
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -114,6 +115,8 @@ namespace CmsCore.Admin
             services.AddTransient<IFormFieldService, FormFieldService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IFeedbackValueService, FeedbackValueService>();
+            services.AddTransient<ISlideService, SlideService>();
+            services.AddTransient<ISliderService, SliderService>();
 
         }
 

@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170311081636_SlideDel")]
+    partial class SlideDel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -765,68 +766,6 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("CmsCore.Model.Entities.Slide", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<string>("CallToActionText");
-
-                    b.Property<string>("CallToActionUrl");
-
-                    b.Property<string>("Description");
-
-                    b.Property<bool>("IsPublished");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Photo");
-
-                    b.Property<int>("Position");
-
-                    b.Property<long>("SliderId");
-
-                    b.Property<string>("SubTitle");
-
-                    b.Property<string>("Title");
-
-                    b.Property<string>("Video");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SliderId");
-
-                    b.ToTable("Slides");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.Slider", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<bool>("IsPublished");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sliders");
-                });
-
             modelBuilder.Entity("CmsCore.Model.Entities.Template", b =>
                 {
                     b.Property<long>("Id")
@@ -1179,13 +1118,6 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Product", "Product")
                         .WithMany("ProductProductCategories")
                         .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.Slide", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.Slider", "Slider")
-                        .WithMany("Slides")
-                        .HasForeignKey("SliderId");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.TemplateSection", b =>

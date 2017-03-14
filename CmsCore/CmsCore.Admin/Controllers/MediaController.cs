@@ -12,36 +12,41 @@ using CmsCore.Service;
 
 namespace CmsCore.Admin.Controllers
 {
-    public class MediaController:BaseController
+    public class MediaController : BaseController
     {
         private readonly IMediaService mediaService;
 
-        public MediaController(IMediaService mediaService) {
-            this.mediaService = mediaService; }
-        public IActionResult Index() {
+        public MediaController(IMediaService mediaService)
+        {
+            this.mediaService = mediaService;
+        }
+        public IActionResult Index()
+        {
             var medias = mediaService.GetMedias();
             return View(medias);
         }
-        public IActionResult Create() {
-           
+        public IActionResult Create()
+        {
+
             return View();
-            
+
         }
         [HttpPost]
         public IActionResult Create(MediaViewModel mediaVM, IFormFile uploadedFile)
         {
             if (ModelState.IsValid)
             {
-                if (uploadedFile != null){
-                Media media = new Media();
-                media.Title = mediaVM.Title;
-                media.FileName = uploadedFile.FileName;
-                media.Description = mediaVM.Description;
-                media.Size = mediaVM.Size;
-                media.AddedBy = "Cevdet";
-                media.AddedDate = DateTime.Now;
-                media.ModifiedBy = "CEVDET";
-                media.ModifiedDate = DateTime.Now;
+                if (uploadedFile != null)
+                {
+                    Media media = new Media();
+                    media.Title = mediaVM.Title;
+                    media.FileName = uploadedFile.FileName;
+                    media.Description = mediaVM.Description;
+                    media.Size = mediaVM.Size;
+                    media.AddedBy = "Cevdet";
+                    media.AddedDate = DateTime.Now;
+                    media.ModifiedBy = "CEVDET";
+                    media.ModifiedDate = DateTime.Now;
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
                     || Path.GetExtension(uploadedFile.FileName) == ".rtf"
@@ -75,10 +80,10 @@ namespace CmsCore.Admin.Controllers
                     {
                         ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
                     }
-                } 
-            else { ModelState.AddModelError("FileExist", "Lütfen bir dosya seçiniz!"); }
+                }
+                else { ModelState.AddModelError("FileExist", "Lütfen bir dosya seçiniz!"); }
             }
-             return View(mediaVM);
+            return View(mediaVM);
         }
         public IActionResult Edit(long id)
         {
@@ -92,7 +97,7 @@ namespace CmsCore.Admin.Controllers
             mediaVM.ModifiedBy = media.ModifiedBy;
             mediaVM.AddedBy = media.AddedBy;
             mediaVM.AddedDate = media.AddedDate;
-           
+
             return View(mediaVM);
         }
 
@@ -103,8 +108,8 @@ namespace CmsCore.Admin.Controllers
             {
                 if (uploadedFile != null)
                 {
-                    
-                    media.ModifiedBy = User.Identity.Name??"CEVDET";
+
+                    media.ModifiedBy = User.Identity.Name ?? "CEVDET";
                     media.ModifiedDate = DateTime.Now;
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
@@ -153,7 +158,7 @@ namespace CmsCore.Admin.Controllers
             return RedirectToAction("Index", "Media");
         }
 
-       
+
         public IActionResult AjaxHandler(jQueryDataTableParamModel param)
         {
             string sSearch = "";

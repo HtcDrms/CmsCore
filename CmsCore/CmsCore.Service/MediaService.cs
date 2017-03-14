@@ -29,7 +29,7 @@ namespace CmsCore.Service
             this.mediaRepository = mediaRepository;
             this.unitOfWork = unitOfWork;
         }
-        #region IMediaServiceMembers
+        #region IMediaService Members
         public IEnumerable<Media> GetMedias()
         {
             var medias = mediaRepository.GetAll();
@@ -61,6 +61,6 @@ namespace CmsCore.Service
             var medias = mediaRepository.Search(search, sortColumnIndex, sortDirection, displayStart, displayLength, out totalRecords, out totalDisplayRecords);
             return medias;
         }
+        #endregion
     }
 }
-#endregion

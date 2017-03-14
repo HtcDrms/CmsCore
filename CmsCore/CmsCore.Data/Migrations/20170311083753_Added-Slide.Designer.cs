@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170311083753_Added-Slide")]
+    partial class AddedSlide
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -824,7 +825,7 @@ namespace CmsCore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sliders");
+                    b.ToTable("Slider");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Template", b =>
@@ -1185,7 +1186,8 @@ namespace CmsCore.Data.Migrations
                 {
                     b.HasOne("CmsCore.Model.Entities.Slider", "Slider")
                         .WithMany("Slides")
-                        .HasForeignKey("SliderId");
+                        .HasForeignKey("SliderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.TemplateSection", b =>

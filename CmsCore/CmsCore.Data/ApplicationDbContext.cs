@@ -22,7 +22,7 @@ namespace CmsCore.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Link> Links { get; set; }
+        public DbSet<Link> Links { get; set;} 
         public DbSet<LinkCategory> LinkCategories { get; set; }
         public DbSet<Media> Medias { get; set; }
         public DbSet<Language> Languages { get; set; }
@@ -30,7 +30,8 @@ namespace CmsCore.Data
         public DbSet<FormField> FormFields { get; set; }
         public DbSet<Feedback> Feedbacks { get;set; }
         public DbSet<FeedbackValue> FeedbackValues { get; set; }
-        
+        public DbSet<Slide> Slides { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -64,7 +65,8 @@ namespace CmsCore.Data
             new FormFieldBuilder(builder.Entity<FormField>());
             new FormBuilder(builder.Entity<Form>());
             new FeedbackValueBuilder(builder.Entity<FeedbackValue>());
-
+            new SlideBuilder(builder.Entity<Slide>());
+            new SliderBuilder(builder.Entity<Slider>());
             
         }
     }

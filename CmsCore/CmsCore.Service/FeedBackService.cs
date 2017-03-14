@@ -20,7 +20,6 @@ namespace CmsCore.Service
         void UpdateFeedback(Feedback Feedback);
         void DeleteFeedback(long id);
         int CountFeedback();
-
         void SaveFeedback();
 
     }
@@ -54,9 +53,7 @@ namespace CmsCore.Service
         {
             Feedback feedback = feedbackRepository.GetById(id, "FeedbackValues");
             return feedback.FeedbackValues.OrderBy(c => c.Position).ToList();
-
         }
-
         public void CreateFeedback(Feedback Feedback)
         {
             feedbackRepository.Add(Feedback);
