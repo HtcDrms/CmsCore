@@ -38,7 +38,10 @@ namespace CmsCore.Data
         {
             
         }
-
+        public ApplicationDbContext()
+        {
+            
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             

@@ -317,7 +317,8 @@
                 <!-- CONTENT-->
                 <div class="content" style="overflow:hidden!important">
                     @RenderBody()
-                    <div id="floatingButton"><a href="#form" class="show">
+                    <div id="floatingButton"><div class="embededForm" id="floatingForm" style="display:none">
+                                                 <img src="~/images/eform-test.jpg" width="251" /></div><a href="javascript:$('#floatingForm').slideToggle('slow')" class="show">
                                                  <img src="~/images/telephone.png" style="float:left;" /><span style="display:inline-block;padding-top:1px;font-size:large">SİZİ ARAYALIM</span></a></div>
                     <!-- BUTTON BACK TO TOP-->
                     <div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>

@@ -13,6 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\css\bilgiye-sevgi-katiyoruz.png" />
+    <Content Include="wwwroot\images\anaokulu-kiz.png" />
+    <Content Include="wwwroot\images\bilgiye-sevgi-katiyoruz.png" />
+    <Content Include="wwwroot\images\blue-background.png" />
+    <Content Include="wwwroot\images\eform-test.jpg" />
+    <Content Include="wwwroot\images\ilkokul-kiz.png" />
+    <Content Include="wwwroot\images\lise-kiz.png" />
+    <Content Include="wwwroot\images\ortaokul-kiz.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
