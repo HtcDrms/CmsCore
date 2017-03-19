@@ -1,0 +1,266 @@
+﻿header .header-topbar {
+    background-color: #093085;
+}
+
+header .header-main .navigation .nav-links li .main-menu {
+    text-transform: capitalize;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot:nth-of-type(1) {
+    background-color: #eb1c74;
+    width:20px;
+    height:20px;
+    border:0px;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot:nth-of-type(2) {
+    background-color: #ff9e19;
+    width:20px;
+    height:20px;
+    border:0px;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot:nth-of-type(3) {
+    background-color: #3baf29;
+    width:20px;
+    height:20px;
+    border:0px;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot:nth-of-type(4) {
+    background-color: #0082cb;
+    width:20px;
+    height:20px;
+    border:0px;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot:nth-of-type(5) {
+    background-color: #092f87;
+    width:20px;
+    height:20px;
+    border:0px;
+}
+.slider-banner .owl-controls .owl-dots .owl-dot.active {
+    border:2px solid white;
+}
+
+#floatingButton a {
+    position: fixed;
+    bottom: 20px;
+    height: 40px;
+    text-align: center;
+    font-size: 24px;
+    z-index: 100;
+    color: #2aacff;
+    transition: all .5s ease-in-out;
+    background-color:#0082cb; width:250px;right:65px;color:white;
+}
+
+video { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;
+  background-size: cover;
+  transition: 1s opacity;
+  
+}
+.btn {
+    text-transform:capitalize;
+}
+#homeSlider2 .slider-item > div {padding-top:120px;}
+.staff-item {background-color:rgba(255,255,255,0.7);}
+.positionRelative {
+    position:relative;
+}
+.why-choose-us {
+    background-color: rgb(62,160,227);
+    background: url('/images/blue-background.png') no-repeat;
+    color: #fff;
+}
+li.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+.item-course.item-1 {
+    padding-top: 220px;
+    
+}
+    .item-course.item-1 > .icon-circle {
+        zoom: 0.7;
+        
+    }
+.choose-course .item-1 .icon-circle .icon-background {
+    background-color: rgba(233,29,177,0.7);
+}
+.choose-course .item-1 .icon-circle .info .info-back:before {
+    border: 12px solid rgb(233,29,177);
+}
+.choose-course .item-1 .name-course a {
+    color: rgb(233,29,177);
+}
+.item-course.item-2 {
+    padding-top: 80px;
+    text-align: center;
+}
+
+
+    .item-course.item-2 > .icon-circle {
+        zoom: 1;
+        
+    }
+.choose-course .item-2 .icon-circle .icon-background {
+    background-color: rgba(248,156,36,0.7);
+}
+
+.choose-course .item-2 .icon-circle .info .info-back:before {
+    border: 12px solid rgb(248,156,36);
+}
+.choose-course .item-2 .name-course a {
+    color: rgb(248,156,36);
+}
+.item-course.item-3 {
+    
+    text-align: center;
+}
+.item-course.item-3 > .icon-circle {
+    zoom: 1.3;
+}
+.choose-course .item-3 .icon-circle .icon-background {
+    background-color: rgba(63,174,72,0.7);
+}
+
+.choose-course .item-3 .icon-circle .info .info-back:before {
+    border: 12px solid rgb(63,174,72);
+}
+.choose-course .item-3 .name-course a {
+    color: rgb(63,174,72);
+}
+.item-course.item-4 {
+    padding-top: 40px;
+    padding-left: 50px;
+    text-align:center;
+}
+.item-course.item-4>.icon-circle {
+    zoom: 1.6;
+    
+}
+.choose-course .item-4 .icon-circle .icon-background {
+    background-color: rgba(0,130,190,0.7);
+}
+
+.choose-course .item-4 .icon-circle .info .info-back:before {
+    border: 12px solid rgb(0,130,190);
+}
+.choose-course .item-4 .name-course a {
+    color: rgb(0,130,190);
+    padding-left:60px;
+}
+.choose-course .icon-circle .info .info-back a  {
+    padding:0px;
+}
+
+.choose-course .name-course a {
+    text-transform: capitalize
+}
+
+.choose-course .icon-circle .info .info-back {
+    background-color: #FFFFFF;
+}
+.choose-course {
+    background: url('../images/background-gradient-gray.png') repeat-y white;
+}
+#floatingButton #floatingForm {
+    position: fixed;
+    display: inline-block;
+    bottom: 65px;
+    height: 435px;
+    text-align: left;
+    z-index: 100;
+    color: gray;
+    font-size: 12px;
+    background-color: rgba(255,255,255,0.7);
+    width: 251px;
+    right: 64px;
+    padding: 9px;
+    border-right: 2px solid #0082cb;
+}
+#floatingForm legend {margin-bottom:0px;}
+#floatingForm input.form-control, #floatingForm select.form-control {
+    font-size: 12px !important;
+}
+#floatingForm .btn-sm {
+    background: #5cb85c;
+}
+#floatingForm .formField {margin:9px 0px;}
+#floatingForm .formField:first-child {
+    margin-top:0px;
+}
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+li.accordion.active, li.accordion:hover {
+    background-color: #ddd;
+}
+div.CustomPanel {
+    padding: 0 18px;
+    background-color: white;
+    display: none;
+}
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+
+

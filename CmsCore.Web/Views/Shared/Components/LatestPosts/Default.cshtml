@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Post>
+<div class="section section-padding top-courses">
+    <div class="container">
+        <div class="group-title-index">
+            <h4 class="top-title">GÜNCEL DUYURULAR</h4>
+
+            <h2 class="center-title">BİLGİ KOLEJİ'NDEN EN SON HABERLER</h2>
+
+            <div class="bottom-title"><i class="bottom-icon icon-icon-04"></i></div>
+        </div>
+        <div class="top-courses-wrapper">
+            <div class="top-courses-slider">
+    @{ int index = 0;
+        foreach (var item in Model)
+        {
+
+        <div class="top-courses-item">
+            <div class="edugate-layout-2">
+                <div class="edugate-layout-2-wrapper">
+                    <div class="edugate-content">
+                        <a href="@item.Slug" class="title">@item.Title</a>
+
+                        <div class="info">
+                            <div class="date-time item"><a href="#">@item.AddedDate.ToString("dd MMM yyyy")</a></div>
+                        </div>
+                        <div class="info-more">
+                            <div class="view item">
+                                <i class="fa fa-user"></i>
+
+                                <p> @item.ViewCount</p>
+                            </div>
+                            <div class="comment item">
+                                <i class="fa fa-comment"></i>
+
+                                <p> 0</p>
+                            </div>
+                        </div>
+                        <div class="description">@Html.Raw(item.Body.Substring(0,(item.Body.Length>100?100:item.Body.Length)))</div>
+                        <button onclick="window.location.href='@item.Slug'" class="btn btn-green"><span>Detaylı Bilgi</span></button>
+                    </div>
+                    <div class="edugate-image"><img src="~/assets/images/courses/courses-1.jpg" alt="" class="img-responsive" /></div>
+                </div>
+            </div>
+        </div>
+                index++;
+                    if (index % 2 == 0 && Model.Count() > index)
+                    {
+                        <text>@Html.Raw("</div><div class='top-courses-slider'>")
+                            </text>
+                    }
+                        }
+                        }
+                    
+
+                    </div>
+            <div class="group-btn-top-courses-slider">
+                <div class="btn-prev">&lsaquo;</div>
+                <div class="btn-next">&rsaquo;</div>
+            </div>
+        </div>
+    </div>
+</div>

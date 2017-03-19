@@ -1,0 +1,100 @@
+﻿@model FormFieldViewModel
+    @using CmsCore.Admin.Helpers
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>@ViewBag.Title-CMS Core</title>
+<br />
+<style>
+    textarea {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Index","FormField")">Form Alanları</a>
+            <i class="fa fa-circle"></i>
+        </li>
+        <li>
+            <span>Form Alanı Düzenle</span>
+        </li>
+    </ul>
+    <div class="page-toolbar">
+
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">Form Alanı Düzenle</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
+            <div class="row">
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-12 ">
+                        <div class="portlet light bordered">
+
+                            <div class="portlet-body form">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.HiddenFor(model => model.FormId)
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <text>Form Seçiniz:</text><br />
+                                        @Html.DropDownList("Forms", (IEnumerable<SelectListItem>)ViewBag.Forms, "Seçiniz", new { @tabindex = "1", @class = "form-control", @selected = "FormId" })
+                                        @Html.ValidationMessageFor(model => model.FormId, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <text>Form Alanı İsmi Giriniz:</text><br />
+                                        @Html.TextBoxFor(model => model.Name, new { @tabindex = "2", @class = "form-control", autofocus = "autofocus"})
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <text>Form Alanı Tipi Seçiniz:</text>
+                                        <select asp-for="FieldType" class="form-control" asp-items="Html.GetEnumSelectList<FieldType>()">
+                                            >
+                                        </select>
+                                        @Html.ValidationMessageFor(model => model.FieldType, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <text>Zorunlu Alan</text>
+                                    @Html.CheckBoxFor(model => model.Required, new { @tabindex = "4", @class = "form-control spinner" })
+                                    @Html.ValidationMessageFor(model => model.Required, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <text>Varsayılan Değer Giriniz:</text>
+                                    @Html.TextBoxFor(model => model.Value, new { @tabindex = "5", @class = "form-control spinner" })
+                                    @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="Kaydet" class="btn btn-success"/>
+                    </div>
+
+
+                        <!-- END SAMPLE FORM PORTLET-->
+                        <!-- BEGIN SAMPLE FORM PORTLET-->
+                   
+                }
+            </div>
+
+            </div>
+        </div>
+    </div>
+
