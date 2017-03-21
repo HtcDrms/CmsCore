@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170320090119_Added-Gallery")]
+    partial class AddedGallery
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -210,31 +211,11 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<bool>("IsPublished");
+                    b.Property<string>("CallToActionText");
 
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Galleries");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
+                    b.Property<string>("CallToActionUrl");
 
                     b.Property<string>("Description");
-
-                    b.Property<long?>("GalleryId");
 
                     b.Property<bool>("IsPublished");
 
@@ -246,75 +227,15 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<int>("Position");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200);
+                    b.Property<string>("SubTitle");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GalleryId");
-
-                    b.ToTable("GalleryItems");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<string>("Description");
-
-                    b.Property<long?>("GalleryItemId");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200);
-
-                    b.Property<long?>("ParentCategoryId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GalleryItemId");
-
-                    b.HasIndex("ParentCategoryId");
-
-                    b.ToTable("GalleryItemCategories");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemGalleryItemCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<long>("GalleryItemCategoryId");
-
-                    b.Property<long>("GalleryItemId");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GalleryItemCategoryId");
-
-                    b.HasIndex("GalleryItemId");
-
-                    b.ToTable("GalleryItemGalleryItemCategory");
+                    b.ToTable("Galleries");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Language", b =>
@@ -1146,37 +1067,6 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Form", "Form")
                         .WithMany("FormFields")
                         .HasForeignKey("FormId");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.Gallery")
-                        .WithMany("GalleryItems")
-                        .HasForeignKey("GalleryId");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemCategory", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.GalleryItem")
-                        .WithMany("GalleryItemCategories")
-                        .HasForeignKey("GalleryItemId");
-
-                    b.HasOne("CmsCore.Model.Entities.GalleryItemCategory", "ParentCategory")
-                        .WithMany("ChildCategories")
-                        .HasForeignKey("ParentCategoryId");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemGalleryItemCategory", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.GalleryItemCategory", "GalleryItemCategory")
-                        .WithMany("GalleryItemGalleryItemCategories")
-                        .HasForeignKey("GalleryItemCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("CmsCore.Model.Entities.GalleryItem", "GalleryItem")
-                        .WithMany("GalleryItemGalleryItemCategories")
-                        .HasForeignKey("GalleryItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Link", b =>

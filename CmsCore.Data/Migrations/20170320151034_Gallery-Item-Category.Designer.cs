@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170320151034_Gallery-Item-Category")]
+    partial class GalleryItemCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -201,28 +202,6 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("FormFields");
                 });
 
-            modelBuilder.Entity("CmsCore.Model.Entities.Gallery", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
-
-                    b.Property<bool>("IsPublished");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Galleries");
-                });
-
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
                 {
                     b.Property<long>("Id")
@@ -233,8 +212,6 @@ namespace CmsCore.Data.Migrations
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<string>("Description");
-
-                    b.Property<long?>("GalleryId");
 
                     b.Property<bool>("IsPublished");
 
@@ -253,8 +230,6 @@ namespace CmsCore.Data.Migrations
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GalleryId");
 
                     b.ToTable("GalleryItems");
                 });
@@ -1146,13 +1121,6 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Form", "Form")
                         .WithMany("FormFields")
                         .HasForeignKey("FormId");
-                });
-
-            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
-                {
-                    b.HasOne("CmsCore.Model.Entities.Gallery")
-                        .WithMany("GalleryItems")
-                        .HasForeignKey("GalleryId");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemCategory", b =>

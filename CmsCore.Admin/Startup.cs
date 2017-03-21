@@ -57,8 +57,8 @@ namespace CmsCore.Admin
 
             services.Configure<AppSettings>(mySetting =>
             {
-                mySetting.AssetsUrl = "http://assets.bilgikoleji.com/";
-                mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
+                mySetting.AssetsUrl = "http://localhost:30740/";
+                mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
             });
 
             services.AddMvc();
@@ -90,6 +90,9 @@ namespace CmsCore.Admin
             services.AddTransient<IFeedbackValueRepository, FeedbackValueRepository>();
             services.AddTransient<ISlideRepository, SlideRepository>();
             services.AddTransient<ISliderRepository, SliderRepository>();
+            services.AddTransient<IGalleryItemRepository, GalleryItemRepository>();
+            services.AddTransient<IGalleryItemCategoryRepository, GalleryItemCategoryRepository>();
+            services.AddTransient<IGalleryRepository, GalleryRepository>();
 
             // services
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -117,6 +120,9 @@ namespace CmsCore.Admin
             services.AddTransient<IFeedbackValueService, FeedbackValueService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<ISliderService, SliderService>();
+            services.AddTransient<IGalleryItemService, GalleryItemService>();
+            services.AddTransient<IGalleryItemCategoryService, GalleryItemCategoryService>();
+            services.AddTransient<IGalleryService, GalleryService>();
 
         }
 

@@ -1,0 +1,101 @@
+﻿@model GalleryItemViewModel
+@{
+    ViewData["Title"] = "Create Gallery Item";
+}
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script src="~/js/generate-slug.js"> </script><br />
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li><a asp-controller="GalleryItem" asp-action="Index" class="nav-link">Gallery Item</a><i class="fa fa-circle"></i></li>
+        <li><span>New Gallery Item</span></li>
+    </ul>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase ">Create New Gallery Item</span>
+                </div>
+            </div>
+
+            <form asp-controller="GalleryItem" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12">
+                        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Title)
+                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Description)
+                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.IsPublished)
+                            @Html.CheckBoxFor(model => model.IsPublished, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IsPublished, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <text>Photo</text>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="input-group input-large">
+                                    @*<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                            <span class="fileinput-filename"></span>
+                                        </div>*@
+                                    <span class="input-group-addon btn default btn-file">
+                                        <input type="file" id="Photo" name="uploadedFilePhoto">
+                                    </span>
+                                    @*<a href="javascript:" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Kaldır</a>*@
+
+                                </div>
+                                @*@Html.ValidationMessage("FileName", new { @class = "text-danger" })*@
+                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
+                                <span class="text-danger" asp-validation-for="Photo"></span>
+                            </div>
+                            <div class="clearfix margin-top-10">
+                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.doc, .docx, .pdf, .rtf, .jpg, .gif</strong> ya da <strong>.png</strong> olmalıdır.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <text>Video</text>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="input-group input-large">
+                                    @*<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
+                                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                            <span class="fileinput-filename"></span>
+                                        </div>*@
+                                    <span class="input-group-addon btn default btn-file">
+                                        <input type="file" id="Video" name="uploadedFileVideo">
+                                    </span>
+                                    @*<a href="javascript:" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Kaldır</a>*@
+
+                                </div>
+                                @*@Html.ValidationMessage("FileName", new { @class = "text-danger" })*@
+                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
+                                <span class="text-danger" asp-validation-for="Video"></span>
+                            </div>
+                            <div class="clearfix margin-top-10">
+                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.mp4, .mpeg, .gif</strong> olmalıdır.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" tabindex="10" class="btn blue">Save</button>
+                        <a type="button" tabindex="11" class="btn default" href="/GalleryItem/Index">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
