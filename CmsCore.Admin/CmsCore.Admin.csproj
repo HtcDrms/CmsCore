@@ -12,6 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\js\pages\gallery-index.js" />
+    <Content Include="wwwroot\js\pages\galleryitem-category-index.js" />
+    <Content Include="wwwroot\js\pages\galleryitem-index.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>

@@ -1,25 +1,25 @@
 ﻿@{
-    ViewBag.Title = "Slides";
+    ViewBag.Title = "Gallery Items";
 }
 <link href="@(ViewBag.AssetsUrl)/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="@(ViewBag.AssetsUrl)/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" /><br />
 <div class="page-bar">
     <ul class="page-breadcrumb">
-        <li><a href="@Url.Action("Index", "Slide")" class="nav-link">Slide</a><i class="fa fa-circle"></i></li>
-        <li><span>Files</span></li>
+        <li><a href="@Url.Action("Index", "GalleryItem")" class="nav-link">Gallery Item</a><i class="fa fa-circle"></i></li>
+        <li><span>Gallery Items</span></li>
     </ul>
 </div><br />
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet light bordered">
-            <div class="portlet-title"><h1 class="page-title">All Slides</h1></div>
+            <div class="portlet-title"><h1 class="page-title">All Gallery Items</h1></div>
             <div class="portlet-body">
                 <div class="table-toolbar">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <a href="@Url.Action("Create", "Slide")" id="sample_editable_1_new" class="btn sbold green">New Slide <i class="fa fa-plus"></i></a>
+                                <a href="@Url.Action("Create", "GalleryItem")" id="sample_editable_1_new" class="btn sbold green">New Gallery Item <i class="fa fa-plus"></i></a>
                             </div>
                         </div>
                     </div>
@@ -35,9 +35,8 @@
                             </th>
                             <th>Media</th>
                             <th>Title</th>
-                            <th>SubTitle</th>
-                            <th>Upload By</th>
-                            <th>Upload Date</th>
+                            <th>Added By</th>
+                            <th>Added Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -53,15 +52,15 @@
     <script src="@(ViewBag.AssetsUrl)/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="@(ViewBag.AssetsUrl)/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="@(ViewBag.AssetsUrl)/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-    <script src="~/js/pages/slide-index.js"></script>
+    <script src="~/js/pages/galleryitem-index.js"></script>
     <script src="@(ViewBag.AssetsUrl)/pages/scripts/table-datatables-buttons.min.js" type="text/javascript"></script>
 
 
     <script>
         $(document).ready(function () {
             initTable1();
-            
-            
+
+
         });
     </script>
 }
