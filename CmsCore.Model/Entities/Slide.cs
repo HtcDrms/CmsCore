@@ -9,6 +9,7 @@ namespace CmsCore.Model.Entities
     {
         public Slide()
         {
+            DisplayTexts = false;
             IsPublished = true;
         }
         public string Title { get; set; }
@@ -19,6 +20,7 @@ namespace CmsCore.Model.Entities
         public string Video { get; set; }
         public string CallToActionText { get; set; }
         public string CallToActionUrl { get; set; }
+        public bool DisplayTexts { get; set; }
         public bool IsPublished { get; set; }
         public long SliderId { get; set; }
         public virtual Slider Slider { get; set; }

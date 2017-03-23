@@ -15,5 +15,7 @@ namespace CmsCore.Model.Entities
         public string Name { get; set; }
         public bool IsPublished { get; set; }
         public virtual ICollection<Slide> Slides { get; set; }
+        public long? TemplateId { get; set; }
+        public virtual Template Template { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using CmsCore.Model.Entities;
 using CmsCore.Service;
 using CmsCore.Data.Infrastructure;
 using CmsCore.Data.Repositories;
+using CmsCore.Web.Models;
 
 namespace CmsCore.Web
 {
@@ -48,7 +49,13 @@ namespace CmsCore.Web
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            //services.Configure<AppSettings>(mySetting =>
+            //{
+            //    mySetting.AssetsUrl = "http://assets.bilgikoleji.com/";
+            //    mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
+            //});
             services.AddMvc();
 
             // Add application services.
@@ -74,6 +81,8 @@ namespace CmsCore.Web
             services.AddTransient<ILanguageRepository, LanguageRepository>();
             services.AddTransient<IFormRepository, FormRepository>();
             services.AddTransient<IFormFieldRepository, FormFieldRepository>();
+            services.AddTransient<ISliderRepository, SliderRepository>();
+            services.AddTransient<ISlideRepository, SlideRepository>();
 
 
             // services
@@ -98,7 +107,8 @@ namespace CmsCore.Web
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IFormFieldService, FormFieldService>();
-
+            services.AddTransient<ISliderService, SliderService>();
+            services.AddTransient<ISlideService, SlideService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

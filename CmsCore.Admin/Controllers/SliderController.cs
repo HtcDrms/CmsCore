@@ -16,20 +16,24 @@ namespace CmsCore.Admin.Controllers
     {
         private readonly ISlideService slideService;
         private readonly ISliderService sliderService;
-        public SliderController(ISlideService slideService, ISliderService sliderService)
+        private readonly ITemplateService templateService;
+        public SliderController(ISlideService slideService, ISliderService sliderService, ITemplateService templateService)
         {
             this.slideService = slideService;
             this.sliderService = sliderService;
+            this.templateService = templateService;
         }
         public IActionResult Index()
         {
-            var slider = sliderService.GetSliders();
-            return View(slider);
+            
+            return View();
         }
 
         public IActionResult Create()
         {
-            return View();
+            SliderViewModel svm = new SliderViewModel();
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", svm.TemplateId);
+            return View(svm);
         }
         [HttpPost]
         public IActionResult Create(SliderViewModel slider)
@@ -39,29 +43,26 @@ namespace CmsCore.Admin.Controllers
                 Slider svm = new Slider();
                 svm.Name = slider.Name;
                 svm.IsPublished = slider.IsPublished;
-                svm.Id = slider.Id;
-                svm.ModifiedBy = User.Identity.Name ?? "username";
-                svm.ModifiedDate = DateTime.Now;
-                svm.AddedBy = User.Identity.Name ?? "username";
-                svm.AddedDate = DateTime.Now;
+                svm.TemplateId = slider.TemplateId;
+                
                 sliderService.CreateSlider(svm);
                 sliderService.SaveSlider();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", slider.TemplateId);
+            return View(slider);
         }
 
         public IActionResult Edit(long id)
         {
-            ViewBag.Slider = new SelectList(sliderService.GetSliders(), "Id", "Name");
+            
             var slider = sliderService.GetSlider(id);
             SliderViewModel svm = new SliderViewModel();
             svm.Name = slider.Name;
             svm.IsPublished = slider.IsPublished;
             svm.Id = slider.Id;
-            svm.ModifiedBy = slider.ModifiedBy;
-            svm.ModifiedDate = slider.ModifiedDate;
-            svm.AddedBy = slider.AddedBy;
-            svm.AddedDate = slider.AddedDate;
+            svm.TemplateId = slider.TemplateId;
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", slider.TemplateId);
             return View(svm);
         }
 
@@ -73,14 +74,13 @@ namespace CmsCore.Admin.Controllers
                 Slider svm = sliderService.GetSlider(slider.Id);
                 svm.Name = slider.Name;
                 svm.IsPublished = slider.IsPublished;
-                svm.ModifiedBy = User.Identity.Name ?? "username";
-                svm.ModifiedDate = DateTime.Now;
-                svm.AddedBy = slider.AddedBy;
-                svm.AddedDate = slider.AddedDate;
+                svm.TemplateId = slider.TemplateId;
                 sliderService.UpdateSlider(svm);
                 sliderService.SaveSlider();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", slider.TemplateId);
+            return View(slider);
         }
 
         public ActionResult Delete(long id)
@@ -88,7 +88,7 @@ namespace CmsCore.Admin.Controllers
             var sld = sliderService.GetSlider(id);
             if (sld != null)
             {
-                var frmfield = sliderService.GetSlideBySliderId(sld.Id);
+                var frmfield = sliderService.GetSlidesBySliderId(sld.Id);
                 foreach (var item in frmfield)
                 {
                     slideService.DeleteSlide(item.Id);

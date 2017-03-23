@@ -48,17 +48,13 @@ namespace CmsCore.Admin.Controllers
                 slide.CallToActionUrl = slidevm.CallToActionUrl;
                 slide.SliderId = slidevm.SliderId;
                 slide.Position = slideService.CountSlide() + 1;
-                slide.AddedBy = User.Identity.Name;
-                slide.AddedDate = DateTime.Now;
-                slide.ModifiedBy = User.Identity.Name;
-                slide.ModifiedDate = DateTime.Now;
 
                 if (uploadedFilePhoto != null)
                 {
-                    if (Path.GetExtension(uploadedFilePhoto.FileName) == ".jpeg"
-                    || Path.GetExtension(uploadedFilePhoto.FileName) == ".jpg"
-                    || Path.GetExtension(uploadedFilePhoto.FileName) == ".gif"
-                    || Path.GetExtension(uploadedFilePhoto.FileName) == ".png"
+                    if (Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpeg"
+                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpg"
+                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".gif"
+                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".png"
                      )
                     {
                         Random rnd = new Random();
@@ -87,12 +83,12 @@ namespace CmsCore.Admin.Controllers
                     {
                         ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
                     }
-
+                }
                     if (uploadedFileVideo != null)
                     {
-                        if (Path.GetExtension(uploadedFileVideo.FileName) == ".mp4"
-                                || Path.GetExtension(uploadedFileVideo.FileName) == ".mpg"
-                                || Path.GetExtension(uploadedFileVideo.FileName) == ".gif")
+                        if (Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mp4"
+                                || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mpg"
+                                || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mov")
                         {
                             Random rnd = new Random();
                             slide.Video = rnd.Next(1, Int32.MaxValue) + uploadedFileVideo.FileName;
@@ -119,12 +115,12 @@ namespace CmsCore.Admin.Controllers
                             ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
                         }
                     }
-                }
+                
                 slideService.CreateSlide(slide);
                 slideService.SaveSlide();
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View(slidevm);
         }
 
         public IActionResult Edit(long id)
@@ -170,8 +166,7 @@ namespace CmsCore.Admin.Controllers
                 slide.AddedDate = slidevm.AddedDate;
                 slide.ModifiedBy = User.Identity.Name ?? "username";
                 slide.ModifiedDate = DateTime.Now;
-                slide.Video = slidevm.Video;
-                slide.Photo = slide.Photo;
+
 
                 if (uploadedFilePhoto != null)
                 {
@@ -179,10 +174,10 @@ namespace CmsCore.Admin.Controllers
                     {
                         slide.Photo = slidevm.Photo;
                     }
-                    else if ((Path.GetExtension(uploadedFilePhoto.FileName) == ".jpeg"
-                 || Path.GetExtension(uploadedFilePhoto.FileName) == ".jpg"
-                 || Path.GetExtension(uploadedFilePhoto.FileName) == ".gif"
-                 || Path.GetExtension(uploadedFilePhoto.FileName) == ".png") && slide.Photo != uploadedFilePhoto.FileName
+                    else if ((Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpeg"
+                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpg"
+                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".gif"
+                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".png") && slide.Photo != uploadedFilePhoto.FileName
                   )
                     {
                         Random rnd = new Random();
@@ -207,14 +202,15 @@ namespace CmsCore.Admin.Controllers
                         }
                         catch (Exception) { }
                     }
-
+                }
+                if (uploadedFileVideo != null) { 
                     if (slide.Video == uploadedFileVideo.FileName)
                     {
                         slide.Video = slidevm.Video;
                     }
-                    else if ((Path.GetExtension(uploadedFileVideo.FileName) == ".mp4"
-                           || Path.GetExtension(uploadedFileVideo.FileName) == ".mpg"
-                           || Path.GetExtension(uploadedFileVideo.FileName) == ".gif") && slide.Video != slidevm.Video)
+                    else if ((Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mp4"
+                           || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mpg"
+                           || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mov") && slide.Video != slidevm.Video)
                     {
                         Random rnd = new Random();
                         slide.Video = rnd.Next(1, Int32.MaxValue) + uploadedFileVideo.FileName;
@@ -240,8 +236,8 @@ namespace CmsCore.Admin.Controllers
                     {
                         ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
                     }
-
                 }
+
                 slideService.UpdateSlide(slide);
                 slideService.SaveSlide();
                 return RedirectToAction("Index");
@@ -268,9 +264,9 @@ namespace CmsCore.Admin.Controllers
             var result = from p in displayedPages
                          select new[] {
                              p.Id.ToString(),
-                             ("<img src='"+ViewBag.AssetsUrl+"uploads/media/slide/"+p.Photo.ToString()+"' width='100'>"),
+                             ("<img src='"+(!String.IsNullOrEmpty(p.Photo)?ViewBag.AssetsUrl+"uploads/media/slide/"+p.Photo.ToString():"")+"' width='100'>"),
                              p.Title.ToString(),
-                             p.SubTitle.ToString(),
+                             (!String.IsNullOrEmpty(p.SubTitle)?p.SubTitle.ToString():""),
                              p.AddedBy.ToString(),
                              p.AddedDate.ToString(),
                              string.Empty };

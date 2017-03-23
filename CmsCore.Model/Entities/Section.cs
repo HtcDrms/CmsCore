@@ -16,5 +16,6 @@ namespace CmsCore.Model.Entities
 
         public virtual ICollection<Widget> Widgets { get; set; }
         public virtual ICollection<TemplateSection> TemplateSections { get; set; }
+
     }
 }

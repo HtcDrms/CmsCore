@@ -13,7 +13,8 @@ namespace CmsCore.Service
         IEnumerable<Slider> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Slider> GetSliders();
         Slider GetSlider(long id);
-        List<Slide> GetSlideBySliderId(long id);
+        Slider GetSlider(string name);
+        List<Slide> GetSlidesBySliderId(long id);
         void CreateSlider(Slider slider);
         void UpdateSlider(Slider slider);
         void DeleteSlider(long id);
@@ -38,7 +39,7 @@ namespace CmsCore.Service
             var sliders = sliderRepository.GetAll();
             return sliders;
         }
-        public List<Slide> GetSlideBySliderId(long id)
+        public List<Slide> GetSlidesBySliderId(long id)
         {
             Slider slider = sliderRepository.GetById(id,"Slides");
             return slider.Slides.OrderBy(c => c.Position).ToList();
@@ -46,6 +47,12 @@ namespace CmsCore.Service
         public Slider GetSlider(long id)
         {
             var slider = sliderRepository.GetById(id);
+            return slider;
+        }
+        public Slider GetSlider(string name)
+        {
+            name = name.ToLower();
+            var slider = sliderRepository.Get(s => s.Name.ToLower() == name,"Slides");
             return slider;
         }
         public void CreateSlider(Slider slider)

@@ -8,7 +8,7 @@ using CmsCore.Web.Models;
 
 namespace CmsCore.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IPageService pageService;
         public HomeController (IPageService pageService)

@@ -12,6 +12,8 @@ namespace CmsCore.Model.EntityBuilders
         public SliderBuilder(EntityTypeBuilder<Slider> entityBuilder)
         {
             entityBuilder.HasKey(s => s.Id);
+            entityBuilder.Property(s => s.Name).IsRequired();
+            entityBuilder.HasOne(s => s.Template).WithMany(t => t.Sliders).HasForeignKey(s => s.TemplateId).OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
         }
     }
 }

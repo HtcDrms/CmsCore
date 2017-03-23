@@ -55,11 +55,11 @@ namespace CmsCore.Admin
             //AppSettings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            services.Configure<AppSettings>(mySetting =>
-            {
-                mySetting.AssetsUrl = "http://localhost:30740/";
-                mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
-            });
+            //services.Configure<AppSettings>(mySetting =>
+            //{
+            //    mySetting.AssetsUrl = "http://assets.bilgikoleji.com/";
+            //    mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
+            //});
 
             services.AddMvc();
             

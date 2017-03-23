@@ -1,0 +1,41 @@
+﻿@model CmsCore.Model.Entities.Slider
+@if (Model != null && Model.Id > 0)
+{
+    <div id="homeSlider" style="clear:both;">
+        <!-- ~/videos/3383465.mov -->
+        <div class="section slider-banner set-height-top">
+            @{ int index = 0;}
+            @foreach (var slide in Model.Slides)
+                    {
+                        index++;
+            <div class="slider-item">
+
+                <div class="slider-@index">
+                    @if (!String.IsNullOrEmpty(slide.Video)) {
+                    <video @(String.IsNullOrEmpty(slide.Photo)?"":"poster=\"" + (ViewBag.AssetsUrl) + "uploads/media/slide/" + slide.Photo+ "\"") width="100%" id="bgvid" playsinline autoplay muted loop>
+                        <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+                        <source src="@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Video" type="video/webm">
+                        <source src="@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Video" type="video/mp4">
+                    </video>
+                    }
+                    else
+                    {
+                        
+                        <div class="slider-caption" style="background: url('@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Photo') no-repeat whitesmoke; background-size:cover;">
+                            <div class="container">
+                                <h5 class="text-info-2">@slide.Title</h5>
+
+                                <h1 class="text-info-1">@slide.SubTitle</h1>
+
+                                <p class="text-info-3">@Html.Raw(slide.Description)</p>
+                                <a class="btn btn-green" href="@slide.CallToActionUrl"><span>@slide.CallToActionText</span></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+           
+            }
+        </div>
+    </div>
+}
