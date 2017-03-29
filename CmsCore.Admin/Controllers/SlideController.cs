@@ -1,6 +1,7 @@
 ﻿using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
 using CmsCore.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,SLIDER")]
     public class SlideController : BaseController
     {
         private readonly ISlideService slideService;

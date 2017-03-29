@@ -11,29 +11,43 @@ using Microsoft.Extensions.Logging;
 using CmsCore.Model.Entities;
 using CmsCore.Admin.Models.AccountViewModels;
 using CmsCore.Service;
+using CmsCore.Admin.Models;
+using CmsCore.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.Collections;
 
 namespace CmsCore.Admin.Controllers
 {
-    [Authorize]
-    public class AccountController : Controller
+
+    public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IApplicationUserService applicationUserService;
+        private readonly RoleManager<Role> _roleManager;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext dbContext,
+            RoleManager<Role> roleManager,
+            IApplicationUserService applicationUserService)
         {
+            _roleManager = roleManager;
+            _dbContext = dbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            this.applicationUserService = applicationUserService;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -91,7 +105,10 @@ namespace CmsCore.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            ViewBag.Roles = applicationUserService.GetAllRole();
+            //ViewBag.Roles = _dbContext.Roles.ToList();
             ViewData["ReturnUrl"] = returnUrl;
+
             return View();
         }
 
@@ -100,15 +117,27 @@ namespace CmsCore.Admin.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(RegisterViewModel model, IFormCollection frm, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
+                IEnumerable<string> frmRole = frm["rolesFrmCol"];
+
+                foreach (var item in frm)
+                {
+                    if (item.Key == "rolesFrmCol")
+                    {
+                        frmRole = item.Value;
+                    }
+                }
+
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRolesAsync(user, frmRole);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -123,6 +152,46 @@ namespace CmsCore.Admin.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
+        public IActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Register");
+            }
+            //ViewBag.CurrentRoles = _userManager.GetRolesAsync(_dbContext.Users.First(u => u.UserName == id)).Result??null;
+            
+            ApplicationUser appUser = _dbContext.Users.First(u => u.UserName == id);
+            ViewBag.CurrentRoles = _userManager.GetRolesAsync(appUser).Result;
+            ViewBag.Roles = applicationUserService.GetAllRole();
+            if (appUser == null)
+            {
+                return RedirectToAction("Register");
+            }
+            return View(appUser);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ApplicationUser model, IFormCollection frm)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = _dbContext.Users.First(u => u.Email == model.Email);
+                user.UserName = model.Email;
+                user.Email = model.Email;
+
+                IEnumerable<string> frmRole = frm["rolesFrmCol"];
+                applicationUserService.DeleteRolesAsync(_userManager.GetRolesAsync(user).Result, model.Email);
+                _userManager.UpdateAsync(user);                
+                _userManager.AddToRolesAsync(user, frmRole);
+
+                return RedirectToAction("Index");
+            }
             return View(model);
         }
 
@@ -250,6 +319,37 @@ namespace CmsCore.Admin.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
+
+            if (_roleManager.FindByNameAsync("ADMIN").Result == null)
+            {
+                Role role = new Role();
+                Guid id = Guid.NewGuid();
+                role.Id = id;
+                role.Name = "ADMIN";
+                role.NormalizedName = "ADMIN";
+                role.ConcurrencyStamp = "Yönetici";
+                _roleManager.CreateAsync(role);
+            }
+            if (_roleManager.FindByNameAsync("SLIDER").Result == null)
+            {
+                Role role = new Role();
+                Guid id = Guid.NewGuid();
+                role.Id = id;
+                role.Name = "SLIDER";
+                role.NormalizedName = "SLIDER";
+                role.ConcurrencyStamp = "Slider Düzenle";
+                _roleManager.CreateAsync(role);
+            }
+            if (_roleManager.FindByNameAsync("HOME").Result == null)
+            {
+                Role role = new Role();
+                Guid id = Guid.NewGuid();
+                role.Id = id;
+                role.Name = "HOME";
+                role.NormalizedName = "HOME";
+                role.ConcurrencyStamp = "Anasayfa Düzenle";
+                _roleManager.CreateAsync(role);
+            }
             return View();
         }
 
@@ -435,6 +535,7 @@ namespace CmsCore.Admin.Controllers
                 return View(model);
             }
         }
+
 
         #region Helpers
 

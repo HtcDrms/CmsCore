@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\js\pages\account-index.js" />
     <Content Include="wwwroot\js\pages\gallery-index.js" />
     <Content Include="wwwroot\js\pages\galleryitem-category-index.js" />
     <Content Include="wwwroot\js\pages\galleryitem-index.js" />

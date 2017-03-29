@@ -1,4 +1,6 @@
 ﻿using CmsCore.Model.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace CmsCore.Data
     {
         public static void Seed(this ApplicationDbContext context)
         {
-            
+
             context.Database.Migrate();
 
             // Perform seed operations
@@ -20,11 +22,11 @@ namespace CmsCore.Data
             AddMenuItems(context);
             AddMenuLocations(context);
 
-
             // Save changes and release resources
             //context.SaveChanges();
             context.Dispose();
         }
+        static RoleManager<Role> _roleManager;
         static Menu menu;
         private static void AddPages(ApplicationDbContext context)
         {
@@ -36,20 +38,20 @@ namespace CmsCore.Data
         {
             menu = new Menu { Name = "name" };
             context.AddRange(menu
-                
+
                 );
-        }private static void AddMenuItems(ApplicationDbContext context)
+        }
+        private static void AddMenuItems(ApplicationDbContext context)
         {
             context.AddRange(
-                new MenuItem { Name = "MenuLocname", Url="url",Menu=menu}
+                new MenuItem { Name = "MenuLocname", Url = "url", Menu = menu }
                 );
         }
         private static void AddMenuLocations(ApplicationDbContext context)
         {
             context.AddRange(
-                new MenuLocation {Name = "MenuLocname", Menu=menu}
+                new MenuLocation { Name = "MenuLocname", Menu = menu }
                 );
         }
-        
     }
 }

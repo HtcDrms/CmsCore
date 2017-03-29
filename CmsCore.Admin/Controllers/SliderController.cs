@@ -7,11 +7,13 @@ using CmsCore.Service;
 using CmsCore.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CmsCore.Model.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,SLIDER")]
     public class SliderController : BaseController
     {
         private readonly ISlideService slideService;

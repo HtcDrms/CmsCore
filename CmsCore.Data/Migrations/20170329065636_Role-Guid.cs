@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CmsCore.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class RoleGuid : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace CmsCore.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -32,6 +32,45 @@ namespace CmsCore.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    FormId = table.Column<int>(nullable: true),
+                    FormName = table.Column<string>(nullable: true),
+                    IP = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    SentDate = table.Column<DateTime>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Galleries",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Galleries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +134,20 @@ namespace CmsCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sections",
                 columns: table => new
                 {
@@ -148,24 +201,10 @@ namespace CmsCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -183,7 +222,7 @@ namespace CmsCore.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,7 +242,7 @@ namespace CmsCore.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,6 +253,63 @@ namespace CmsCore.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FeedbackValues",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    FeedbackId = table.Column<long>(nullable: false),
+                    FieldType = table.Column<int>(nullable: false),
+                    FormFieldId = table.Column<int>(nullable: true),
+                    FormFieldName = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Position = table.Column<int>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FeedbackValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FeedbackValues_Feedbacks_FeedbackId",
+                        column: x => x.FeedbackId,
+                        principalTable: "Feedbacks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GalleryItems",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    GalleryId = table.Column<long>(nullable: true),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Photo = table.Column<string>(nullable: true),
+                    Position = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 200, nullable: false),
+                    Video = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GalleryItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GalleryItems_Galleries_GalleryId",
+                        column: x => x.GalleryId,
+                        principalTable: "Galleries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,7 +347,7 @@ namespace CmsCore.Data.Migrations
                         column: x => x.LanguageId,
                         principalTable: "Languages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -496,6 +592,51 @@ namespace CmsCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    RoleId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Widgets",
                 columns: table => new
                 {
@@ -577,6 +718,31 @@ namespace CmsCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sliders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    TemplateId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sliders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sliders_Templates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Templates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TemplateSections",
                 columns: table => new
                 {
@@ -601,48 +767,35 @@ namespace CmsCore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
+                name: "GalleryItemCategories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    GalleryItemId = table.Column<long>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    ParentCategoryId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.PrimaryKey("PK_GalleryItemCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        name: "FK_GalleryItemCategories_GalleryItems_GalleryItemId",
+                        column: x => x.GalleryItemId,
+                        principalTable: "GalleryItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        name: "FK_GalleryItemCategories_GalleryItemCategories_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "GalleryItemCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -654,8 +807,7 @@ namespace CmsCore.Data.Migrations
                     AddedBy = table.Column<string>(nullable: true),
                     AddedDate = table.Column<DateTime>(nullable: false),
                     FieldType = table.Column<int>(nullable: false),
-                    FormId = table.Column<int>(nullable: true),
-                    FormId1 = table.Column<long>(nullable: true),
+                    FormId = table.Column<long>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
@@ -667,8 +819,8 @@ namespace CmsCore.Data.Migrations
                 {
                     table.PrimaryKey("PK_FormFields", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FormFields_Forms_FormId1",
-                        column: x => x.FormId1,
+                        name: "FK_FormFields_Forms_FormId",
+                        column: x => x.FormId,
                         principalTable: "Forms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -809,6 +961,69 @@ namespace CmsCore.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Slides",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    CallToActionText = table.Column<string>(nullable: true),
+                    CallToActionUrl = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    DisplayTexts = table.Column<bool>(nullable: false),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Photo = table.Column<string>(nullable: true),
+                    Position = table.Column<int>(nullable: false),
+                    SliderId = table.Column<long>(nullable: false),
+                    SubTitle = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Video = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Slides", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Slides_Sliders_SliderId",
+                        column: x => x.SliderId,
+                        principalTable: "Sliders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GalleryItemGalleryItemCategory",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    GalleryItemCategoryId = table.Column<long>(nullable: false),
+                    GalleryItemId = table.Column<long>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GalleryItemGalleryItemCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GalleryItemGalleryItemCategory_GalleryItemCategories_GalleryItemCategoryId",
+                        column: x => x.GalleryItemCategoryId,
+                        principalTable: "GalleryItemCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GalleryItemGalleryItemCategory_GalleryItems_GalleryItemId",
+                        column: x => x.GalleryItemId,
+                        principalTable: "GalleryItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
@@ -821,6 +1036,11 @@ namespace CmsCore.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_FeedbackValues_FeedbackId",
+                table: "FeedbackValues",
+                column: "FeedbackId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Forms_FormId",
                 table: "Forms",
                 column: "FormId");
@@ -831,9 +1051,34 @@ namespace CmsCore.Data.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FormFields_FormId1",
+                name: "IX_FormFields_FormId",
                 table: "FormFields",
-                column: "FormId1");
+                column: "FormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryItems_GalleryId",
+                table: "GalleryItems",
+                column: "GalleryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryItemCategories_GalleryItemId",
+                table: "GalleryItemCategories",
+                column: "GalleryItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryItemCategories_ParentCategoryId",
+                table: "GalleryItemCategories",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryItemGalleryItemCategory_GalleryItemCategoryId",
+                table: "GalleryItemGalleryItemCategory",
+                column: "GalleryItemCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryItemGalleryItemCategory_GalleryItemId",
+                table: "GalleryItemGalleryItemCategory",
+                column: "GalleryItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Links_LanguageId",
@@ -957,6 +1202,22 @@ namespace CmsCore.Data.Migrations
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Slides_SliderId",
+                table: "Slides",
+                column: "SliderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sliders_TemplateId",
+                table: "Sliders",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TemplateSections_SectionId",
                 table: "TemplateSections",
                 column: "SectionId");
@@ -965,12 +1226,6 @@ namespace CmsCore.Data.Migrations
                 name: "IX_Widgets_SectionId1",
                 table: "Widgets",
                 column: "SectionId1");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -996,7 +1251,13 @@ namespace CmsCore.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "FeedbackValues");
+
+            migrationBuilder.DropTable(
                 name: "FormFields");
+
+            migrationBuilder.DropTable(
+                name: "GalleryItemGalleryItemCategory");
 
             migrationBuilder.DropTable(
                 name: "LinkLinkCategory");
@@ -1026,6 +1287,9 @@ namespace CmsCore.Data.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
+                name: "Slides");
+
+            migrationBuilder.DropTable(
                 name: "TemplateSections");
 
             migrationBuilder.DropTable(
@@ -1047,7 +1311,13 @@ namespace CmsCore.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Feedbacks");
+
+            migrationBuilder.DropTable(
                 name: "Forms");
+
+            migrationBuilder.DropTable(
+                name: "GalleryItemCategories");
 
             migrationBuilder.DropTable(
                 name: "LinkCategories");
@@ -1071,7 +1341,7 @@ namespace CmsCore.Data.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Templates");
+                name: "Sliders");
 
             migrationBuilder.DropTable(
                 name: "Sections");
@@ -1083,7 +1353,16 @@ namespace CmsCore.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "GalleryItems");
+
+            migrationBuilder.DropTable(
                 name: "Languages");
+
+            migrationBuilder.DropTable(
+                name: "Templates");
+
+            migrationBuilder.DropTable(
+                name: "Galleries");
         }
     }
 }

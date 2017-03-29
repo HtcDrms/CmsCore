@@ -48,8 +48,8 @@ namespace CmsCore.Admin
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).ConfigureWarnings(warnings => warnings.Throw(CoreEventId.IncludeIgnoredWarning)));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<ApplicationUser, Role>()
+                .AddEntityFrameworkStores<ApplicationDbContext,Guid>()
                 .AddDefaultTokenProviders();
             
             //AppSettings
@@ -93,6 +93,7 @@ namespace CmsCore.Admin
             services.AddTransient<IGalleryItemRepository, GalleryItemRepository>();
             services.AddTransient<IGalleryItemCategoryRepository, GalleryItemCategoryRepository>();
             services.AddTransient<IGalleryRepository, GalleryRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             // services
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -123,6 +124,7 @@ namespace CmsCore.Admin
             services.AddTransient<IGalleryItemService, GalleryItemService>();
             services.AddTransient<IGalleryItemCategoryService, GalleryItemCategoryService>();
             services.AddTransient<IGalleryService, GalleryService>();
+            services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
         }
 

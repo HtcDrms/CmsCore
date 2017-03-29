@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using CmsCore.Model.Entities;
 using CmsCore.Model.EntityBuilders;
+using System;
 
 namespace CmsCore.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,Role,Guid>
     {
         public DbSet<Page> Pages { get; set; }
         public DbSet<Menu> Menus { get; set; }
@@ -35,6 +36,7 @@ namespace CmsCore.Data
         public DbSet<GalleryItem> GalleryItems { get; set; }
         public DbSet<GalleryItemCategory> GalleryItemCategories { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
+        
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

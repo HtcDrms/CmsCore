@@ -9,8 +9,8 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170320151034_Gallery-Item-Category")]
-    partial class GalleryItemCategory
+    [Migration("20170329065636_Role-Guid")]
+    partial class RoleGuid
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace CmsCore.Data.Migrations
 
             modelBuilder.Entity("CmsCore.Model.Entities.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -202,6 +202,28 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("FormFields");
                 });
 
+            modelBuilder.Entity("CmsCore.Model.Entities.Gallery", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AddedBy");
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<bool>("IsPublished");
+
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Galleries");
+                });
+
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
                 {
                     b.Property<long>("Id")
@@ -212,6 +234,8 @@ namespace CmsCore.Data.Migrations
                     b.Property<DateTime>("AddedDate");
 
                     b.Property<string>("Description");
+
+                    b.Property<long?>("GalleryId");
 
                     b.Property<bool>("IsPublished");
 
@@ -230,6 +254,8 @@ namespace CmsCore.Data.Migrations
                     b.Property<string>("Video");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GalleryId");
 
                     b.ToTable("GalleryItems");
                 });
@@ -813,6 +839,29 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("Redirects");
                 });
 
+            modelBuilder.Entity("CmsCore.Model.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
             modelBuilder.Entity("CmsCore.Model.Entities.Section", b =>
                 {
                     b.Property<long>("Id")
@@ -871,6 +920,8 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<bool>("DisplayTexts");
+
                     b.Property<bool>("IsPublished");
 
                     b.Property<string>("ModifiedBy");
@@ -911,9 +962,14 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<long?>("TemplateId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TemplateId");
 
                     b.ToTable("Sliders");
                 });
@@ -991,30 +1047,7 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("Widgets");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -1023,8 +1056,7 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -1033,7 +1065,7 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -1042,8 +1074,7 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -1052,7 +1083,7 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -1060,8 +1091,7 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -1070,11 +1100,11 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -1083,9 +1113,9 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -1121,6 +1151,13 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Form", "Form")
                         .WithMany("FormFields")
                         .HasForeignKey("FormId");
+                });
+
+            modelBuilder.Entity("CmsCore.Model.Entities.GalleryItem", b =>
+                {
+                    b.HasOne("CmsCore.Model.Entities.Gallery")
+                        .WithMany("GalleryItems")
+                        .HasForeignKey("GalleryId");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemCategory", b =>
@@ -1303,6 +1340,13 @@ namespace CmsCore.Data.Migrations
                         .HasForeignKey("SliderId");
                 });
 
+            modelBuilder.Entity("CmsCore.Model.Entities.Slider", b =>
+                {
+                    b.HasOne("CmsCore.Model.Entities.Template", "Template")
+                        .WithMany("Sliders")
+                        .HasForeignKey("TemplateId");
+                });
+
             modelBuilder.Entity("CmsCore.Model.Entities.TemplateSection", b =>
                 {
                     b.HasOne("CmsCore.Model.Entities.Section", "Section")
@@ -1323,15 +1367,15 @@ namespace CmsCore.Data.Migrations
                         .HasForeignKey("SectionId1");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
+                    b.HasOne("CmsCore.Model.Entities.Role")
                         .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("CmsCore.Model.Entities.ApplicationUser")
                         .WithMany("Claims")
@@ -1339,7 +1383,7 @@ namespace CmsCore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("CmsCore.Model.Entities.ApplicationUser")
                         .WithMany("Logins")
@@ -1347,9 +1391,9 @@ namespace CmsCore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
+                    b.HasOne("CmsCore.Model.Entities.Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
