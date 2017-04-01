@@ -21,7 +21,9 @@
                     else
                     {
                         
-                        <div class="slider-caption" style="background: url('@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Photo') no-repeat whitesmoke; background-size:cover;">
+                        <div class="slider-caption" @(slide.DisplayTexts?"style=\"background: url('@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Photo') no-repeat whitesmoke; background-size:cover;\"":"")>
+                            @if (slide.DisplayTexts)
+                            {
                             <div class="container">
                                 <h5 class="text-info-2">@slide.Title</h5>
 
@@ -30,6 +32,11 @@
                                 <p class="text-info-3">@Html.Raw(slide.Description)</p>
                                 <a class="btn btn-green" href="@slide.CallToActionUrl"><span>@slide.CallToActionText</span></a>
                             </div>
+                            }
+                            else
+                            {
+                                <a href="@slide.CallToActionUrl"><span><img src="@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Photo" alt="@slide.Title" style="border:0px; width:100%;"/></span></a>
+                            }
                         </div>
                     }
                 </div>
