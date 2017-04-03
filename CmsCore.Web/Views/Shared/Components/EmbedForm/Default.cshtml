@@ -2,21 +2,26 @@
 @addTagHelper "CmsCore.Web.Helpers.FormFieldHelper, CmsCore.Web"
 @if (Model != null && Model.Id > 0) { 
 <form asp-action="Post" asp-controller="FeedBack" method="post" enctype="multipart/form-data">
-    <fieldset>
-        <legend>@Model.FormName</legend>
-      
-            @foreach (FormField item in Model.FormFields)
-            {
-                <div class="formField">
-                    <formField form-field="item" required="false" read_only="false" show-placeholder="true" />
-                    @Html.ValidationMessage(item.Name, "", new { @class = "text-danger" })
+    <div style="position:relative;">
+            <img src="~/images/icon-close.png" style="border:0px;position:absolute;right:0px;cursor:pointer;" onclick="$('#floatingForm').slideToggle('slow')" alt="Kapat" />
+            <div style="padding: 9px;">
+                <fieldset>
+                    <legend><img src="~/images/icon-phone.png" style="border:0px; vertical-align:text-bottom;" /> @Model.FormName.ToUpper()</legend>
 
-                </div>
-            }
-        <div style="text-align:right;">
-            <input type="submit" value="Gönder" class="btn-sm btn-success" />
-        </div>
-    </fieldset>
+                    @foreach (FormField item in Model.FormFields)
+                {
+                        <div class="formField">
+                            <formField form-field="item" required="false" read_only="false" show-placeholder="true" />
+                            @Html.ValidationMessage(item.Name, "", new { @class = "text-danger" })
+
+                        </div>
+                    }
+                    <div style="text-align:right;">
+                        <input type="submit" value="Gönder" class="btn-sm btn-success" />
+                    </div>
+                </fieldset>
+            </div>
+</div>
 </form>
 } else {
     <p>Form bulunamadı!</p>
