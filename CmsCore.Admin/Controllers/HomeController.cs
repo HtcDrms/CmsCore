@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CmsCore.Admin.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,HOME")]
     public class HomeController : BaseController
     {
         public HomeController()

@@ -1,6 +1,7 @@
 ﻿using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
 using CmsCore.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,GALLERY")]
     public class GalleryItemController:BaseController
     {
         private readonly IGalleryItemService galleryItemService;

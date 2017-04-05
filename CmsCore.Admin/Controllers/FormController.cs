@@ -7,11 +7,13 @@ using CmsCore.Service;
 using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles ="ADMIN,FORM")]
     public class FormController : BaseController
     {
         private readonly IFormService formService;

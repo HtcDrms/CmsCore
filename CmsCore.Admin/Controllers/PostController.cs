@@ -7,11 +7,13 @@ using CmsCore.Service;
 using CmsCore.Model.Entities;
 using CmsCore.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,POST")]
     public class PostController : BaseController
     {
         private readonly IPostService postService;

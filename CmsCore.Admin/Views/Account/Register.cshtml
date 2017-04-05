@@ -23,45 +23,40 @@
             <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                 <div class="portlet light bordered">
                     <div class="portlet-title">Roles</div>
-                    @foreach (var item in ViewBag.Roles)
-                    {
-                        <label>
-                            <input name="rolesFrmCol" type="checkbox" class="checkbox-inline tab-space" value="@item.Name" id="@item.Id" />@item.ConcurrencyStamp 
-                        </label>
-                        <br />
-                    }
-                    @Html.ValidationMessage("RoleCheckSelect", new { @class="text-danger"})
-                </div>
+                    <div class="row">
 
+                        @foreach (var item in ViewBag.Roles)
+                        {
+                            <div class="col-md-3" style="margin-bottom:5px;">
+                                <label>
+                                    <input name="rolesFrmCol" type="checkbox" class="checkbox-inline" value="@item.Name" id="@item.Id" />@item.ConcurrencyStamp
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    @Html.ValidationMessage("RoleCheckSelect", new { @class = "text-danger" })
+                </div>
                 <div class="portlet-body form">
                     <div class="form-body">
                         @*<div asp-validation-summary="All" class="text-danger"></div>*@
-
                         <div class="form-group">
-                            <label asp-for="Email" class="col-md-2 control-label"></label>
-                            <div class="col-md-10">
-                                <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Password" class="col-md-2 control-label"></label>
-                            <div class="col-md-10">
-                                <input asp-for="Password" class="form-control" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-                            <div class="col-md-10">
-                                <input asp-for="ConfirmPassword" class="form-control" />
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                            </div>
+                            <label asp-for="ConfirmPassword" class="control-label"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn btn-default">Register</button>
-                            </div>
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a href="/Account/Index" type="button" class="btn btn-default">Cancel</a>
                         </div>
                     </div>
                 </div>

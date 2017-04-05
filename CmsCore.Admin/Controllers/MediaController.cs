@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 using Microsoft.Net.Http.Headers;
 using CmsCore.Model.Entities;
 using CmsCore.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,MEDIA")]
     public class MediaController : BaseController
     {
         private readonly IMediaService mediaService;

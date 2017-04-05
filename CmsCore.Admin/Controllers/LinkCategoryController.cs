@@ -1,6 +1,7 @@
 ﻿using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
 using CmsCore.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,LINK")]
     public class LinkCategoryController : BaseController
     {
         private readonly ILinkCategoryService linkCategoryService;

@@ -1,6 +1,7 @@
 ﻿using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
 using CmsCore.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,SEO")]
     public class RedirectController:BaseController
     {
         private readonly IRedirectService redirectService;

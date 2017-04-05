@@ -73,36 +73,15 @@ namespace CmsCore.Data
 
         private static void AddRoles(RoleManager<Role> _roleManager)
         {
-           
-            var role = new Role { Id = Guid.NewGuid(), Name = "ADMIN", NormalizedName = "ADMIN", ConcurrencyStamp = "Yönetici" };
-            var task1 =Task.Run(()=>_roleManager.CreateAsync(role));
-            task1.Wait();
+            string[] roles = { "ADMIN", "SLIDER", "MENU", "HOME", "FORM", "GALLERY", "MEDIA", "PAGE", "POST", "LINK", "SEO", "SETTING","PRODUCT" };
+            string[] stamp = { "Yönetici", "Slayt", "Menü", "Anasayfa", "Formlar", "Galeri", "Medya", "Sayfalar", "Gönderiler", "Bağlantılar", "SEO", "Ayarlar","Ürün" };
 
-            role = new Role { Id = Guid.NewGuid(), Name = "SLIDER", NormalizedName = "SLIDER", ConcurrencyStamp = "Slayt" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
-            role = new Role { Id = Guid.NewGuid(), Name = "MENU", NormalizedName = "MENU", ConcurrencyStamp = "Menü" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
-            role = new Role { Id = Guid.NewGuid(), Name = "HOME", NormalizedName = "HOME", ConcurrencyStamp = "Anasayfa" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
-
-            role = new Role { Id = Guid.NewGuid(), Name = "FORM", NormalizedName = "FORM", ConcurrencyStamp = "Form" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
-            role = new Role { Id = Guid.NewGuid(), Name = "GALLERY", NormalizedName = "GALLERY", ConcurrencyStamp = "Galeri" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
-            role = new Role { Id = Guid.NewGuid(), Name = "MEDIA", NormalizedName = "MEDIA", ConcurrencyStamp = "Medya" };
-            task1 = Task.Run(() => _roleManager.CreateAsync(role));
-            task1.Wait();
-
+            for (int i = 0; i < roles.Count(); i++)
+            {
+                var role = new Role { Id = Guid.NewGuid(), Name = roles[i], NormalizedName = roles[i], ConcurrencyStamp = stamp[i]};
+                var task1 = Task.Run(() => _roleManager.CreateAsync(role));
+                task1.Wait();
+            }            
         }
         private static void AddRoleToUser(UserManager<ApplicationUser> _userManager)
         {

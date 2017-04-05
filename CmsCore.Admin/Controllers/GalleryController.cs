@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using CmsCore.Service;
 using CmsCore.Admin.Models;
 using CmsCore.Model.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize(Roles = "ADMIN,GALLERY")]
     public class GalleryController : BaseController
     {
         private readonly IGalleryService galleryService;
