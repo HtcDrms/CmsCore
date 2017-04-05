@@ -16,6 +16,7 @@ using CmsCore.Data.Infrastructure;
 using CmsCore.Data.Repositories;
 using CmsCore.Admin.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 //using static CmsCore.Service.FeedbackService;
 
 namespace CmsCore.Admin
@@ -51,7 +52,6 @@ namespace CmsCore.Admin
             services.AddIdentity<ApplicationUser, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext,Guid>()
                 .AddDefaultTokenProviders();
-            
             //AppSettings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
@@ -146,9 +146,9 @@ namespace CmsCore.Admin
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-            app.ApplicationServices.GetRequiredService<ApplicationDbContext>().Seed();
+            app.UseStaticFiles();           
             app.UseIdentity();
+            app.ApplicationServices.GetRequiredService<ApplicationDbContext>().Seed(app.ApplicationServices.GetRequiredService<UserManager<ApplicationUser>>(), app.ApplicationServices.GetRequiredService<RoleManager<Role>>());
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

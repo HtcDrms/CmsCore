@@ -61,7 +61,7 @@
             }, {
                 'orderable': false,
                 'searchable': false,
-                'targets': [6],
+                'targets': [2],
                 'render': function (data, type, row) {
                     return '<div class="btn-group"><button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Eylemler<i class="fa fa-angle-down"></i></button>'
                         + '<ul class="dropdown-menu" role="menu"><li><a href="/Account/Edit/' + row[0] + '"><i class="icon-note"></i> Düzenle</a></li>'

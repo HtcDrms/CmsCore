@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CmsCore.Admin.Controllers
 {
-    [Authorize(Roles = "ADMIN,SLIDER")]
+    [Authorize(Roles ="SLIDE,ADMIN")]
     public class SliderController : BaseController
     {
         private readonly ISlideService slideService;

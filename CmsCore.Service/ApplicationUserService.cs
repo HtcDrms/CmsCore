@@ -19,7 +19,6 @@ namespace CmsCore.Service
     {
         IEnumerable<ApplicationUser> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         List<Role> GetAllRole();
-        void DeleteRolesAsync(IEnumerable<string> deleteList, string userId);
     }
     public class ApplicationUserService:IApplicationUserService
     {
@@ -47,23 +46,7 @@ namespace CmsCore.Service
             //IEnumerable<string> allRole = (IEnumerable<string>)roleManager.Roles.ToList();
             return allrole;
         }
-        public async void DeleteRolesAsync(IEnumerable<string> deleteList, string email)
-        {
-            ApplicationUser user = await userManager.FindByEmailAsync(email);
-
-            if (email != null)
-            {
-                foreach (var roleName in deleteList)
-                {
-                    //var result=await userManager.RemoveFromRolesAsync(user, deleteList);
-                    var result = await userManager.RemoveFromRoleAsync(user, "ADMIN");
-                    if(result.Succeeded)
-                    {
-                        await userManager.UpdateAsync(user);
-                    }
-                }
-            }
-        }
+        
         #endregion
     }
 }

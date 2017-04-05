@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using CmsCore.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CmsCore.Admin.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
        

@@ -94,42 +94,14 @@
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-user">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="@(ViewBag.AssetsUrl)layouts/layout/img/avatar3_small.jpg" />
+                                    <img alt="" class="img-circle" src="@(ViewBag.AssetsUrl)layouts/layout/img/avatar.png" />
                                     <span class="username username-hide-on-mobile"> @User.Identity.Name </span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     <li>
-                                        <a href="page_user_profile_1.html">
-                                            <i class="icon-user"></i> My Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_calendar.html">
-                                            <i class="icon-calendar"></i> My Calendar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_inbox.html">
-                                            <i class="icon-envelope-open"></i> My Inbox
-                                            <span class="badge badge-danger"> 3 </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_todo.html">
-                                            <i class="icon-rocket"></i> My Tasks
-                                            <span class="badge badge-success"> 7 </span>
-                                        </a>
-                                    </li>
-                                    <li class="divider"> </li>
-                                    <li>
-                                        <a href="page_user_lock_1.html">
-                                            <i class="icon-lock"></i> Lock Screen
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="/Account/LogOff">
-                                            <i class="icon-key"></i> Log Out
+                                            <i class="icon-key"></i> Çıkış
                                         </a>
                                     </li>
                                 </ul>
@@ -137,11 +109,11 @@
                             <!-- END USER LOGIN DROPDOWN -->
                             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                            <li class="dropdown dropdown-quick-sidebar-toggler">
+                            @*<li class="dropdown dropdown-quick-sidebar-toggler">
                                 <a href="javascript:;" class="dropdown-toggle">
                                     <i class="icon-logout"></i>
                                 </a>
-                            </li>
+                            </li>*@
                             <!-- END QUICK SIDEBAR TOGGLER -->
                         </ul>
                     </div>
@@ -313,7 +285,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="javascript:;" class="nav-link nav-toggle">
-                                <i class="fa fa-file"></i>
+                                <i class="glyphicon glyphicon-folder-open"></i>
                                 <span class="title">Media</span>
                                 <span class="arrow"></span>
                             </a>
@@ -380,7 +352,16 @@
                                     <a asp-controller="Widget" asp-action="Index" class="nav-link">
                                         <span class="title">Widgets</span>
                                     </a>
-                                </li>
+                                </li>                        
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="glyphicon glyphicon-th"></i>
+                                <span class="title">Sliders</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
                                 <li class="nav-item">
                                     <a asp-controller="Slider" asp-action="Index" class="nav-link">
                                         <span class="title">Sliders</span>
@@ -390,7 +371,7 @@
                                     <a asp-controller="Slide" asp-action="Index" class="nav-link">
                                         <span class="title">Slides</span>
                                     </a>
-                                </li>                               
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">

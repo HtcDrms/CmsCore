@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using CmsCore.Model.Entities;
 using CmsCore.Admin.Models.ManageViewModels;
 using CmsCore.Service;
+using System.Net;
 
 namespace CmsCore.Admin.Controllers
 {
@@ -207,7 +208,7 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Manage/ChangePassword
         [HttpGet]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(string email)
         {
             return View();
         }
@@ -216,13 +217,14 @@ namespace CmsCore.Admin.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model,string email)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await GetCurrentUserAsync();
+            //var user = await GetCurrentUserAsync();
+            var user =await _userManager.FindByEmailAsync(email);
             if (user != null)
             {
                 var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
@@ -249,27 +251,26 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Manage/SetPassword
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
+        public async Task<JsonResult> SetPassword(SetPasswordViewModel model,string email)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return Json(new { result="false"});
             }
-
-            var user = await GetCurrentUserAsync();
+            var user = await _userManager.FindByEmailAsync(email);            
             if (user != null)
             {
+                await _userManager.RemovePasswordAsync(user);
                 var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Json(new {result=result.Succeeded});
                 }
-                AddErrors(result);
-                return View(model);
+                //AddErrors(result);
+                return Json(new { result="false"});
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return Json(new { result = "false" });
         }
 
         //GET: /Manage/ManageLogins

@@ -34,13 +34,13 @@ namespace CmsCore.Data.Repositories
                 switch (sortColumnIndex)
                 {
                     case 1:
-                        filteredApplicationUser = filteredApplicationUser.OrderBy(p => p.Id);
+                        filteredApplicationUser = filteredApplicationUser.OrderBy(p => p.Email);
                         break;
                     case 2:
-                        filteredApplicationUser = filteredApplicationUser.OrderBy(p => p.UserName);
+                        filteredApplicationUser = filteredApplicationUser.OrderBy(p => p.Email);
                         break;
                     default:
-                        filteredApplicationUser = filteredApplicationUser.OrderBy(c => c.Id);
+                        filteredApplicationUser = filteredApplicationUser.OrderBy(c => c.Email);
                         break;
                 }
             }
@@ -49,13 +49,13 @@ namespace CmsCore.Data.Repositories
                 switch (sortColumnIndex)
                 {
                     case 1:
-                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(p => p.Id);
+                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(p => p.Email);
                         break;
                     case 2:
-                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(p => p.UserName);
+                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(p => p.Email);
                         break;
                     default:
-                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(c => c.Id);
+                        filteredApplicationUser = filteredApplicationUser.OrderByDescending(c => c.Email);
                         break;
                 }
             }

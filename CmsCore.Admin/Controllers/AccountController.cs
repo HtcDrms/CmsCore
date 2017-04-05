@@ -19,7 +19,7 @@ using System.Collections;
 
 namespace CmsCore.Admin.Controllers
 {
-
+    [Authorize]
     public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -27,7 +27,6 @@ namespace CmsCore.Admin.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly ApplicationDbContext _dbContext;
         private readonly IApplicationUserService applicationUserService;
         private readonly RoleManager<Role> _roleManager;
 
@@ -37,18 +36,22 @@ namespace CmsCore.Admin.Controllers
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
-            ApplicationDbContext dbContext,
             RoleManager<Role> roleManager,
             IApplicationUserService applicationUserService)
         {
             _roleManager = roleManager;
-            _dbContext = dbContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             this.applicationUserService = applicationUserService;
             _logger = loggerFactory.CreateLogger<AccountController>();
+        }
+
+        public IActionResult Index()
+        {
+
+            return View();
         }
 
         //
@@ -101,12 +104,11 @@ namespace CmsCore.Admin.Controllers
 
         //
         // GET: /Account/Register
+        [Authorize(Roles="ADMIN")]
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewBag.Roles = applicationUserService.GetAllRole();
-            //ViewBag.Roles = _dbContext.Roles.ToList();
             ViewData["ReturnUrl"] = returnUrl;
 
             return View();
@@ -115,17 +117,23 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, IFormCollection frm, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.Roles = applicationUserService.GetAllRole();
+            IEnumerable<string> frmRole = frm["rolesFrmCol"];
+            if (frmRole.Count()<=0)
+            {
+                ModelState.AddModelError("RoleCheckSelect", "En bir adet rol seçilmesi gerekmektedir.");
+                return View(model);
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                IEnumerable<string> frmRole = frm["rolesFrmCol"];
+                
 
                 foreach (var item in frm)
                 {
@@ -144,9 +152,9 @@ namespace CmsCore.Admin.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index");
                 }
                 AddErrors(result);
             }
@@ -155,8 +163,8 @@ namespace CmsCore.Admin.Controllers
             return View(model);
         }
 
-
-        public IActionResult Edit(string id)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -164,7 +172,7 @@ namespace CmsCore.Admin.Controllers
             }
             //ViewBag.CurrentRoles = _userManager.GetRolesAsync(_dbContext.Users.First(u => u.UserName == id)).Result??null;
             
-            ApplicationUser appUser = _dbContext.Users.First(u => u.UserName == id);
+            ApplicationUser appUser = await _userManager.FindByEmailAsync(id);
             ViewBag.CurrentRoles = _userManager.GetRolesAsync(appUser).Result;
             ViewBag.Roles = applicationUserService.GetAllRole();
             if (appUser == null)
@@ -177,39 +185,44 @@ namespace CmsCore.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ApplicationUser model, IFormCollection frm)
+        public async Task<IActionResult> Edit(ApplicationUser model, IFormCollection frm)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = _dbContext.Users.First(u => u.Email == model.Email);
+                ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
                 user.UserName = model.Email;
                 user.Email = model.Email;
 
                 IEnumerable<string> frmRole = frm["rolesFrmCol"];
-                applicationUserService.DeleteRolesAsync(_userManager.GetRolesAsync(user).Result, model.Email);
-                _userManager.UpdateAsync(user);                
-                _userManager.AddToRolesAsync(user, frmRole);
+                await _userManager.RemoveFromRolesAsync(user, _userManager.GetRolesAsync(user).Result);
+                await _userManager.UpdateAsync(user);                
+                await _userManager.AddToRolesAsync(user, frmRole);
 
                 return RedirectToAction("Index");
             }
             return View(model);
         }
 
+        [Authorize(Roles ="ADMIN")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _userManager.DeleteAsync(await _userManager.FindByEmailAsync(id));
+            return RedirectToAction("Index");
+        }
+
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(AccountController.Login), "Account");
         }
 
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
@@ -222,7 +235,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
             if (remoteError != null)
@@ -264,7 +276,6 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
@@ -297,7 +308,6 @@ namespace CmsCore.Admin.Controllers
 
         // GET: /Account/ConfirmEmail
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -316,47 +326,14 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/ForgotPassword
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-
-            if (_roleManager.FindByNameAsync("ADMIN").Result == null)
-            {
-                Role role = new Role();
-                Guid id = Guid.NewGuid();
-                role.Id = id;
-                role.Name = "ADMIN";
-                role.NormalizedName = "ADMIN";
-                role.ConcurrencyStamp = "Yönetici";
-                _roleManager.CreateAsync(role);
-            }
-            if (_roleManager.FindByNameAsync("SLIDER").Result == null)
-            {
-                Role role = new Role();
-                Guid id = Guid.NewGuid();
-                role.Id = id;
-                role.Name = "SLIDER";
-                role.NormalizedName = "SLIDER";
-                role.ConcurrencyStamp = "Slider Düzenle";
-                _roleManager.CreateAsync(role);
-            }
-            if (_roleManager.FindByNameAsync("HOME").Result == null)
-            {
-                Role role = new Role();
-                Guid id = Guid.NewGuid();
-                role.Id = id;
-                role.Name = "HOME";
-                role.NormalizedName = "HOME";
-                role.ConcurrencyStamp = "Anasayfa Düzenle";
-                _roleManager.CreateAsync(role);
-            }
             return View();
         }
 
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -385,7 +362,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -394,7 +370,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/ResetPassword
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
             return code == null ? View("Error") : View();
@@ -403,7 +378,6 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
@@ -429,7 +403,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -438,7 +411,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/SendCode
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
@@ -454,7 +426,6 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Account/SendCode
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendCode(SendCodeViewModel model)
         {
@@ -492,7 +463,6 @@ namespace CmsCore.Admin.Controllers
         //
         // GET: /Account/VerifyCode
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
         {
             // Require that the user has already logged in via username/password or external login
@@ -507,7 +477,6 @@ namespace CmsCore.Admin.Controllers
         //
         // POST: /Account/VerifyCode
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyCode(VerifyCodeViewModel model)
         {
@@ -534,6 +503,43 @@ namespace CmsCore.Admin.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid code.");
                 return View(model);
             }
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public IActionResult ChangePasswordModal()
+        {
+            
+            return PartialView("ChangePasswordModal");
+        }
+
+
+        public IActionResult AjaxHandler(jQueryDataTableParamModel param)
+        {
+            string sSearch = "";
+            if (param.sSearch != null) sSearch = param.sSearch;
+            var sortColumnIndex = Convert.ToInt32(Request.Query["iSortCol_0"]);
+            var sortDirection = Request.Query["sSortDir_0"]; // asc or desc
+            int iTotalRecords;
+            int iTotalDisplayRecords;
+            var displayedPages = applicationUserService.Search(sSearch, sortColumnIndex, sortDirection, param.iDisplayStart, param.iDisplayLength, out iTotalRecords, out iTotalDisplayRecords);
+
+
+            var result = from p in displayedPages
+                         select new[] {
+                             p.UserName,
+                             p.UserName,
+                             string.Empty };
+            return Json(new
+            {
+                sEcho = param.sEcho,
+                iTotalRecords = iTotalRecords,
+                iTotalDisplayRecords = iTotalDisplayRecords,
+                aaData = result.ToList()
+            });
         }
 
 
@@ -563,6 +569,8 @@ namespace CmsCore.Admin.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
+
+
 
         #endregion
     }
