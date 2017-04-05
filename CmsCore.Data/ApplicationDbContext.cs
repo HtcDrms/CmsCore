@@ -36,6 +36,7 @@ namespace CmsCore.Data
         public DbSet<GalleryItem> GalleryItems { get; set; }
         public DbSet<GalleryItemCategory> GalleryItemCategories { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<Resource> Resources { get; set; }
         
 
 

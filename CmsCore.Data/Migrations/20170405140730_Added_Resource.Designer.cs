@@ -9,8 +9,8 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170329065636_Role-Guid")]
-    partial class RoleGuid
+    [Migration("20170405140730_Added_Resource")]
+    partial class Added_Resource
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -839,6 +839,32 @@ namespace CmsCore.Data.Migrations
                     b.ToTable("Redirects");
                 });
 
+            modelBuilder.Entity("CmsCore.Model.Entities.Resource", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AddedBy");
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<long>("LanguageId");
+
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("Resources");
+                });
+
             modelBuilder.Entity("CmsCore.Model.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1331,6 +1357,14 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Product", "Product")
                         .WithMany("ProductProductCategories")
                         .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("CmsCore.Model.Entities.Resource", b =>
+                {
+                    b.HasOne("CmsCore.Model.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Slide", b =>

@@ -1,0 +1,70 @@
+﻿@model ResourceViewModel
+
+@{
+    ViewBag.Title = "Edit Resource";
+}
+<head>
+
+    <link href="@(ViewBag.AssetsUrl)/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <link href="@(ViewBag.AssetsUrl)/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="@(ViewBag.AssetsUrl)/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+<br />
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li><a href="@Url.Action("Index","Resource")">Resources</a><i class="fa fa-circle"></i></li>
+        <li><span>Edit Resource</span></li>
+    </ul>
+    <div class="page-toolbar"></div>
+</div><br />
+
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase ">Edit New Resource</span>
+                </div>
+            </div>
+
+            <form asp-controller="Resource" asp-action="Edit" method="post" enctype="multipart/form-data">
+                @Html.HiddenFor(model => model.Id)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="col-md-12">
+                        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Name)
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Value)
+                            @Html.TextBoxFor(model => model.Value, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LanguageId"></label><br />
+                            <select asp-for="LanguageId" asp-items="@ViewBag.Languages" class="form-control">
+                                <option value="">Seçiniz</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.LanguageId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" tabindex="10" class="btn blue">Save</button>
+                        <a type="button" tabindex="11" class="btn default" href="/Resource/Index">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

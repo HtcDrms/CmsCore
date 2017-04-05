@@ -93,6 +93,7 @@ namespace CmsCore.Admin
             services.AddTransient<IGalleryItemRepository, GalleryItemRepository>();
             services.AddTransient<IGalleryItemCategoryRepository, GalleryItemCategoryRepository>();
             services.AddTransient<IGalleryRepository, GalleryRepository>();
+            services.AddTransient<IResourceRepository, ResourceRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             // services
@@ -124,6 +125,7 @@ namespace CmsCore.Admin
             services.AddTransient<IGalleryItemService, GalleryItemService>();
             services.AddTransient<IGalleryItemCategoryService, GalleryItemCategoryService>();
             services.AddTransient<IGalleryService, GalleryService>();
+            services.AddTransient<IResourceService, ResourceService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
         }

@@ -15,6 +15,7 @@ using CmsCore.Service;
 using CmsCore.Data.Infrastructure;
 using CmsCore.Data.Repositories;
 using CmsCore.Web.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CmsCore.Web
 {
@@ -129,7 +130,7 @@ namespace CmsCore.Web
             }
 
             app.UseStaticFiles();
-            app.ApplicationServices.GetRequiredService<ApplicationDbContext>().Seed();
+            app.ApplicationServices.GetRequiredService<ApplicationDbContext>().Seed(app.ApplicationServices.GetRequiredService<UserManager<ApplicationUser>>(), app.ApplicationServices.GetRequiredService<RoleManager<Role>>());
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715

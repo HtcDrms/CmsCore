@@ -16,6 +16,7 @@
     <Content Include="wwwroot\js\pages\gallery-index.js" />
     <Content Include="wwwroot\js\pages\galleryitem-category-index.js" />
     <Content Include="wwwroot\js\pages\galleryitem-index.js" />
+    <Content Include="wwwroot\js\pages\resource-index.js" />
   </ItemGroup>
 
   <ItemGroup>

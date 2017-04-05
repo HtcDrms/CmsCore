@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CmsCore.Data.Migrations
 {
-    public partial class RoleGuid : Migration
+    public partial class Added_Resource : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -589,6 +589,31 @@ namespace CmsCore.Data.Migrations
                         principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resources",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedBy = table.Column<string>(nullable: true),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    LanguageId = table.Column<long>(nullable: false),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resources", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Resources_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1202,6 +1227,11 @@ namespace CmsCore.Data.Migrations
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Resources_LanguageId",
+                table: "Resources",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
@@ -1282,6 +1312,9 @@ namespace CmsCore.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Redirects");
+
+            migrationBuilder.DropTable(
+                name: "Resources");
 
             migrationBuilder.DropTable(
                 name: "Settings");
