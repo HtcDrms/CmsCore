@@ -325,7 +325,7 @@
                     @RenderBody()
                     <div id="floatingButton"><div class="embededForm" id="floatingForm" style="display:none">
                                                  @await Component.InvokeAsync("EmbedForm", new { name = "Sizi Arayalım" })
-                                                 </div><a href="javascript:$('#floatingForm').slideToggle('slow')" class="show">
+                                                 </div><a href="javascript:void(0);" onclick="$('#floatingForm').slideToggle('slow')" class="show">
                                                  <img src="~/images/telephone.png" style="float:left;" /><span style="display:inline-block;padding-top:1px;font-size:large">SİZİ ARAYALIM</span></a></div>
                     <!-- BUTTON BACK TO TOP-->
                     <div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>
