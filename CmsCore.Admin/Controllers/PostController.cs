@@ -33,8 +33,9 @@ namespace CmsCore.Admin.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.PostCategories = postCategoryService.GetParentPostCategories();
+            
             var postVM = new PostViewModel();
+            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(),"Id","Name",postVM.PostPostCategories.Select(s=>s.PostCategoryId).ToList(), "ParentCategoryId");
             return View(postVM);
         }
         [HttpPost]
@@ -48,23 +49,26 @@ namespace CmsCore.Admin.Controllers
                 post.Slug = postVM.Slug;
                 post.Body = postVM.Body;
                 post.IsPublished = postVM.IsPublished;
-                post.PostPostCategories = postVM.PostPostCategories;
+                
                 post.SeoTitle = postVM.SeoTitle;
                 post.SeoKeywords = postVM.SeoKeywords;
                 post.SeoDescription = postVM.SeoDescription;
                 post.PostPostCategories.Clear();
+               
+                postService.CreatePost(post);
+                postService.SavePost();
                 if (postVM.PostCategoryId != null)
-                { 
+                {
                     foreach (var item in postVM.PostCategoryId)
                     {
-                        post.PostPostCategories.Add(new PostPostCategory { PostId = postVM.Id, PostCategoryId = item });
+                        post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = item });
                     }
                 }
-                postService.CreatePost(post);
+                postService.UpdatePost(post);
                 postService.SavePost();
                 return RedirectToAction("Index", "Post");
             }
-            ViewBag.PostCategories = postCategoryService.GetParentPostCategories();
+            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
             return View(postVM);
         }
 
@@ -87,7 +91,7 @@ namespace CmsCore.Admin.Controllers
             postVM.SeoTitle = post.SeoTitle;
             postVM.SeoDescription = post.SeoDescription;
             postVM.SeoKeywords = post.SeoKeywords;
-            ViewBag.PostCategories = postCategoryService.GetParentPostCategories();
+            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
             postVM.PostCategoryId = new long[post.PostPostCategories.Count()];
             long index = 0;
             foreach (var item in post.PostPostCategories)
@@ -121,8 +125,8 @@ namespace CmsCore.Admin.Controllers
                 postService.SavePost();
                 return RedirectToAction("Index", "Post");
             }
-            ViewBag.PostCategories = postCategoryService.GetParentPostCategories();
-           
+            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
+
             return View(postVM);
         }
 
