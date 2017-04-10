@@ -8,6 +8,7 @@ using CmsCore.Model.Entities;
 using CmsCore.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,8 +36,6 @@ namespace CmsCore.Admin.Controllers
         {
             
             var postVM = new PostViewModel();
-            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(),"Id","Name",postVM.PostPostCategories.Select(s=>s.PostCategoryId).ToList(), "ParentCategoryId");
-            //ViewBag.CategoryList = new SelectList(postCategoryService.GetPostCategories(), "Id", "Name");
             ViewBag.CategoryList = postCategoryService.GetPostCategories();
             return View(postVM);
         }
@@ -53,34 +52,29 @@ namespace CmsCore.Admin.Controllers
                 post.Description = postVM.Description;
                 post.Photo = postVM.Photo;
                 post.IsPublished = postVM.IsPublished;
-                
+
                 post.SeoTitle = postVM.SeoTitle;
                 post.SeoKeywords = postVM.SeoKeywords;
                 post.SeoDescription = postVM.SeoDescription;
-                post.PostPostCategories.Clear();
-               
+                
                 postService.CreatePost(post);
                 postService.SavePost();
-                if (postVM.PostCategoryId != null)
-                {
-                    foreach (var item in postVM.PostCategoryId)
-                    {
-                        post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = item });
-                    }
-                }
-                postService.UpdatePost(post);
-                postService.SavePost();
+
+                postService.UpdatePostPostCategories(post.Id, postVM.categoriesHidden);
+                
                 return RedirectToAction("Index", "Post");
             }
-            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
+            ViewBag.CategoryList = postCategoryService.GetPostCategories();
             return View(postVM);
         }
 
         public IActionResult Edit(long id)
         {
             var post = postService.GetPost(id);
+            var catList= postCategoryService.GetPostCategories();
+            ViewBag.CategoryList = catList;
+            ViewBag.CheckList = post.PostPostCategories;
 
-            
             PostViewModel postVM = new PostViewModel();
             postVM.Id = post.Id;
             postVM.Title = post.Title;
@@ -97,14 +91,8 @@ namespace CmsCore.Admin.Controllers
             postVM.SeoTitle = post.SeoTitle;
             postVM.SeoDescription = post.SeoDescription;
             postVM.SeoKeywords = post.SeoKeywords;
-            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
-            postVM.PostCategoryId = new long[post.PostPostCategories.Count()];
-            long index = 0;
-            foreach (var item in post.PostPostCategories)
-            {
-                postVM.PostCategoryId[index] = item.PostCategoryId;
-                index++;
-            }
+            ViewBag.CategoryList = postCategoryService.GetPostCategories();
+            
             return View(postVM);
         }
 
@@ -122,9 +110,13 @@ namespace CmsCore.Admin.Controllers
                 post.Photo = postVM.Photo;
                 post.IsPublished = postVM.IsPublished;
                 post.PostPostCategories.Clear();
-                foreach (var item in postVM.PostCategoryId)
+                if (postVM.categoriesHidden != null)
                 {
-                    post.PostPostCategories.Add(new PostPostCategory { PostId = postVM.Id, PostCategoryId = item });
+                    var cateArray = postVM.categoriesHidden.Split(',');
+                    foreach (var item in cateArray)
+                    {
+                        post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = Convert.ToInt32(item) });
+                    }
                 }
                 post.SeoTitle = postVM.SeoTitle;
                 post.SeoDescription = postVM.SeoDescription;
@@ -133,7 +125,7 @@ namespace CmsCore.Admin.Controllers
                 postService.SavePost();
                 return RedirectToAction("Index", "Post");
             }
-            ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(), "Id", "Name", postVM.PostPostCategories.Select(s => s.PostCategoryId).ToList(), "ParentCategoryId");
+            ViewBag.CategoryList = postCategoryService.GetPostCategories();
 
             return View(postVM);
         }

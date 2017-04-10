@@ -15,6 +15,7 @@ namespace CmsCore.Service
         IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count);
         Post GetPost(long id);
 
+        void UpdatePostPostCategories(long postId, string SelectedCategories);
         void CreatePost(Post post);
         void UpdatePost(Post post);
         void DeletePost(long id);
@@ -63,7 +64,7 @@ namespace CmsCore.Service
 
         public Post GetPost(long id)
         {
-            var post = postRepository.GetById(id);
+            var post = postRepository.GetById(id,"PostPostCategories");
             return post;
         }
 
@@ -86,6 +87,10 @@ namespace CmsCore.Service
             return postRepository.GetPostBySlug(Slug);
         }
 
+        public void UpdatePostPostCategories(long postId, string SelectedCategories)
+        {
+            postRepository.UpdatePostPostCategories(postId, SelectedCategories);
+        }
 
         public void SavePost()
         {

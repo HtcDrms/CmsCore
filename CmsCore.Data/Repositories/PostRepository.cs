@@ -13,6 +13,9 @@ namespace CmsCore.Data.Repositories
     
         public PostRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
+
+        
+
         public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count)
         {
             if (categories.Length > 0) { 
@@ -126,10 +129,23 @@ namespace CmsCore.Data.Repositories
             var post = DbContext.Posts.Where(p => p.Slug == slug).FirstOrDefault();
             return post;
         }
+        public void UpdatePostPostCategories(long postId, string SelectedCategories)
+        {
+            Post post = DbContext.Posts.Find(postId);
+            post.PostPostCategories.Clear();
+            var cateArray = SelectedCategories.Split(',');
+            foreach (var item in cateArray)
+            {
+                post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = Convert.ToInt64(item) });
+            }
+            DbContext.Update(post);
+            DbContext.SaveChanges();
+        }
     }
     public interface IPostRepository : IRepository<Post>
     {
         Post GetPostBySlug(string slug);
+        void UpdatePostPostCategories(long postId, string SelectedCategories);
         IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count);
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
