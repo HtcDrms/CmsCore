@@ -25,6 +25,7 @@ namespace CmsCore.Admin.Models
         public string CallToActionText { get; set; }
         public string CallToActionUrl { get; set; }
         public bool IsPublished { get; set; }
+        public bool DisplayTexts { get; set; }
         public long SliderId { get; set; }
         public virtual Slider Slider { get; set; }
     }

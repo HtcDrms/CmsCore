@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170410074831_Post-Edited")]
+    partial class PostEdited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -510,8 +511,6 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<DateTime>("AddedDate");
 
-                    b.Property<bool>("IsPublished");
-
                     b.Property<long?>("MenuId");
 
                     b.Property<string>("ModifiedBy");
@@ -521,8 +520,6 @@ namespace CmsCore.Data.Migrations
                     b.Property<string>("Name");
 
                     b.Property<long?>("ParentMenuItemId");
-
-                    b.Property<int>("Position");
 
                     b.Property<string>("Target");
 

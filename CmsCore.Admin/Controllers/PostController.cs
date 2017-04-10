@@ -36,6 +36,8 @@ namespace CmsCore.Admin.Controllers
             
             var postVM = new PostViewModel();
             ViewBag.PostCategories = new MultiSelectList(postCategoryService.GetPostCategories(),"Id","Name",postVM.PostPostCategories.Select(s=>s.PostCategoryId).ToList(), "ParentCategoryId");
+            //ViewBag.CategoryList = new SelectList(postCategoryService.GetPostCategories(), "Id", "Name");
+            ViewBag.CategoryList = postCategoryService.GetPostCategories();
             return View(postVM);
         }
         [HttpPost]
@@ -48,6 +50,8 @@ namespace CmsCore.Admin.Controllers
                 post.Title = postVM.Title;
                 post.Slug = postVM.Slug;
                 post.Body = postVM.Body;
+                post.Description = postVM.Description;
+                post.Photo = postVM.Photo;
                 post.IsPublished = postVM.IsPublished;
                 
                 post.SeoTitle = postVM.SeoTitle;
@@ -82,6 +86,8 @@ namespace CmsCore.Admin.Controllers
             postVM.Title = post.Title;
             postVM.Slug = post.Slug;
             postVM.Body = post.Body;
+            postVM.Description = post.Description;
+            postVM.Photo = post.Photo;
             postVM.IsPublished = post.IsPublished;
             postVM.PostPostCategories = post.PostPostCategories;
             postVM.ModifiedDate = post.ModifiedDate;
@@ -112,6 +118,8 @@ namespace CmsCore.Admin.Controllers
                 post.Title = postVM.Title;
                 post.Slug = postVM.Slug;
                 post.Body = postVM.Body;
+                post.Description = postVM.Description;
+                post.Photo = postVM.Photo;
                 post.IsPublished = postVM.IsPublished;
                 post.PostPostCategories.Clear();
                 foreach (var item in postVM.PostCategoryId)

@@ -11,6 +11,8 @@ namespace CmsCore.Model.Entities
         public string Name { get; set; }
         public string Url { get; set; }
         public string Target { get; set; }
+        public int Position { get; set; }
+        public bool IsPublished { get; set; }
         public long? ParentMenuItemId { get; set; }
         public virtual MenuItem ParentMenuItem { get; set; }
         public ICollection<MenuItem> ChildMenuItems { get; set; }

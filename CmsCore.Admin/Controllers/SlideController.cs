@@ -48,6 +48,7 @@ namespace CmsCore.Admin.Controllers
                 slide.Description = slidevm.Description;
                 slide.CallToActionText = slidevm.CallToActionText;
                 slide.CallToActionUrl = slidevm.CallToActionUrl;
+                slide.DisplayTexts = slidevm.DisplayTexts;
                 slide.SliderId = slidevm.SliderId;
                 slide.Position = slideService.CountSlide() + 1;
 
@@ -144,6 +145,7 @@ namespace CmsCore.Admin.Controllers
             svm.AddedDate = slide.AddedDate;
             svm.ModifiedBy = slide.ModifiedBy;
             svm.ModifiedDate = slide.ModifiedDate;
+            svm.DisplayTexts = slide.DisplayTexts;
             ViewBag.FileName = slide.Photo ?? slide.Video;
             return View(svm);
         }
@@ -162,6 +164,7 @@ namespace CmsCore.Admin.Controllers
                 slide.Description = slidevm.Description;
                 slide.CallToActionText = slidevm.CallToActionText;
                 slide.CallToActionUrl = slidevm.CallToActionUrl;
+                slide.DisplayTexts = slidevm.DisplayTexts;
                 slide.SliderId = slidevm.SliderId;
                 slide.Position = slideService.CountSlide() + 1;
                 slide.AddedBy = slidevm.AddedBy;

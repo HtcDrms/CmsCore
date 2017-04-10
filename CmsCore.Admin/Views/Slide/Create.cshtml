@@ -64,7 +64,12 @@
                             @Html.DisplayNameFor(model => model.CallToActionUrl)
                             @Html.TextBoxFor(model => model.CallToActionUrl, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CallToActionUrl, "", new { @class = "text-danger" })
-                        </div>                        
+                        </div>  
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.DisplayTexts)
+                            @Html.CheckBoxFor(model => model.DisplayTexts, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DisplayTexts, "", new { @class = "text-danger" })
+                        </div>
                         <div class="form-group">
                             @Html.DisplayNameFor(model => model.IsPublished)
                             @Html.CheckBoxFor(model => model.IsPublished, new { @class = "form-control" })

@@ -19,6 +19,8 @@ namespace CmsCore.Model.Entities
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Body { get; set; }
+        public string Description { get; set; }
+        public string Photo { get; set; }
         public long ViewCount { get; set; }
 
         public string SeoTitle { get; set; }

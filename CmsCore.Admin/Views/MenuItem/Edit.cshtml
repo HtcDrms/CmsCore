@@ -40,20 +40,25 @@
                             <div class="form-group">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.Id)
-                                <div class="form-body">
+                                <div class="form-group">
                                     @Html.LabelFor(model => model.Name)
                                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @tabindex = "1", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-body">
+                                <div class="form-group">
                                     @Html.LabelFor(model => model.Url)
                                     @Html.EditorFor(model => model.Url, new { htmlAttributes = new { @tabindex = "2", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-body">
+                                <div class="form-group">
                                     @Html.LabelFor(model => model.Target)
                                     @Html.EditorFor(model => model.Target, new { htmlAttributes = new { @tabindex = "3", @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Target, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Position)
+                                    @Html.EditorFor(model => model.Position, new { htmlAttributes = new { @tabindex = "3", @class = "form-control", @type="number",@min="" } })
+                                    @Html.ValidationMessageFor(model => model.Position, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ParentMenuItemId)
@@ -64,6 +69,11 @@
                                     @Html.LabelFor(model => model.MenuId)
                                     @Html.DropDownList("MenuId", (IEnumerable<SelectListItem>)ViewBag.MenuId, new { @tabindex = "5", @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.MenuId, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.IsPublished)
+                                    @Html.CheckBoxFor(model => model.IsPublished, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IsPublished, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>

@@ -22,6 +22,8 @@ namespace CmsCore.Admin.Models
         [MaxLength(200)]
         public string Slug { get; set; }
         public string Body { get; set; }
+        public string Description { get; set; }
+        public string Photo { get; set; }
         public long ViewCount { get; set; }
 
         [MaxLength(200)]
