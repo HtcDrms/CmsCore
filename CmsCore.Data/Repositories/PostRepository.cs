@@ -10,16 +10,17 @@ namespace CmsCore.Data.Repositories
 {
     public class PostRepository : RepositoryBase<Post>, IPostRepository
     {
-    
+
         public PostRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
 
-        
+
 
         public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count)
         {
-            if (categories.Length > 0) { 
-                return (from pc in DbContext.PostPostCategories join p in DbContext.Posts on pc.PostId equals p.Id join c in DbContext.PostCategories on pc.PostCategoryId equals c.Id where (categories.Length > 0 ? categories.Contains(c.Name.ToLower()): true) orderby p.AddedDate descending select p).Take(count).ToList();
+            if (categories.Length > 0)
+            {
+                return (from pc in DbContext.PostPostCategories join p in DbContext.Posts on pc.PostId equals p.Id join c in DbContext.PostCategories on pc.PostCategoryId equals c.Id where (categories.Length > 0 ? categories.Contains(c.Name.ToLower()) : true) orderby p.AddedDate descending select p).Take(count).ToList();
             }
             else
             {
@@ -100,30 +101,30 @@ namespace CmsCore.Data.Repositories
             return displayedPosts.ToList();
         }
 
-        public override void Update(Post entity)
-        {
-            var post = DbContext.Posts.Include("PostPostCategories").Where(c => c.Id == entity.Id).Single();
+        //public override void Update(Post entity)
+        //{
+        //    var post = DbContext.Posts.Include("PostPostCategories").Where(c => c.Id == entity.Id).Single();
 
-            post.PostPostCategories.Clear();
+        //    post.PostPostCategories.Clear();
 
-            foreach (var category in entity.PostPostCategories)
-            {
-                post.PostPostCategories.Add(category);
-            }
+        //    foreach (var category in entity.PostPostCategories)
+        //    {
+        //        post.PostPostCategories.Add(category);
+        //    }
 
-            post.Body = entity.Body;
-            post.AddedDate = entity.AddedDate;
-            post.AddedBy = entity.AddedBy;
-            post.Id = entity.Id;
-            post.Slug = entity.Slug;
-            post.Title = entity.Title;
-            post.ModifiedDate = entity.ModifiedDate;
-            post.ModifiedBy = entity.ModifiedBy;
-            post.SeoDescription = entity.SeoDescription;
-            post.SeoKeywords = entity.SeoKeywords;
-            post.SeoTitle = entity.SeoTitle;
-            DbContext.SaveChanges();
-        }
+        //    post.Body = entity.Body;
+        //    post.AddedDate = entity.AddedDate;
+        //    post.AddedBy = entity.AddedBy;
+        //    post.Id = entity.Id;
+        //    post.Slug = entity.Slug;
+        //    post.Title = entity.Title;
+        //    post.ModifiedDate = entity.ModifiedDate;
+        //    post.ModifiedBy = entity.ModifiedBy;
+        //    post.SeoDescription = entity.SeoDescription;
+        //    post.SeoKeywords = entity.SeoKeywords;
+        //    post.SeoTitle = entity.SeoTitle;
+        //    DbContext.SaveChanges();
+        //}
         public Post GetPostBySlug(string slug)
         {
             var post = DbContext.Posts.Where(p => p.Slug == slug).FirstOrDefault();
@@ -133,10 +134,14 @@ namespace CmsCore.Data.Repositories
         {
             Post post = DbContext.Posts.Find(postId);
             post.PostPostCategories.Clear();
-            var cateArray = SelectedCategories.Split(',');
-            foreach (var item in cateArray)
+            if (SelectedCategories != null)
             {
-                post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = Convert.ToInt64(item) });
+                var cateArray = SelectedCategories.Split(',');
+
+                foreach (var item in cateArray)
+                {
+                    post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = Convert.ToInt64(item) });
+                }
             }
             DbContext.Update(post);
             DbContext.SaveChanges();

@@ -71,8 +71,7 @@ namespace CmsCore.Admin.Controllers
         public IActionResult Edit(long id)
         {
             var post = postService.GetPost(id);
-            var catList= postCategoryService.GetPostCategories();
-            ViewBag.CategoryList = catList;
+            ViewBag.CategoryList = postCategoryService.GetPostCategories();
             ViewBag.CheckList = post.PostPostCategories;
 
             PostViewModel postVM = new PostViewModel();
@@ -91,7 +90,6 @@ namespace CmsCore.Admin.Controllers
             postVM.SeoTitle = post.SeoTitle;
             postVM.SeoDescription = post.SeoDescription;
             postVM.SeoKeywords = post.SeoKeywords;
-            ViewBag.CategoryList = postCategoryService.GetPostCategories();
             
             return View(postVM);
         }
@@ -109,20 +107,15 @@ namespace CmsCore.Admin.Controllers
                 post.Description = postVM.Description;
                 post.Photo = postVM.Photo;
                 post.IsPublished = postVM.IsPublished;
-                post.PostPostCategories.Clear();
-                if (postVM.categoriesHidden != null)
-                {
-                    var cateArray = postVM.categoriesHidden.Split(',');
-                    foreach (var item in cateArray)
-                    {
-                        post.PostPostCategories.Add(new PostPostCategory { PostId = post.Id, PostCategoryId = Convert.ToInt32(item) });
-                    }
-                }
+                
                 post.SeoTitle = postVM.SeoTitle;
                 post.SeoDescription = postVM.SeoDescription;
                 post.SeoKeywords = postVM.SeoKeywords;
                 postService.UpdatePost(post);
                 postService.SavePost();
+
+                postService.UpdatePostPostCategories(post.Id, postVM.categoriesHidden);
+
                 return RedirectToAction("Index", "Post");
             }
             ViewBag.CategoryList = postCategoryService.GetPostCategories();
@@ -137,38 +130,12 @@ namespace CmsCore.Admin.Controllers
             return RedirectToAction("Index", "Post");
         }
 
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var post = postService.GetPost(id);
             return View(post);
         }
-
-        public static string RenderPostCategories(IEnumerable<PostCategory> categories, long[] selectedIds)
-        {
-            string result = "";
-            if (selectedIds == null)
-            {
-                selectedIds = new long[0];
-            }
-            foreach (var category in categories)
-            {
-
-                result += "{ \"text\": \"" + category.Name + "\", \"state\": { \"selected\": " + (selectedIds.Contains(category.Id) ? "false" : "false") + " }, ";
-
-                if (category.ChildCategories.Count() > 0)
-                {
-                    result += "\"children\": [" + RenderPostCategories(category.ChildCategories, selectedIds) + "],},";
-                }
-                else
-                {
-                    result += "},";
-                }
-            }
-
-            return result;
-        }
-
-        public ActionResult AjaxHandler(jQueryDataTableParamModel param)
+        public IActionResult AjaxHandler(jQueryDataTableParamModel param)
         {
             string sSearch = "";
             if (param.sSearch != null) sSearch = param.sSearch;

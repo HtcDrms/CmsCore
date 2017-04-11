@@ -155,6 +155,7 @@
     <script>
 
         var handleSample = function () {
+
             $('#tree').jstree({
                 'plugins': ["wholerow", "checkbox"],
                 'core': {
@@ -170,13 +171,36 @@
                     if(item.ParentCategoryId==null)
                     {
                         <text>
-                        { "id": '@item.Id', "parent": "#", "text": "@item.Name" },
+                        {
+                            "id": '@item.Id', "parent": "#", "text": "@item.Name", "state": {
+                                @foreach (var dist in (IEnumerable<PostPostCategory>)ViewBag.CheckList)
+                                    {
+                                        if (item.Id == dist.PostCategoryId)
+                                        {
+                                            <text>
+                                                selected: true
+                                            </text>
+                                        }
+                                    }
+                            }
+                        },
                         </text>
-                    }
-                    else
-                    {
+                                }
+                                else
+                                {
                         <text>
-                        { "id": '@item.Id', "parent": "@item.ParentCategoryId", "text": "@item.Name" },
+                        { "id": '@item.Id', "parent": "@item.ParentCategoryId", "text": "@item.Name","state": {
+                                @foreach (var dist in (IEnumerable<PostPostCategory>)ViewBag.CheckList)
+                                    {
+                                        if (item.Id == dist.PostCategoryId)
+                                        {
+                                            <text>
+                                                selected: true
+                                            </text>
+                                        }
+                                    }
+                                }
+                        },
                         </text>
                     }
                 }
@@ -194,7 +218,7 @@
             // 7 bind to events triggered on the tree
             $('#tree').on("changed.jstree", function (e, data) {
                 console.log(data.selected);
-                $('#categoriesHidden').value = data.selected;
+                $('#categoriesHidden').val(data.selected);
             });
             // 8 interact with the tree - either way is OK
             $('button').on('click', function () {
