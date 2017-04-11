@@ -25,7 +25,7 @@ namespace CmsCore.Admin.Models
         public string Description { get; set; }
         public string Photo { get; set; }
         public long ViewCount { get; set; }
-
+        public string categoriesHidden { get; set; }
         [MaxLength(200)]
         public string SeoTitle { get; set; }
         public string SeoDescription { get; set; }
