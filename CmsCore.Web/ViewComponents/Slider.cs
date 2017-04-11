@@ -19,11 +19,15 @@ namespace CmsCore.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string name)
         {
-
+            
             var slider = await GetSlider(name);
             if (slider == null)
             {
                 slider = new CmsCore.Model.Entities.Slider();
+            }
+            if (slider.Template != null)
+            {
+                return View(slider.Template.ViewName, slider);
             }
             return View("Default",slider);
           

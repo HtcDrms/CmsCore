@@ -46,13 +46,13 @@ namespace CmsCore.Service
         }
         public Slider GetSlider(long id)
         {
-            var slider = sliderRepository.GetById(id);
+            var slider = sliderRepository.GetById(id, "Template", "Slides");
             return slider;
         }
         public Slider GetSlider(string name)
         {
             name = name.ToLower();
-            var slider = sliderRepository.Get(s => s.Name.ToLower() == name,"Slides");
+            var slider = sliderRepository.Get(s => s.Name.ToLower() == name,"Template","Slides");
             return slider;
         }
         public void CreateSlider(Slider slider)

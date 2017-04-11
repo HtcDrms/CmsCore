@@ -21,7 +21,7 @@
                         <a href="@item.Slug" class="title">@item.Title</a>
 
                         <div class="info">
-                            <div class="date-time item"><a href="#">@item.AddedDate.ToString("dd MMM yyyy")</a></div>
+                            <div class="date-time item">@item.AddedDate.ToString("dd MMM yyyy")</div>
                         </div>
                         <div class="info-more">
                             <div class="view item">
@@ -35,10 +35,10 @@
                                 <p> 0</p>
                             </div>
                         </div>
-                        <div class="description">@Html.Raw(item.Body.Substring(0,(item.Body.Length>100?100:item.Body.Length)))</div>
+                        <div class="description" style="text-overflow: ellipsis;">@Html.Raw(item.Description)</div>
                         <button onclick="window.location.href='@item.Slug'" class="btn btn-green"><span>Detaylı Bilgi</span></button>
                     </div>
-                    <div class="edugate-image"><img src="~/assets/images/courses/courses-1.jpg" alt="" class="img-responsive" /></div>
+                    <div class="edugate-image"><img src="@item.Photo" alt="" class="img-responsive" /></div>
                 </div>
             </div>
         </div>
