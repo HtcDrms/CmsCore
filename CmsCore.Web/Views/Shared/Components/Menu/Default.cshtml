@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MenuItem>
 <ul class="nav-links nav navbar-nav">
-@foreach (var item in Model)
+@foreach (var item in Model.OrderBy(o=>o.Position).ThenBy(o=>o.Id).ToList())
 {
 
     <li @(item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0 ? "class=dropdown" : "")>
@@ -10,7 +10,7 @@
             @if (item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0)
             {
                 <ul class="dropdown-menu edugate-dropdown-menu-1">
-                    @foreach (var childItem in item.ChildMenuItems)
+                    @foreach (var childItem in item.ChildMenuItems.OrderBy(o => o.Position).ThenBy(o => o.Id).ToList())
                     {
                         <li><a href="@childItem.Url" class="link-page" @(!String.IsNullOrEmpty(item.Target) ? "target='" + childItem.Target + "'" : "")>@childItem.Name</a></li>
                     }
