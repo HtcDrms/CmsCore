@@ -1,6 +1,40 @@
-﻿header .header-topbar {
-    background-color: #093085;
+﻿.edugate-layout-2:before {
+    border-left: 3px solid #eaedf5;
 }
+.edugate-layout-2:after {
+    width: 3px;
+    
+}
+.top-courses-slider:nth-child(1) .owl-item:nth-child(3) .edugate-layout-2:after {
+    background-color: rgb(88,169,207);
+}
+.top-courses-slider:nth-child(1) .owl-item:nth-child(4) .edugate-layout-2:after {
+    background-color: rgb(233,29,117);
+}
+.top-courses-slider:nth-child(1) .owl-item:nth-child(5) .edugate-layout-2:after {
+    background-color: rgb(88,169,207);
+}
+
+.top-courses-slider:nth-child(1) .owl-item:nth-child(6) .edugate-layout-2:after {
+    background-color: rgb(233,29,117);
+}
+.top-courses-slider:nth-child(2) .owl-item:nth-child(3) .edugate-layout-2:after {
+    background-color: rgb(248,156,36);
+}
+.top-courses-slider:nth-child(2) .owl-item:nth-child(4) .edugate-layout-2:after {
+    background-color: rgb(63,174,72);
+}
+.top-courses-slider:nth-child(2) .owl-item:nth-child(5) .edugate-layout-2:after {
+    background-color: rgb(248,156,36);
+}
+
+.top-courses-slider:nth-child(2) .owl-item:nth-child(6) .edugate-layout-2:after {
+    background-color: rgb(63,174,72);
+}
+
+header .header-topbar {
+        background-color: #093085;
+    }
 
 header .header-main .navigation .nav-links li .main-menu {
     text-transform: capitalize;

@@ -138,7 +138,7 @@
     </div>
 </div>    
                 <!-- LATEST POSTS -->
-             @await Component.InvokeAsync("LatestPosts")
+             @await Component.InvokeAsync("LatestPosts", new { categoryNames = "Haberler", count = 4 })
                 <!-- WHY CHOOSE US-->
 
               
