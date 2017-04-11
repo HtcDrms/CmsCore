@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Page>
+@foreach (var item in Model)
+{
+    <li>
+        <div><a href="/@Html.Raw(item.Slug)" class="link title">@(item.Title)</a></div>
+    </li>
+}

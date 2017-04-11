@@ -13,7 +13,7 @@ namespace CmsCore.Data.Repositories
         public Page GetBySlug(string slug)
         {
             slug = slug.ToLower();
-            return Get(p => p.Slug == slug);
+            return Get(p => p.Slug == slug,"Template");
         }
 
         public IEnumerable<Page> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)

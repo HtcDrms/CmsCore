@@ -1,0 +1,55 @@
+﻿@model PageViewModel
+@{
+    ViewData["Title"] = Model.SeoTitle;
+}
+<!-- WRAPPER-->
+<div id="wrapper-content">
+    <!-- PAGE WRAPPER-->
+    <div id="page-wrapper">
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <!-- CONTENT-->
+            <div class="content">
+                <div class="section section-padding courses-detail event-detail-section">
+                    <div class="container">
+                        <div class="courses-detail-wrapper">
+                            <div class="row">
+                                <div class="col-md-9 layout-left">
+                                    <h1 class="event-detail-title">@Html.Raw(Model.Title)</h1>
+
+                                    <div class="event-detail-des">
+                                        <div class="event-detail-des-content">
+                                            @Html.Raw(Model.Body)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 sidebar layout-right">
+                                    <div class="row">
+                                        <div class="popular-course-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
+                                            <div class="title-widget">İlgili Sayfalar</div>
+                                            <div class="content-widget">
+                                                <ul class="category-widget list-unstyled">
+                                                    @* BURAYA GELECEK *@
+                                                    @await Component.InvokeAsync("RelatedPages", new { Id = (Model.Id) })
+                                                    @*<div class="cur">35</div>
+                                                        <a href="courses-detail.html" class="link title">Adobe Lightroom CC for Photographers</a>
+
+                                                        <div class="info">
+                                                            <div class="author item"><a href="#"><span>By Sandara</span></a></div>
+                                                        </div>*@
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BUTTON BACK TO TOP-->
+<div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>

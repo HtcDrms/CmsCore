@@ -15,9 +15,10 @@ namespace CmsCore.Web.Controllers
         {
             this.pageService = pageService;
         }
-        public IActionResult Index(string slug = "")
+        public IActionResult Index(string slug)
         {
             if (slug != "") {
+
                 // Do redirect operations
 
                 // get page by slug
@@ -28,10 +29,14 @@ namespace CmsCore.Web.Controllers
 
                 // if product is null display 404 not found page
 
-                
             }
             // get home page
-            var homePage = pageService.GetPageBySlug("anasayfa");
+            var homePage = pageService.GetPageBySlug(slug);
+            if(homePage==null)
+            {
+                return View("Page404");
+            }
+
             PageViewModel pageVM = new PageViewModel();
             pageVM.Id = homePage.Id;
             pageVM.Title = homePage.Title;
@@ -41,13 +46,16 @@ namespace CmsCore.Web.Controllers
             pageVM.SeoTitle = homePage.SeoTitle;
             pageVM.SeoKeywords = homePage.SeoKeywords;
             pageVM.SeoDescription = homePage.SeoDescription;
-            if (homePage.Template != null)
+            if (homePage.TemplateId != null)
             {
                 return View(homePage.Template.ViewName, pageVM);
             }
             return View(pageVM);
         }
-
+        public IActionResult Page404()
+        {
+            return View();
+        }
         public IActionResult Error()
         {
             return View();

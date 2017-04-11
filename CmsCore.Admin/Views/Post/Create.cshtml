@@ -139,17 +139,6 @@
 @section scripts {
 
     <script src="@(ViewBag.AssetsUrl)global/plugins/jstree/dist/jstree.js"></script>
-    @*<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
-        <link rel="stylesheet" href="/css/bootstrap-multiselect.css" type="text/css" />
-        <script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $('#postCategories').multiselect({
-                                                enableClickableOptGroups: true,
-                                                enableCollapsibleOptGroups: true
-                                            });
-                                        });
-        </script>*@
-
     <script>
 
         var handleSample = function () {
@@ -199,32 +188,4 @@
             });
         });
     </script>
-
-    @*<script src="@(ViewBag.AssetsUrl)/global/plugins/jstree/dist/jstree.min.js" type="text/javascript"></script>
-        <script>
-            var LoadCategoriesTree = function () {
-                $('#categoriesTree').jstree({
-                    'plugins': ["wholerow", "checkbox"],
-                    'core': {
-                        "themes": {
-                            "responsive": false,
-                            "icons": false
-                        },
-
-                        'data': [
-                          @Html.Raw(CmsCore.Admin.Controllers.PostController.RenderPostCategories((IEnumerable<CmsCore.Model.Entities.PostCategory>)ViewBag.PostCategories,(long[])Model.PostCategoryId))
-                        ]
-                    }
-
-                });
-            }
-            LoadCategoriesTree();
-            function generateHiddenFieldsForTree(treeId) {
-                $.tree.plugins.checkbox.get_checked($.tree.reference("#" + treeId)).each(function () {
-                    var checkedId = this.id;
-                    $("<input>").attr("type", "hidden").attr("name", checkedId).val("true").appendTo("#" + treeId);
-                });
-            }
-
-        </script>*@
 }

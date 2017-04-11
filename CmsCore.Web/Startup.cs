@@ -139,7 +139,8 @@ namespace CmsCore.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{slug}",
+                    defaults: new { controller = "Home", action = "Index", slug = "anasayfa" });
             });
         }
     }

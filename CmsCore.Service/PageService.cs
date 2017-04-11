@@ -14,6 +14,7 @@ namespace CmsCore.Service
         IEnumerable<Page> GetPages();
         Page GetPage(long id);
         Page GetPageBySlug(string slug);
+        IEnumerable<Page> ChildPages(long id);
         void CreatePage(Page page);
         void UpdatePage(Page page);
         void DeletePage(long id);
@@ -50,6 +51,12 @@ namespace CmsCore.Service
         {
             var page = pagesRepository.GetBySlug(slug);
             return page;
+        }
+
+        public IEnumerable<Page> ChildPages(long id)
+        {
+            var childs = pagesRepository.GetById(id,"ChildPages").ChildPages;
+            return childs;
         }
 
         public void CreatePage(Page page)
