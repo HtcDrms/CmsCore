@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CmsCore.Service;
 using CmsCore.Web.Models;
+using CmsCore.Model.Entities;
 
 namespace CmsCore.Web.Controllers
 {
@@ -58,6 +59,7 @@ namespace CmsCore.Web.Controllers
                     postVM.Photo = post.Photo;
                     postVM.ViewCount = post.ViewCount;
 
+
                     return View("Post", postVM);
                 }
             }
@@ -78,6 +80,11 @@ namespace CmsCore.Web.Controllers
                 }
                 return View(pageVM);
             }
+        }
+
+        public IEnumerable<Post> Posts()
+        {
+            return postService.GetPosts();
         }
         public IActionResult Page404()
         {
