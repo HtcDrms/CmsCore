@@ -13,9 +13,11 @@ namespace CmsCore.Service
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Post> GetPosts();
         IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count);
+        IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count,long id);
         Post GetPost(long id);
 
         void UpdatePostPostCategories(long postId, string SelectedCategories);
+        IEnumerable<Post> PopulerPost(int total,long id);
         void CreatePost(Post post);
         void UpdatePost(Post post);
         void DeletePost(long id);
@@ -51,6 +53,26 @@ namespace CmsCore.Service
             var posts = postRepository.GetPostsByCategoryNames(categories, count);
             return posts;
         }
+        public IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count,long id)
+        {
+            string[] categories;
+            if (categoryNames == "")
+            {
+                categories = new string[0];
+            }
+            else
+            {
+                categories = categoryNames.Split(',');
+            }
+
+            for (var i = 0; i < categories.Length; i++)
+            {
+                categories[i] = categories[i].Trim().ToLower();
+            }
+            var posts = postRepository.GetPostsByCategoryNames(categories, count,id);
+            return posts;
+        }
+
         public IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
         {
             var posts = postRepository.Search(search, sortColumnIndex, sortDirection, displayStart, displayLength, out totalRecords, out totalDisplayRecords);
@@ -67,7 +89,11 @@ namespace CmsCore.Service
             var post = postRepository.GetById(id,"PostPostCategories");
             return post;
         }
-
+        public IEnumerable<Post> PopulerPost(int total,long id)
+        {
+            var post = postRepository.GetAll().Where(u=>u.Id!=id).OrderByDescending(m => m.ViewCount).Take(total).ToList();
+            return post;
+        }
 
         public void CreatePost(Post post)
         {

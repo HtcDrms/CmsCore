@@ -1,0 +1,67 @@
+﻿@model PostViewModel
+@{
+    ViewData["Title"] = Model.SeoTitle;
+}
+<!-- WRAPPER-->
+<div id="wrapper-content">
+    <!-- PAGE WRAPPER-->
+    <div id="page-wrapper">
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <!-- CONTENT-->
+            <div class="content">
+                <div class="section section-padding news-detail">
+                    <div class="container">
+                        <div class="news-detail-wrapper">
+                            <div class="row">
+                                <div class="col-md-9 col-sm-12">
+                                    <div class="news-detail">
+                                        <img src="@Html.Raw(Model.Photo)" alt="" class="news-image" />
+
+                                        <h1 class="title-news">@(Model.Title)</h1>
+
+                                        <div class="news-content">
+                                            @Html.Raw(Model.Body)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12 sidebar layout-right">
+                                    <div class="row">
+                                        <div class="recent-post-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
+                                            <div class="title-widget">Son Yazılar</div>
+                                            <div class="content-widget">
+                                                @await Component.InvokeAsync("LatestPostsOnRightSection", new { categoryNames = "Post", count = 4, id=Model.Id })
+                                            </div>
+                                        </div>
+                                        <div class="popular-course-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
+                                            <div class="title-widget">Çok Okunanlar</div>
+                                            <div class="content-widget">
+                                                @await Component.InvokeAsync("PopularPosts", new { total = 4,id=Model.Id })
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        @*<div class="category-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
+                                                <div class="title-widget">categories</div>
+                                                <div class="content-widget">
+                                                    <ul class="category-widget list-unstyled">
+                                                        <li><a href="categories.html" class="link cat-item"><span class="pull-left">Web Design</span><span class="pull-right">125</span></a></li>
+                                                        <li><a href="categories.html" class="link cat-item"><span class="pull-left">Wordpress Themes</span><span class="pull-right">97</span></a></li>
+                                                        <li><a href="categories.html" class="link cat-item"><span class="pull-left">Photography</span><span class="pull-right">56</span></a></li>
+                                                        <li><a href="categories.html" class="link cat-item"><span class="pull-left">Video</span><span class="pull-right">24</span></a></li>
+                                                        <li><a href="categories.html" class="link cat-item"><span class="pull-left">Miscellaneous</span><span class="pull-right">13</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>*@
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BUTTON BACK TO TOP-->
+    <div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>
+</div>

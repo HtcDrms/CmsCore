@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Post>
+@foreach (var item in Model)
+{
+    <div class="media">
+        <div class="media-left"><a href="/@Html.Raw(item.Slug)" class="link"><img src="@Html.Raw(item.Photo)" alt="" class="media-image" /></a></div>
+        <div class="media-right">
+            <div class="info">
+                <div class="date-created item"><a href="/@Html.Raw(item.Slug)"><span>@item.AddedDate.Day.@item.AddedDate.Month.@item.AddedDate.Year</span></a></div>
+            </div>
+            <a href="/@Html.Raw(item.Slug)" class="link title">@(item.Title)</a>
+        </div>
+    </div>
+}

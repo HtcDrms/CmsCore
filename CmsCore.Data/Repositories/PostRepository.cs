@@ -16,7 +16,7 @@ namespace CmsCore.Data.Repositories
 
 
 
-        public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count)
+        public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count )
         {
             if (categories.Length > 0)
             {
@@ -26,8 +26,20 @@ namespace CmsCore.Data.Repositories
             {
                 return (from p in DbContext.Posts orderby p.AddedDate descending select p).Take(count).ToList();
             }
+        }
+        public IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count, long? id)
+        {
+            if (categories.Length > 0)
+            {
+                return (from pc in DbContext.PostPostCategories join p in DbContext.Posts on pc.PostId equals p.Id join c in DbContext.PostCategories on pc.PostCategoryId equals c.Id where (categories.Length > 0 ? categories.Contains(c.Name.ToLower()) : true) orderby p.AddedDate descending select p).Where(c => c.Id != id).Take(count).ToList();
+            }
+            else
+            {
+                return (from p in DbContext.Posts orderby p.AddedDate descending select p).Where(c => c.Id != id).Take(count).ToList();
+            }
 
         }
+
         public IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
         {
             search = search.Trim();
@@ -133,9 +145,11 @@ namespace CmsCore.Data.Repositories
         public void UpdatePostPostCategories(long postId, string SelectedCategories)
         {
             Post post = DbContext.Posts.Find(postId);
-            post.PostPostCategories.Clear();
+            
             if (SelectedCategories != null)
             {
+                post.PostPostCategories.Clear();
+                DbContext.SaveChanges();
                 var cateArray = SelectedCategories.Split(',');
 
                 foreach (var item in cateArray)
@@ -152,6 +166,7 @@ namespace CmsCore.Data.Repositories
         Post GetPostBySlug(string slug);
         void UpdatePostPostCategories(long postId, string SelectedCategories);
         IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count);
+        IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count,long? id);
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
 }

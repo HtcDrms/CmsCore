@@ -11,13 +11,16 @@ namespace CmsCore.Web.Controllers
     public class HomeController : BaseController
     {
         private readonly IPageService pageService;
-        public HomeController (IPageService pageService)
+        private readonly IPostService postService;
+        public HomeController(IPageService pageService, IPostService postService)
         {
             this.pageService = pageService;
+            this.postService = postService;
         }
         public IActionResult Index(string slug)
         {
-            if (slug != "") {
+            if (slug != "")
+            {
 
                 // Do redirect operations
 
@@ -32,25 +35,49 @@ namespace CmsCore.Web.Controllers
             }
             // get home page
             var homePage = pageService.GetPageBySlug(slug);
-            if(homePage==null)
+            if (homePage == null)
             {
-                return View("Page404");
-            }
+                var post = postService.GetPostBySlug(slug);
+                if (post == null)
+                {
+                    return View("Page404");
+                }
+                else
+                {
+                    PostViewModel postVM = new PostViewModel();
+                    postVM.Id = post.Id;
+                    postVM.Title = post.Title;
+                    postVM.Slug = post.Slug;
+                    postVM.Body = post.Body;
+                    postVM.Description = post.Description;
+                    postVM.IsPublished = post.IsPublished;
+                    postVM.AddedDate = post.AddedDate;
+                    postVM.SeoTitle = post.SeoTitle;
+                    postVM.SeoDescription = post.SeoDescription;
+                    postVM.SeoKeywords = post.SeoKeywords;
+                    postVM.Photo = post.Photo;
+                    postVM.ViewCount = post.ViewCount;
 
-            PageViewModel pageVM = new PageViewModel();
-            pageVM.Id = homePage.Id;
-            pageVM.Title = homePage.Title;
-            pageVM.Slug = homePage.Slug;
-            pageVM.Body = homePage.Body;
-            pageVM.Template = homePage.Template;
-            pageVM.SeoTitle = homePage.SeoTitle;
-            pageVM.SeoKeywords = homePage.SeoKeywords;
-            pageVM.SeoDescription = homePage.SeoDescription;
-            if (homePage.TemplateId != null)
-            {
-                return View(homePage.Template.ViewName, pageVM);
+                    return View("Post", postVM);
+                }
             }
-            return View(pageVM);
+            else
+            {
+                PageViewModel pageVM = new PageViewModel();
+                pageVM.Id = homePage.Id;
+                pageVM.Title = homePage.Title;
+                pageVM.Slug = homePage.Slug;
+                pageVM.Body = homePage.Body;
+                pageVM.Template = homePage.Template;
+                pageVM.SeoTitle = homePage.SeoTitle;
+                pageVM.SeoKeywords = homePage.SeoKeywords;
+                pageVM.SeoDescription = homePage.SeoDescription;
+                if (homePage.TemplateId != null)
+                {
+                    return View(homePage.Template.ViewName, pageVM);
+                }
+                return View(pageVM);
+            }
         }
         public IActionResult Page404()
         {
