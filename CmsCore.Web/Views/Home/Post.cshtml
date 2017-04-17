@@ -30,7 +30,7 @@
                                         <div class="recent-post-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
                                             <div class="title-widget">Son Yazılar</div>
                                             <div class="content-widget">
-                                                @await Component.InvokeAsync("LatestPostsOnRightSection", new { categoryNames = "Haberler", count = 4, id=Model.Id })
+                                                @await Component.InvokeAsync("LatestPostsOnRightSection", new { categoryNames = Model.CategoryName, count = 4, id=Model.Id })
                                             </div>
                                         </div>
                                         <div class="popular-course-widget widget col-sm-6 col-md-12 col-xs-6 sd380">

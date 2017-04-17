@@ -50,6 +50,7 @@ namespace CmsCore.Web.Controllers
                     postVM.Title = post.Title;
                     postVM.Slug = post.Slug;
                     postVM.Body = post.Body;
+                    postVM.CategoryName = postService.GetCategoryName(post.Id);
                     postVM.Description = post.Description;
                     postVM.IsPublished = post.IsPublished;
                     postVM.AddedDate = post.AddedDate;
