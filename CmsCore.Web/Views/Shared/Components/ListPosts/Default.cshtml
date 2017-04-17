@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Post>
+<div class="section section-padding positionRelative best-staff">
+    <div class="container">
+        <div class="group-title-index">
+            <h4 class="top-title">EN İYİSİNDEN ÖĞRENİN</h4>
+
+            <h2 class="center-title">KADROMUZ</h2>
+
+            <div class="bottom-title"><i class="bottom-icon icon-icon-05"></i></div>
+        </div>
+        <div class="best-staff-wrapper">
+            <div class="best-staff-content">
+                @foreach (var item in Model) { 
+                <div class="staff-item">
+                    <div class="staff-item-wrapper">
+                        <div class="staff-info">
+                            <a href="/@item.Slug" class="staff-avatar"><img src="@item.Photo" alt="" class="img-responsive" /></a><a href="/@item.Slug" class="staff-name">@item.Title</a>
+
+                            <div class="staff-job">item.SubTitle</div>
+                            <div class="staff-desctiption">@Html.Raw(item.Description)</div>
+                        </div>
+                    </div>
+                    <div class="staff-socials"><a href="mailto:item.Meta" class="email"><i class="fa fa-envelope-o"></i></a></div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="group-btn-slider">
+        <div class="btn-prev"><i class="fa fa-angle-left"></i></div>
+        <div class="btn-next"><i class="fa fa-angle-right"></i></div>
+    </div>
+</div>
