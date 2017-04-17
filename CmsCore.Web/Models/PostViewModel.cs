@@ -19,6 +19,7 @@ namespace CmsCore.Web.Models
         public string Body { get; set; }
         public string Description { get; set; }
         public string Photo { get; set; }
+        public string CategoryName { get; set; }
         public long ViewCount { get; set; }
         public string SeoTitle { get; set; }
         public string SeoDescription { get; set; }

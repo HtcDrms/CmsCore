@@ -15,7 +15,7 @@ namespace CmsCore.Service
         IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count);
         IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count,long id);
         Post GetPost(long id);
-
+        string GetCategoryName(long id);
         void UpdatePostPostCategories(long postId, string SelectedCategories);
         IEnumerable<Post> PopulerPost(int total,long id);
         void CreatePost(Post post);
@@ -34,6 +34,10 @@ namespace CmsCore.Service
             this.unitOfWork = unitOfWork;
         }
         #region IPostService Members
+        public string GetCategoryName(long id)
+        {
+            return postRepository.GetCategoryName(id);
+        }
         public IEnumerable<Post> GetPostsByCategoryNames(string categoryNames, int count)
         {
             string[] categories;
