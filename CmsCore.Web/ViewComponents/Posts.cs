@@ -18,11 +18,16 @@ namespace CmsCore.Web.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var pageNumber = 1; // Note that page number starts from 1 (not zero!)
+            int pageNumber = 1;            
             var pageSize = 4;
-            
+
+            if (!String.IsNullOrEmpty(Request.Query["page"]))
+            {
+                pageNumber = Convert.ToInt32(Request.Query["page"]);
+            }
             var items = GetItems().AsEnumerable();
             var pagedData = items.ToPagedList(pageSize, pageNumber);
+
             return View(pagedData);
         }
         public List<Post> GetItems()

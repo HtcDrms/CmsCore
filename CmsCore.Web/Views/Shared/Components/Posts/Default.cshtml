@@ -1,20 +1,32 @@
 ﻿@addTagHelper *, Sakura.AspNetCore.Mvc.PagedList
 @model Sakura.AspNetCore.IPagedList<Post>
 
-@foreach (var item in Model)
-{
-    
-    <div class="edugate-layout-1">
-        <div class="edugate-image"><img src="@Html.Raw(item.Photo)" alt="" class="img-responsive" /></div>
-        <div class="edugate-content">
-            <a href="news-detail.html" class="title">@item.Title</a>
+    @foreach (var item in Model)
+    {
+        <div class="edugate-layout-1">
+            <div class="edugate-image"><img src="@Html.Raw(item.Photo)" alt="" class="img-responsive" /></div>
+            <div class="edugate-content">
+                <a href="news-detail.html" class="title">@item.Title</a>
 
-            <div class="info">
-                <div class="date-time item"><a href="#">@item.AddedDate.ToString().Substring(0,10)</a></div>
+                <div class="info">
+                    <div class="date-time item"><a href="#">@item.AddedDate.ToString().Substring(0, 10)</a></div>
+                </div>
+                <div class="description">
+                    @Html.Raw(item.Description.PadLeft(120))
+                </div>
+                <a href="/@item.Slug" class="btn btn-green"><span>Devamını oku...</span></a>
             </div>
-            <div class="description">
-            @Html.Raw(item.Description.PadLeft(120))</div>
-            <a href="/@item.Slug" class="btn btn-green"><span>Devamını oku...</span></a>
         </div>
-    </div>
-}<pager resource='Post' />
+        
+        
+
+    }
+</div>
+
+<div class="row">
+    <nav class="pagination col-md-12">
+        <ul class="pagination__list">
+            <pager resource='Post' />
+        </ul>
+    </nav>
+</div>
