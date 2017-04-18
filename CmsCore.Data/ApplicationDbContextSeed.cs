@@ -24,14 +24,14 @@ namespace CmsCore.Data
             // Perform seed operations
             AddLanguages(context);
             context.SaveChanges();
+            AddTemplates(context);
+            context.SaveChanges();
             AddPages(context);
             AddMenuLocations(context);
             context.SaveChanges();
             AddMenus(context);
             context.SaveChanges();
             AddMenuItems(context);
-            context.SaveChanges();
-            AddTemplates(context);
             context.SaveChanges();
             AddSliders(context);
             context.SaveChanges();
@@ -61,7 +61,7 @@ namespace CmsCore.Data
         private static void AddPages(ApplicationDbContext context)
         {
             context.AddRange(
-                new Page { Title = "Anasayfa", Slug = "anasayfa", LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Page { Title = "Anasayfa", Slug = "anasayfa", TemplateId=3,LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
         private static void AddMenuLocations(ApplicationDbContext context)
@@ -123,7 +123,11 @@ namespace CmsCore.Data
         {
             context.AddRange(
                 new Template { Name = "Default", ViewName="Default", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Secondary", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Template { Name = "Secondary", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Index", ViewName = "Index", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Page", ViewName = "Page", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Post", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Posts", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
         private static void AddSliders(ApplicationDbContext context)
