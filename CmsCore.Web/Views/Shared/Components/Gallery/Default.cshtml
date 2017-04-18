@@ -38,7 +38,7 @@
 
     @foreach (var item in Model.Where(m=>m.GalleryItemGalleryItemCategories.Any(a=>a.GalleryItemCategoryId == cat.Id)).ToList())
     {
-                    <div class="grid-item grid-item-height3"><a href="@(ViewBag.AssetsUrl)/@item.Photo" class="content fancybox-button"><img src="@(ViewBag.AssetsUrl)/@item.Photo" alt="" class="img-responsive" /></a></div>
+                    <div class="grid-item @item.Meta1"><a href="@item.Photo" class="content fancybox-button"><img src="@item.Photo" alt="" class="img-responsive" /></a></div>
         }
   
                     @*<div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>

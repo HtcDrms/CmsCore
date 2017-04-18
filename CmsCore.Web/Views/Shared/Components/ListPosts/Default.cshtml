@@ -16,11 +16,11 @@
                         <div class="staff-info">
                             <a href="/@item.Slug" class="staff-avatar"><img src="@item.Photo" alt="" class="img-responsive" /></a><a href="/@item.Slug" class="staff-name">@item.Title</a>
 
-                            <div class="staff-job">item.SubTitle</div>
+                            <div class="staff-job">@item.Meta1</div>
                             <div class="staff-desctiption">@Html.Raw(item.Description)</div>
                         </div>
                     </div>
-                    <div class="staff-socials"><a href="mailto:item.Meta" class="email"><i class="fa fa-envelope-o"></i></a></div>
+                    <div class="staff-socials"><a href="mailto:@item.Meta2" class="email"><i class="fa fa-envelope-o"></i></a></div>
                 </div>
                 }
             </div>
