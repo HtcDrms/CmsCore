@@ -46,8 +46,13 @@ namespace CmsCore.Service
         public IEnumerable<GalleryItem> GetGalleryItems(string galleryName, int count)
         {
             galleryName = galleryName.ToLower();
-            var galleryItems = galleryRepository.Get(g => g.Name.ToLower() == galleryName && g.IsPublished == true, "GalleryItems").GalleryItems.Where(gi => gi.IsPublished == true).Take(count).ToList();
-            return galleryItems;
+            var gallery = galleryRepository.Get(g => g.Name.ToLower() == galleryName && g.IsPublished == true, "GalleryItems");
+            if (gallery != null) { 
+                var galleryItems = gallery.GalleryItems.Where(gi => gi.IsPublished == true).Take(count).ToList();
+                return galleryItems;
+            }
+            return new List<GalleryItem>();
+            
         }
         public void CreateGallery(Gallery gallery)
         {
