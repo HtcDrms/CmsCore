@@ -85,61 +85,21 @@
                             @Html.ValidationMessageFor(model => model.DisplayTexts, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Photo)
+                            @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Video)
+                            @Html.TextBoxFor(model => model.Video, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
                             @Html.DisplayNameFor(model => model.IsPublished)
                             @Html.CheckBoxFor(model => model.IsPublished, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IsPublished, "", new { @class = "text-danger" })
                         </div>
                         
-                        <div class="form-group">
-                            <fieldset>
-                                <legend>Photo</legend>
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <span class="btn green btn-file">
-                                        <span class="fileinput-new">Dosya Seç</span>
-                                        <span class="fileinput-exists">Değiştir</span>
-                                        <input type="file" id="FileName" name="uploadedFile" data-path="@(ViewBag.AssetsUrl)/uploads/media/slide/@Model.Photo" data-default-file="@(ViewBag.AssetsUrl)/uploads/media/slide/@Model.Photo">
-                                    </span>
-
-                                    <span class="fileinput-filename">
-                                        @if (!String.IsNullOrEmpty(Model.Photo))
-                                    {
-                                        <a href="@(ViewBag.AssetsUrl)\media\slide\@ViewBag.FileName"><img src="@(ViewBag.AssetsUrl)/uploads/media/slide/@Model.Photo" width="100" height="100" /></a>
-                                    }
-                                </span> &nbsp;
-                                <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
-                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
-                                <span class="text-danger" asp-validation-for="Photo"></span>
-                            </div>
-                            <div class="clearfix margin-top-10">
-                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.jpg, .gif</strong> ya da <strong>.png</strong> olmalıdır.
-                            </div>
-                                </fieldset>
-</div>
-                        <div class="form-group">
-                            <fieldset>
-                                <legend>Video</legend>
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <span class="btn green btn-file">
-                                        <span class="fileinput-new">Dosya Seç</span>
-                                        <span class="fileinput-exists">Değiştir</span>
-                                        <input type="file" id="FileName" name="uploadedFile" data-default-file="@(ViewBag.AssetsUrl)/uploads/media/slide/@Model.Video">
-                                    </span>
-
-                                    <span class="fileinput-filename">
-                                        @if (!String.IsNullOrEmpty(Model.Video))
-                                    {
-                                        <a href="@(ViewBag.AssetsUrl)/media/slide/@ViewBag.Video"><video src="@(ViewBag.AssetsUrl)/uploads/media/slide/@Model.Video" width="100" height="100" /></a>
-                                    }
-                                </span> &nbsp;
-                                <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
-                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
-                                <span class="text-danger" asp-validation-for="Video"></span>
-                            </div>
-                            <div class="clearfix margin-top-10">
-                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı .mp4, .mpeg, .mov olmalıdır.
-                            </div>
-                        </fieldset>
-                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" tabindex="10" class="btn blue">Edit</button>

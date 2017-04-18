@@ -71,54 +71,23 @@
                             @Html.ValidationMessageFor(model => model.DisplayTexts, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Photo)
+                            @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(model => model.Video)
+                            @Html.TextBoxFor(model => model.Video, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
                             @Html.DisplayNameFor(model => model.IsPublished)
                             @Html.CheckBoxFor(model => model.IsPublished, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IsPublished, "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group">
-                            <text>Photo</text>
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="input-group input-large">
-                                    @*<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                                            <span class="fileinput-filename"></span>
-                                        </div>*@
-                                    <span class="input-group-addon btn default btn-file">
-                                        <input type="file" id="Photo" name="uploadedFilePhoto">
-                                    </span>
-                                    @*<a href="javascript:" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Kaldır</a>*@
+                        
 
-                                </div>
-                                @*@Html.ValidationMessage("FileName", new { @class = "text-danger" })*@
-                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
-                                <span class="text-danger" asp-validation-for="Photo"></span>
-                            </div>
-                            <div class="clearfix margin-top-10">
-                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.jpg, .gif</strong> ya da <strong>.png</strong> olmalıdır.
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <text>Video</text>
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="input-group input-large">
-                                    @*<div class="form-control uneditable-input input-fixed input-medium" data-trigger="fileinput">
-                        <i class="fa fa-file fileinput-exists"></i>&nbsp;
-                        <span class="fileinput-filename"></span>
-                    </div>*@
-                                    <span class="input-group-addon btn default btn-file">
-                                        <input type="file" id="Video" name="uploadedFileVideo">
-                                    </span>
-                                    @*<a href="javascript:" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">Kaldır</a>*@
 
-                                </div>
-                                @*@Html.ValidationMessage("FileName", new { @class = "text-danger" })*@
-                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
-                                <span class="text-danger" asp-validation-for="Video"></span>
-                            </div>
-                            <div class="clearfix margin-top-10">
-                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.mp4, .mpeg, .mov</strong> olmalıdır.
-                            </div>
-                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" tabindex="10" class="btn blue">Save</button>

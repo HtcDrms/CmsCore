@@ -49,6 +49,7 @@ namespace CmsCore.Admin.Controllers
                 gallery.AddedDate = DateTime.Now;
                 gallery.ModifiedBy = User.Identity.Name??"username";
                 gallery.ModifiedDate = DateTime.Now;
+                gallery.Meta1 = galvm.Meta1;
                 gallery.Photo = galvm.Photo;
                 gallery.Video = galvm.Video;
 
@@ -73,6 +74,7 @@ namespace CmsCore.Admin.Controllers
             galvm.IsPublished = gallery.IsPublished;
             galvm.Description = gallery.Description;
             galvm.Position = gallery.Position;
+            galvm.Meta1 = gallery.Meta1;
             galvm.Title = gallery.Title;
             galvm.Video = gallery.Video;
             galvm.AddedBy = gallery.AddedBy;
@@ -98,6 +100,7 @@ namespace CmsCore.Admin.Controllers
                 gallery.ModifiedDate = DateTime.Now;
                 gallery.Video = galvm.Video;
                 gallery.Photo = galvm.Photo;
+                gallery.Meta1 = galvm.Meta1;
                 
                 galleryItemService.UpdateGalleryItem(gallery);
                 galleryItemService.SaveGalleryItem();

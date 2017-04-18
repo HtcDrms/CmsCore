@@ -51,73 +51,8 @@ namespace CmsCore.Admin.Controllers
                 slide.DisplayTexts = slidevm.DisplayTexts;
                 slide.SliderId = slidevm.SliderId;
                 slide.Position = slideService.CountSlide() + 1;
-
-                if (uploadedFilePhoto != null)
-                {
-                    if (Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpeg"
-                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpg"
-                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".gif"
-                    || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".png"
-                     )
-                    {
-                        Random rnd = new Random();
-                        slide.Photo = rnd.Next(1, Int32.MaxValue) + uploadedFilePhoto.FileName;
-
-                        string FilePath = ViewBag.UploadPath + "\\media\\slide\\";
-                        string dosyaYolu = slide.Photo;
-                        var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
-                        try
-                        {
-
-                            if (!Directory.Exists(FilePath))
-                            {
-                                Directory.CreateDirectory(FilePath);//Eğer klasör yoksa oluştur
-                                uploadedFilePhoto.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-                            else
-                            {
-                                uploadedFilePhoto.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-
-                        }
-                        catch (Exception) { }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
-                    }
-                }
-                    if (uploadedFileVideo != null)
-                    {
-                        if (Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mp4"
-                                || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mpg"
-                                || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mov")
-                        {
-                            Random rnd = new Random();
-                            slide.Video = rnd.Next(1, Int32.MaxValue) + uploadedFileVideo.FileName;
-                            string FilePath = ViewBag.UploadPath + "\\media\\slide\\";
-                            string dosyaYolu = slide.Video;
-                            var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
-                            try
-                            {
-                                if (!Directory.Exists(FilePath))
-                                {
-                                    Directory.CreateDirectory(FilePath);//Eğer klasör yoksa oluştur
-                                    uploadedFileVideo.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                                }
-                                else
-                                {
-                                    uploadedFileVideo.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                                }
-                            }
-                            catch (Exception ex) { throw ex; }
-                            
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
-                        }
-                    }
+                slide.Photo = slidevm.Photo;
+                slide.Video = slidevm.Video;
                 
                 slideService.CreateSlide(slide);
                 slideService.SaveSlide();
@@ -171,77 +106,10 @@ namespace CmsCore.Admin.Controllers
                 slide.AddedDate = slidevm.AddedDate;
                 slide.ModifiedBy = User.Identity.Name ?? "username";
                 slide.ModifiedDate = DateTime.Now;
+                slide.Photo = slidevm.Photo;
+                slide.Video = slidevm.Video;
 
-
-                if (uploadedFilePhoto != null)
-                {
-                    if (slide.Photo == uploadedFilePhoto.FileName)
-                    {
-                        slide.Photo = slidevm.Photo;
-                    }
-                    else if ((Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpeg"
-                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".jpg"
-                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".gif"
-                 || Path.GetExtension(uploadedFilePhoto.FileName).ToLower() == ".png") && slide.Photo != uploadedFilePhoto.FileName
-                  )
-                    {
-                        Random rnd = new Random();
-                        slide.Photo = rnd.Next(1, Int32.MaxValue) + uploadedFilePhoto.FileName;
-
-                        string FilePath = ViewBag.UploadPath + "\\media\\slide\\";
-                        string dosyaYolu = slide.Photo;
-                        var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
-                        try
-                        {
-
-                            if (!Directory.Exists(FilePath))
-                            {
-                                Directory.CreateDirectory(FilePath);//Eğer klasör yoksa oluştur
-                                uploadedFilePhoto.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-                            else
-                            {
-                                uploadedFilePhoto.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-
-                        }
-                        catch (Exception) { }
-                    }
-                }
-                if (uploadedFileVideo != null) { 
-                    if (slide.Video == uploadedFileVideo.FileName)
-                    {
-                        slide.Video = slidevm.Video;
-                    }
-                    else if ((Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mp4"
-                           || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mpg"
-                           || Path.GetExtension(uploadedFileVideo.FileName).ToLower() == ".mov") && slide.Video != slidevm.Video)
-                    {
-                        Random rnd = new Random();
-                        slide.Video = rnd.Next(1, Int32.MaxValue) + uploadedFileVideo.FileName;
-                        string FilePath = ViewBag.UploadPath + "\\media\\slide\\";
-                        string dosyaYolu = slide.Video;
-                        var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
-                        try
-                        {
-                            if (!Directory.Exists(FilePath))
-                            {
-                                Directory.CreateDirectory(FilePath);//Eğer klasör yoksa oluştur
-                                uploadedFileVideo.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-                            else
-                            {
-                                uploadedFileVideo.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
-                            }
-                        }
-                        catch (Exception ex) { throw ex; }
-
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
-                    }
-                }
+                
 
                 slideService.UpdateSlide(slide);
                 slideService.SaveSlide();
