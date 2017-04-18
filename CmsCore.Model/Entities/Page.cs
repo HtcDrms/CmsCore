@@ -14,6 +14,7 @@ namespace CmsCore.Model.Entities
             ViewCount = 0;
             ChildPages = new HashSet<Page>();
             LanguageId = 1;
+            TemplateId = 4;
             Translations = new HashSet<Page>();
         }
         public string Title { get; set; }
