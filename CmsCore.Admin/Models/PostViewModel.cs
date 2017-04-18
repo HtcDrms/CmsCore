@@ -23,6 +23,8 @@ namespace CmsCore.Admin.Models
         public string Slug { get; set; }
         public string Body { get; set; }
         public string Description { get; set; }
+        public string Meta1 { get; set; }
+        public string Meta2 { get; set; }
         public string Photo { get; set; }
         public long ViewCount { get; set; }
         public string categoriesHidden { get; set; }

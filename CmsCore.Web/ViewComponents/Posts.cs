@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sakura.AspNetCore;
 
 namespace CmsCore.Web.ViewComponents
 {
@@ -17,12 +18,16 @@ namespace CmsCore.Web.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var items = await Post();
-            return View(items);
+            var pageNumber = 1; // Note that page number starts from 1 (not zero!)
+            var pageSize = 4;
+            
+            var items = GetItems().AsEnumerable();
+            var pagedData = items.ToPagedList(pageSize, pageNumber);
+            return View(pagedData);
         }
-        public Task<List<Post>> Post()
+        public List<Post> GetItems()
         {
-            return Task.FromResult(postService.GetPosts().ToList());
+            return postService.GetPosts().ToList();
         }
     }
 }

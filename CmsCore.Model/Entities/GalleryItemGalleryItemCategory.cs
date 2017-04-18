@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CmsCore.Model.Entities
 {
-    public class GalleryItemGalleryItemCategory:BaseEntity
+    public class GalleryItemGalleryItemCategory
     {
         public long GalleryItemId { get; set; }
         public virtual GalleryItem GalleryItem { get; set; }

@@ -16,6 +16,7 @@ namespace CmsCore.Model.Entities
         public string Description { get; set; }
         public int Position { get; set; }
         public string Photo { get; set; }
+        public string categoriesHidden { get; set; }
         public string Video { get; set; }
         public bool IsPublished { get; set; }
         public virtual ICollection<GalleryItemCategory> GalleryItemCategories { get; set; }

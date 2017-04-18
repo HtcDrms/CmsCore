@@ -34,6 +34,7 @@ namespace CmsCore.Data
         public DbSet<Slide> Slides { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<GalleryItem> GalleryItems { get; set; }
+        public DbSet<GalleryItemGalleryItemCategory> GalleryItemGalleryItemCategories { get; set; }
         public DbSet<GalleryItemCategory> GalleryItemCategories { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<Resource> Resources { get; set; }
@@ -78,6 +79,7 @@ namespace CmsCore.Data
             new SlideBuilder(builder.Entity<Slide>());
             new SliderBuilder(builder.Entity<Slider>());
             new GalleryItemBuilder(builder.Entity<GalleryItem>());
+            new GalleryItemGalleryItemCategoryBuilder(builder.Entity<GalleryItemGalleryItemCategory>());
             new GalleryItemCategoryBuilder(builder.Entity<GalleryItemCategory>());
 
         }

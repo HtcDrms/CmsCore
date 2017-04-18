@@ -14,6 +14,7 @@ namespace CmsCore.Service
         IEnumerable<GalleryItem> GetGalleryItems();
         GalleryItem GetGalleryItem(long id);
         int CountGalleryItem();
+        void UpdateCategories(long galItemId, string SelectedCategories);
         void CreateGalleryItem(GalleryItem galleryItem);
         void UpdateGalleryItem(GalleryItem galleryItem);
         void DeleteGalleryItem(long id);
@@ -34,10 +35,15 @@ namespace CmsCore.Service
             var galleryItems = galleryItemRepository.GetAll();
             return galleryItems;
         }
-       
+
+        public void UpdateCategories(long galItemId, string SelectedCategories)
+        {
+            galleryItemRepository.UpdateGalleryItemGalleryItemCategories(galItemId, SelectedCategories);
+        }
+
         public GalleryItem GetGalleryItem(long id)
         {
-            var galleryItem = galleryItemRepository.GetById(id);
+            var galleryItem = galleryItemRepository.GetById(id,"GalleryItemGalleryItemCategories");
             return galleryItem;
         }
         public void CreateGalleryItem(GalleryItem galleryItem)

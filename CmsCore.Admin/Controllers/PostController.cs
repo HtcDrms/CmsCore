@@ -51,6 +51,8 @@ namespace CmsCore.Admin.Controllers
                 post.Body = postVM.Body;
                 post.Description = postVM.Description;
                 post.Photo = postVM.Photo;
+                post.Meta1 = postVM.Meta1;
+                post.Meta2 = postVM.Meta2;
                 post.IsPublished = postVM.IsPublished;
 
                 post.SeoTitle = postVM.SeoTitle;
@@ -81,6 +83,8 @@ namespace CmsCore.Admin.Controllers
             postVM.Body = post.Body;
             postVM.Description = post.Description;
             postVM.Photo = post.Photo;
+            postVM.Meta1 = post.Meta1;
+            postVM.Meta2 = post.Meta2;
             postVM.IsPublished = post.IsPublished;
             postVM.PostPostCategories = post.PostPostCategories;
             postVM.ModifiedDate = post.ModifiedDate;
@@ -106,6 +110,8 @@ namespace CmsCore.Admin.Controllers
                 post.Body = postVM.Body;
                 post.Description = postVM.Description;
                 post.Photo = postVM.Photo;
+                post.Meta1 = postVM.Meta1;
+                post.Meta2 = postVM.Meta2;
                 post.IsPublished = postVM.IsPublished;
                 
                 post.SeoTitle = postVM.SeoTitle;
@@ -118,7 +124,9 @@ namespace CmsCore.Admin.Controllers
 
                 return RedirectToAction("Index", "Post");
             }
+            var postR = postService.GetPost(postVM.Id);
             ViewBag.CategoryList = postCategoryService.GetPostCategories();
+            ViewBag.CheckList = postR.PostPostCategories;
 
             return View(postVM);
         }

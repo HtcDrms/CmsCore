@@ -28,9 +28,14 @@
                 <form role="form" method="post" asp-action="Create" asp-controller="GalleryItemCategory">
                     <div class="form-body">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Name)
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control spinner" })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            <label asp-for="Name"></label>
+                            <input type="text" asp-for="Name" class="form-control" tabindex="1" autofocus="autofocus" onblur="if ($('#Slug').val() == '') {$('#Slug').val(slug($('#Name').val().toLowerCase(),'-'));}" />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Slug"></label>
+                            <input type="text" asp-for="Slug" class="form-control" tabindex="2" onblur="if ($('#Slug').val() == '') {$('#Slug').val(slug($('#Name').val().toLowerCase(),'-'));}" />
+                            <span class="text-danger" asp-validation-for="Slug"></span>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Description)

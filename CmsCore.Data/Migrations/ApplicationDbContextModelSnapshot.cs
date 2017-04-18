@@ -282,6 +282,8 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<long?>("ParentCategoryId");
 
+                    b.Property<string>("Slug");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GalleryItemId");
@@ -293,28 +295,15 @@ namespace CmsCore.Data.Migrations
 
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemGalleryItemCategory", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedBy");
-
-                    b.Property<DateTime>("AddedDate");
+                    b.Property<long>("GalleryItemId");
 
                     b.Property<long>("GalleryItemCategoryId");
 
-                    b.Property<long>("GalleryItemId");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime>("ModifiedDate");
-
-                    b.HasKey("Id");
+                    b.HasKey("GalleryItemId", "GalleryItemCategoryId");
 
                     b.HasIndex("GalleryItemCategoryId");
 
-                    b.HasIndex("GalleryItemId");
-
-                    b.ToTable("GalleryItemGalleryItemCategory");
+                    b.ToTable("GalleryItemGalleryItemCategories");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.Language", b =>
@@ -633,6 +622,10 @@ namespace CmsCore.Data.Migrations
                     b.Property<bool>("IsPublished");
 
                     b.Property<long>("LanguageId");
+
+                    b.Property<string>("Meta1");
+
+                    b.Property<string>("Meta2");
 
                     b.Property<string>("ModifiedBy");
 

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using CmsCore.Service;
 using CmsCore.Web.Models;
 using CmsCore.Model.Entities;
+using Sakura.AspNetCore.Mvc;
+using Sakura.AspNetCore;
 
 namespace CmsCore.Web.Controllers
 {
@@ -13,11 +15,14 @@ namespace CmsCore.Web.Controllers
     {
         private readonly IPageService pageService;
         private readonly IPostService postService;
+       
         public HomeController(IPageService pageService, IPostService postService)
         {
             this.pageService = pageService;
             this.postService = postService;
         }
+
+        
         public IActionResult Index(string slug)
         {
             if (slug != "")
@@ -35,6 +40,7 @@ namespace CmsCore.Web.Controllers
 
             }
             // get home page
+            
             var homePage = pageService.GetPageBySlug(slug);
             if (homePage == null)
             {
@@ -45,6 +51,7 @@ namespace CmsCore.Web.Controllers
                 }
                 else
                 {
+
                     PostViewModel postVM = new PostViewModel();
                     postVM.Id = post.Id;
                     postVM.Title = post.Title;
@@ -60,7 +67,7 @@ namespace CmsCore.Web.Controllers
                     postVM.Photo = post.Photo;
                     postVM.ViewCount = post.ViewCount;
 
-
+                    
                     return View("Post", postVM);
                 }
             }

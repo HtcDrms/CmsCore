@@ -40,10 +40,15 @@
                         <div class="form-group">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             @Html.HiddenFor(model => model.Id)
-                            <div class="form-body">
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.Name)
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @tabindex = "1", @class = "form-control", @onblur = "if ($('#Slug').val() == '') {$('#Slug').val(slug($('#Name').val().toLowerCase(),'-'));}" } })
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Slug)
+                                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @tabindex = "2", @class = "form-control", @onblur = "if ($('#Slug').val() == '') {$('#Slug').val(slug($('#Name').val().toLowerCase(),'-'));}" } })
+                                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-body">
                                 @Html.LabelFor(model => model.Description)

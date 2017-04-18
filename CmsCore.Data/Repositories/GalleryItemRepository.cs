@@ -80,9 +80,29 @@ namespace CmsCore.Data.Repositories
             totalDisplayRecords = filteredGalleries.Count();
             return displayedGalleries.ToList();
         }
+
+        public void UpdateGalleryItemGalleryItemCategories(long galItemId, string SelectedCategories)
+        {
+            GalleryItem galleryItem = DbContext.GalleryItems.Find(galItemId);
+
+            if (SelectedCategories != null)
+            {
+                galleryItem.GalleryItemGalleryItemCategories.Clear();
+                DbContext.SaveChanges();
+                var cateArray = SelectedCategories.Split(',');
+
+                foreach (var item in cateArray)
+                {
+                    galleryItem.GalleryItemGalleryItemCategories.Add(new GalleryItemGalleryItemCategory { GalleryItemId = galleryItem.Id, GalleryItemCategoryId = Convert.ToInt64(item) });
+                }
+            }
+            DbContext.Update(galleryItem);
+            DbContext.SaveChanges();
+        }
     }
     public interface IGalleryItemRepository : IRepository<GalleryItem>
     {
+        void UpdateGalleryItemGalleryItemCategories(long galItemId, string SelectedCategories);
         IEnumerable<GalleryItem> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
 }

@@ -16,6 +16,7 @@ namespace CmsCore.Admin.Models
 
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Slug { get; set; }
         public long? ParentCategoryId { get; set; }
         public virtual GalleryItemCategory ParentCategory { get; set; }
         public virtual ICollection<GalleryItemCategory> ChildCategories { get; set; }

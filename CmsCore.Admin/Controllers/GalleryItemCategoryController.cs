@@ -27,25 +27,32 @@ namespace CmsCore.Admin.Controllers
         {
             var galitemcvm = new GalleryItemCategoryViewModel();
             ViewBag.GalleryItemCategories = new SelectList(galleryItemCategoryService.GetGalleryItemCategories(), "Id", "Name");
+            
             return View(galitemcvm);
         }
 
         [HttpPost]
         public ActionResult Create(GalleryItemCategoryViewModel vm)
         {
-            GalleryItemCategory galitem = new GalleryItemCategory();
-            galitem.Name = vm.Name;
-            galitem.ParentCategoryId = vm.ParentCategoryId;
-            galitem.Description = vm.Description;
-            galitem.AddedBy = User.Identity.Name ?? "username";
-            galitem.AddedDate = DateTime.Now;
-            galitem.ModifiedBy = User.Identity.Name ?? "username";
-            galitem.ModifiedDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                GalleryItemCategory galitem = new GalleryItemCategory();
+                galitem.Name = vm.Name;
+                galitem.ParentCategoryId = vm.ParentCategoryId;
+                galitem.Description = vm.Description;
+                galitem.Slug = vm.Slug;
+                galitem.AddedBy = User.Identity.Name ?? "username";
+                galitem.AddedDate = DateTime.Now;
+                galitem.ModifiedBy = User.Identity.Name ?? "username";
+                galitem.ModifiedDate = DateTime.Now;
 
-            galleryItemCategoryService.CreateGalleryItemCategory(galitem);
-            galleryItemCategoryService.SaveGalleryItemCategory();
+                galleryItemCategoryService.CreateGalleryItemCategory(galitem);
+                galleryItemCategoryService.SaveGalleryItemCategory();
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+           
+            return View(vm);
         }
 
         public ActionResult Edit(long id)
@@ -57,6 +64,7 @@ namespace CmsCore.Admin.Controllers
                 GalleryItemCategoryViewModel linkCVM = new GalleryItemCategoryViewModel();
                 linkCVM.Id = galitem.Id;
                 linkCVM.Name = galitem.Name;
+                linkCVM.Slug = galitem.Slug;
                 linkCVM.Description = galitem.Description;
                 linkCVM.ParentCategoryId = galitem.ParentCategoryId;
                 ViewBag.GalleryItemCategories = new SelectList(galleryItemCategoryService.GetGalleryItemCategories().Where(c=>c.Id!=id), "Id", "Name", galitem.ParentCategoryId);
@@ -73,6 +81,7 @@ namespace CmsCore.Admin.Controllers
             {
                 GalleryItemCategory pc = galleryItemCategoryService.GetGalleryItemCategory(galCVM.Id);
                 pc.Name = galCVM.Name;
+                pc.Slug = galCVM.Slug;
                 pc.Description = galCVM.Description;
                 pc.ParentCategoryId = galCVM.ParentCategoryId;
                 galleryItemCategoryService.UpdateGalleryItemCategory(pc);

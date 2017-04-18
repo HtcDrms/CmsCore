@@ -16,6 +16,7 @@ using CmsCore.Data.Infrastructure;
 using CmsCore.Data.Repositories;
 using CmsCore.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Sakura.AspNetCore.Mvc;
 
 namespace CmsCore.Web
 {
@@ -57,6 +58,13 @@ namespace CmsCore.Web
             //    mySetting.AssetsUrl = "http://assets.bilgikoleji.com/";
             //    mySetting.UploadPath = "C:\\Users\\Admin\\Source\\Repos\\CmsCore\\CmsCore.Assets\\wwwroot\\uploads";
             //});
+            // Add default bootstrap-styled pager implementation
+            services.AddBootstrapPagerGenerator(options =>
+            {
+                // Use default pager options.
+                options.ConfigureDefault();
+            });
+            services.Configure<PagerOptions>(Configuration.GetSection("Pager"));
             services.AddMvc();
 
             // Add application services.
