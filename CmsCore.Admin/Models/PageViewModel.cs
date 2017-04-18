@@ -14,6 +14,8 @@ namespace CmsCore.Admin.Models
             IsPublished = true;
             ViewCount = 0;
             ChildPages = new HashSet<PageViewModel>();
+            TemplateId = 4;
+           
         }
         [Required]
         [MaxLength(200)]

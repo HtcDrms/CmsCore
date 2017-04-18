@@ -33,9 +33,10 @@ namespace CmsCore.Admin.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title");
-            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name");
+            
             var pageVM = new PageViewModel();
+            ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title");
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", pageVM.TemplateId);
             return View(pageVM);
         }
         [HttpPost]
