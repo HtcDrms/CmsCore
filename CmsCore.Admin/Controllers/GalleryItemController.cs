@@ -4,6 +4,7 @@ using CmsCore.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,11 +18,13 @@ namespace CmsCore.Admin.Controllers
     {
         private readonly IGalleryItemService galleryItemService;
         private readonly IGalleryItemCategoryService galleryItemCategoryService;
+        private readonly IGalleryService galleryService;
 
-        public GalleryItemController(IGalleryItemService galleryItemService, IGalleryItemCategoryService galleryItemCategoryService)
+        public GalleryItemController(IGalleryItemService galleryItemService, IGalleryItemCategoryService galleryItemCategoryService, IGalleryService galleryService)
         {
             this.galleryItemService = galleryItemService;
             this.galleryItemCategoryService = galleryItemCategoryService;
+            this.galleryService = galleryService;
         }
 
         public IActionResult Index()
@@ -33,6 +36,7 @@ namespace CmsCore.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.CategoryList = galleryItemCategoryService.GetGalleryItemCategories();
+            ViewBag.GalleryList = new SelectList(galleryService.GetGalleries(), "Id", "Name");
             return View();
         }
 
@@ -43,6 +47,7 @@ namespace CmsCore.Admin.Controllers
             {
                 GalleryItem gallery = new GalleryItem();
                 gallery.Title = galvm.Title;
+                gallery.GalleryId = galvm.GalleryId;
                 gallery.Description = galvm.Description;
                 gallery.Position = galleryItemService.CountGalleryItem() + 1;
                 gallery.AddedBy = User.Identity.Name??"username";
@@ -59,6 +64,7 @@ namespace CmsCore.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryList = galleryItemCategoryService.GetGalleryItemCategories();
+            ViewBag.GalleryList = new SelectList(galleryService.GetGalleries(), "Id", "Name");
             return View(galvm);
         }
 
@@ -67,10 +73,10 @@ namespace CmsCore.Admin.Controllers
             GalleryItem gallery = galleryItemService.GetGalleryItem(id);
             ViewBag.CategoryList = galleryItemCategoryService.GetGalleryItemCategories();
             ViewBag.CheckList = gallery.GalleryItemGalleryItemCategories;
-            
-
+            ViewBag.GalleryList = new SelectList(galleryService.GetGalleries(), "Id", "Name");
             GalleryItemViewModel galvm = new GalleryItemViewModel();
             galvm.Photo = gallery.Photo;
+            galvm.GalleryId = gallery.GalleryId;
             galvm.IsPublished = gallery.IsPublished;
             galvm.Description = gallery.Description;
             galvm.Position = gallery.Position;
@@ -95,6 +101,7 @@ namespace CmsCore.Admin.Controllers
                 gallery.Description = galvm.Description; 
                 gallery.Position = galleryItemService.CountGalleryItem() + 1;
                 gallery.AddedBy = galvm.AddedBy;
+                gallery.GalleryId = galvm.GalleryId;
                 gallery.AddedDate = galvm.AddedDate;
                 gallery.ModifiedBy = User.Identity.Name ?? "username";
                 gallery.ModifiedDate = DateTime.Now;
@@ -110,6 +117,7 @@ namespace CmsCore.Admin.Controllers
             var galleryR = galleryItemService.GetGalleryItem(galvm.Id);
             ViewBag.CategoryList = galleryItemCategoryService.GetGalleryItemCategories();
             ViewBag.CheckList = galleryR.GalleryItemGalleryItemCategories;
+            ViewBag.GalleryList = new SelectList(galleryService.GetGalleries(), "Id", "Name");
             return View(galvm);
         }
 

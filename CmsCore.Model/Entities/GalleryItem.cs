@@ -17,8 +17,9 @@ namespace CmsCore.Model.Entities
         public string Photo { get; set; }
         public string Video { get; set; }
         public string Meta1 { get; set; }
-        public bool IsPublished { get; set; }
-        
+        public long GalleryId { get; set; }
+        public virtual Gallery Gallery { get; set; }
+        public bool IsPublished { get; set; }        
         public virtual ICollection<GalleryItemGalleryItemCategory> GalleryItemGalleryItemCategories { get; set; }
     }
 }

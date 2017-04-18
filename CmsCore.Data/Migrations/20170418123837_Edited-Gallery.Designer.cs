@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170418123837_Edited-Gallery")]
+    partial class EditedGallery
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -1181,7 +1182,8 @@ namespace CmsCore.Data.Migrations
                 {
                     b.HasOne("CmsCore.Model.Entities.Gallery", "Gallery")
                         .WithMany("GalleryItems")
-                        .HasForeignKey("GalleryId");
+                        .HasForeignKey("GalleryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.GalleryItemCategory", b =>
