@@ -12,6 +12,7 @@ namespace CmsCore.Service
     {
         IEnumerable<Gallery> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Gallery> GetGalleries();
+        IEnumerable<GalleryItem> GetGalleryItems(string galleryName, int count);
         Gallery GetGallery(long id);
         void CreateGallery(Gallery slider);
         void UpdateGallery(Gallery slider);
@@ -41,6 +42,12 @@ namespace CmsCore.Service
         {
             var gallery = galleryRepository.GetById(id);
             return gallery;
+        }
+        public IEnumerable<GalleryItem> GetGalleryItems(string galleryName, int count)
+        {
+            galleryName = galleryName.ToLower();
+            var galleryItems = galleryRepository.Get(g => g.Name.ToLower() == galleryName && g.IsPublished == true, "GalleryItems").GalleryItems.Where(gi => gi.IsPublished == true).Take(count).ToList();
+            return galleryItems;
         }
         public void CreateGallery(Gallery gallery)
         {

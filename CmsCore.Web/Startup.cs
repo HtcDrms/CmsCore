@@ -92,6 +92,7 @@ namespace CmsCore.Web
             services.AddTransient<IFormFieldRepository, FormFieldRepository>();
             services.AddTransient<ISliderRepository, SliderRepository>();
             services.AddTransient<ISlideRepository, SlideRepository>();
+            services.AddTransient<IGalleryRepository, GalleryRepository>();
 
 
             // services
@@ -118,6 +119,7 @@ namespace CmsCore.Web
             services.AddTransient<IFormFieldService, FormFieldService>();
             services.AddTransient<ISliderService, SliderService>();
             services.AddTransient<ISlideService, SlideService>();
+            services.AddTransient<IGalleryService, GalleryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
