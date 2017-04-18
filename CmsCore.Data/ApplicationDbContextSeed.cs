@@ -27,6 +27,7 @@ namespace CmsCore.Data
             AddTemplates(context);
             context.SaveChanges();
             AddPages(context);
+            AddPostCategories(context);
             AddMenuLocations(context);
             context.SaveChanges();
             AddMenus(context);
@@ -64,6 +65,14 @@ namespace CmsCore.Data
                 new Page { Title = "Anasayfa", Slug = "anasayfa", TemplateId=3,LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
+        private static void AddPostCategories(ApplicationDbContext context)
+        {
+            context.AddRange(
+                new PostCategory { Name = "Haberler", Slug="haberler", LanguageId=1, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new PostCategory { Name = "Kadromuz", Slug = "kadromuz", LanguageId = 1, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                );
+        }
+
         private static void AddMenuLocations(ApplicationDbContext context)
         {
             context.AddRange(
@@ -126,8 +135,8 @@ namespace CmsCore.Data
                 new Template { Name = "Secondary", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new Template { Name = "Index", ViewName = "Index", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new Template { Name = "Page", ViewName = "Page", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Post", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Posts", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Template { Name = "Post", ViewName = "Post", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Posts", ViewName = "Posts", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
         private static void AddSliders(ApplicationDbContext context)
@@ -159,7 +168,7 @@ namespace CmsCore.Data
                 new FormField { Name = "E-posta", FormId = 1, FieldType = FieldType.email, Position = 2, Required = true, Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new FormField { Name = "Telefon", FormId = 1, FieldType = FieldType.telephone, Position = 3, Required = true, Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new FormField { Name = "Çocuğunuzu kaydettirmeyi düşündüğünüz okul aşağıdakilerden hangisidir?", FormId = 1, FieldType = FieldType.radioButtons, Position = 4, Required = true, Value = "Anaokulu,İlkokul,Ortaokul,Lise", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new FormField { Name = "Çocuğunuzu kaydettirmeyi düşündüğünüz sınıf hangisidir?", FormId = 1, FieldType = FieldType.dropdownMenu, Position = 5, Required = true, Value = "1,2,3,4", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new FormField { Name = "Çocuğunuzu kaydettirmeyi düşündüğünüz sınıf hangisidir?", FormId = 1, FieldType = FieldType.dropdownMenu, Position = 5, Required = true, Value = "Seçiniz,1,2,3,4", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new FormField { Name = "Abonelik", FormId = 1, FieldType = FieldType.checkbox, Position = 6, Required = true, Value = "Bilgi Koleji Okullarından gönderilen her türlü haber&#44; bilgi ve tanıtım içeriklerinden e-posta adresim ve telefonum aracılığıyla haberdar olmak istiyorum.", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
