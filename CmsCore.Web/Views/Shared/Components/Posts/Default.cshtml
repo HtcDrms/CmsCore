@@ -1,26 +1,26 @@
 ﻿@addTagHelper *, Sakura.AspNetCore.Mvc.PagedList
 @model Sakura.AspNetCore.IPagedList<Post>
 
-    @foreach (var item in Model)
-    {
-        <div class="edugate-layout-1">
-            <div class="edugate-image"><img src="@Html.Raw(item.Photo)" alt="" class="img-responsive" /></div>
-            <div class="edugate-content">
-                <a href="news-detail.html" class="title">@item.Title</a>
+@foreach (var item in Model)
+{
+    <div class="edugate-layout-1">
+        <div class="edugate-image"><img src="@Html.Raw(item.Photo)" alt="" class="img-responsive" /></div>
+        <div class="edugate-content">
+            <a href="news-detail.html" class="title">@item.Title</a>
 
-                <div class="info">
-                    <div class="date-time item"><a href="#">@item.AddedDate.ToString().Substring(0, 10)</a></div>
-                </div>
-                <div class="description">
-                    @Html.Raw(item.Description.PadLeft(120))
-                </div>
-                <a href="/@item.Slug" class="btn btn-green"><span>Devamını oku...</span></a>
+            <div class="info">
+                <div class="date-time item"><a href="#">@item.AddedDate.ToString().Substring(0, 10)</a></div>
             </div>
+            <div class="description">
+                @Html.Raw(item.Description.PadLeft(120))
+            </div>
+            <a href="/@item.Slug" class="btn btn-green"><span>Devamını oku...</span></a>
         </div>
-        
-        
+    </div>
 
-    }
+
+
+}
 </div>
 
 <div class="row">
@@ -28,17 +28,6 @@
         <ul class="pagination__list">
             <pager resource='Post' />
         </ul>
-</nav>
-</div>
-<div class="row">
-    <nav class="pagination col-md-12">
-        <ul class="pagination__list">
-            <li><a rel="prev" href="#" class="pagination__previous btn-squae disable">&#8249;</a></li>
-            <li><span class="pagination__page btn-squae active">1</span></li>
-            <li><a href="#" class="pagination__page btn-squae">2</a></li>
-            <li><a href="#" class="pagination__page btn-squae">...</a></li>
-            <li><a href="#" class="pagination__page btn-squae">14</a></li>
-            <li><a rel="next" href="#" class="pagination__next btn-squae">&#8250;</a></li>
-        </ul>
     </nav>
 </div>
+
