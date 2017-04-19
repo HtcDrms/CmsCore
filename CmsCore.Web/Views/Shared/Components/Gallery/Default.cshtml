@@ -19,9 +19,11 @@
             giCategories = giCategories.Distinct().ToList();
         }
         <ul role="tablist" class="nav nav-tabs edugate-tabs">
+            @{ bool isFirst = true; }
             @foreach (var cat in giCategories)
             { 
-                <li role="presentation" class="active"><a href="#@cat.Name.ToLower()" data-toggle="tab" class="text">@cat.Name</a></li>
+                <li role="presentation" @(isFirst?"class=active":string.Empty)><a href="#@cat.Name.ToLower()" data-toggle="tab" class="text">@cat.Name</a></li>
+                isFirst = false;
             }
             
             @*<li role="presentation"><a href="#education" data-toggle="tab" class="text">Eğitim</a></li>
@@ -31,9 +33,10 @@
         </ul>
         <!-- Tab panes-->
         <div class="tab-content gallery-content">
+            @{ isFirst = true; }
             @foreach (var cat in giCategories)
             {
-            <div id="@cat.Name.ToLower()" role="tabpanel" class="tab-pane fade in active">
+            <div id="@cat.Name.ToLower()" role="tabpanel" class="tab-pane fade in @(isFirst?"active":string.Empty)">
                 <div class="grid">
 
     @foreach (var item in Model.Where(m=>m.GalleryItemGalleryItemCategories.Any(a=>a.GalleryItemCategoryId == cat.Id)).ToList())
@@ -41,54 +44,13 @@
                     <div class="grid-item @item.Meta1"><a href="@item.Photo" class="content fancybox-button"><img src="@item.Photo" alt="" class="img-responsive" /></a></div>
         }
   
-                    @*<div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-3.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-3.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-4.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-4.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-6.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-6.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-5.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-5.jpg" alt="" class="img-responsive" /></a></div>*@
+                    
                 </div>
             </div>
-    }
-            @*<div id="education" role="tabpanel" class="tab-pane fade">
-                <div class="grid">
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-3.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-3.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-6.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-1.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-1.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-4.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-4.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-5.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-5.jpg" alt="" class="img-responsive" /></a></div>
-                </div>
-            </div>
-            <div id="building" role="tabpanel" class="tab-pane fade">
-                <div class="grid">
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-1.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-1.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-6.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-6.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-3.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-3.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-5.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-5.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-4.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-4.jpg" alt="" class="img-responsive" /></a></div>
-                </div>
-            </div>
-            <div id="teachers" role="tabpanel" class="tab-pane fade">
-                <div class="grid">
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-3.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-3.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-1.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-1.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-5.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-5.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-6.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-6.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-4.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-4.jpg" alt="" class="img-responsive" /></a></div>
-                </div>
-            </div>
-            <div id="students" role="tabpanel" class="tab-pane fade">
-                <div class="grid">
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-1.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-1.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-2.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-2.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height3"><a href="~/assets/images/lib-pictures/pictures-3.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-3.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-5.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-5.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height2"><a href="~/assets/images/lib-pictures/pictures-6.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-6.jpg" alt="" class="img-responsive" /></a></div>
-                    <div class="grid-item grid-item-height1"><a href="~/assets/images/lib-pictures/pictures-4.jpg" class="content fancybox-button"><img src="~/assets/images/lib-pictures/pictures-4.jpg" alt="" class="img-responsive" /></a></div>
-                </div>
-            </div>*@
+                isFirst = false;
+            }
+            
+            
         </div>
     </div>
 </div>

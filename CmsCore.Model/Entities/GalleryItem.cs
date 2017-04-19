@@ -10,6 +10,7 @@ namespace CmsCore.Model.Entities
         {
             IsPublished = true;
             GalleryItemGalleryItemCategories = new HashSet<GalleryItemGalleryItemCategory>();
+            Meta1 = "grid-item-height1";
         }
         public string Title { get; set; }
         public string Description { get; set; }

@@ -1,0 +1,23 @@
+﻿@model CmsCore.Model.Entities.Slider
+@if (Model != null && Model.Id > 0)
+{
+    <div class="section slider-logo">
+        <div class="container">
+            <div class="slider-logo-wrapper">
+                <div class="slider-logo-content">
+                    <div class="carousel-logos owl-carousel">
+                        @{ int index = 0;}
+                        @foreach (var slide in Model.Slides)
+                    {
+                        index++;
+    <div class="logo-iteam item"><a href="@(String.IsNullOrEmpty(slide.CallToActionUrl)?"javascript:void(0)":slide.CallToActionUrl)"><img src="@(slide.Photo)" alt="@slide.Title" class="img-responsive" /></a></div>
+            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                }
+
+
+
