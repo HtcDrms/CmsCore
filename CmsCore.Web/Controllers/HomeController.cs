@@ -8,6 +8,10 @@ using CmsCore.Web.Models;
 using CmsCore.Model.Entities;
 using Sakura.AspNetCore.Mvc;
 using Sakura.AspNetCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace CmsCore.Web.Controllers
 {
@@ -15,14 +19,67 @@ namespace CmsCore.Web.Controllers
     {
         private readonly IPageService pageService;
         private readonly IPostService postService;
+        private readonly IFeedbackService feedbackService;
        
-        public HomeController(IPageService pageService, IPostService postService)
+        public HomeController(IPageService pageService, IPostService postService, IFeedbackService feedbackService)
         {
             this.pageService = pageService;
             this.postService = postService;
+            this.feedbackService = feedbackService;
         }
-
         
+        [HttpPost]
+        public IActionResult PostForm(IFormCollection formCollection)
+        {
+            List<FeedbackValue> feedbackvalue=feedbackService.FeedbackPost(formCollection,null);
+            foreach (var item in feedbackvalue)
+            {
+                if (item.FieldType.ToString() == "multipleChoice" || item.FieldType.ToString() == "singleChoice" || item.FieldType.ToString() == "radioButtons")
+                {
+                    TagBuilder text = new TagBuilder("text");
+                    text.InnerHtml.SetHtmlContent(item.FormFieldName);
+                    TagBuilder list = new TagBuilder("ul");
+                    var items = item.Value.Split(',');
+                    string element = "";
+                    foreach (var item2 in items)
+                    {
+                        TagBuilder singlechoice = new TagBuilder("li");
+                        singlechoice.Attributes.Add("value", item2);
+                        singlechoice.InnerHtml.SetHtmlContent(item2);
+                        element += singlechoice.ToString() + "<br/>";
+                    }
+                    list.InnerHtml.SetHtmlContent(element);
+
+                    var write = new System.IO.StringWriter();
+                    text.WriteTo(write, HtmlEncoder.Default);
+                    var write2 = new System.IO.StringWriter();
+                    list.WriteTo(write2, HtmlEncoder.Default);
+
+                    string body = text.ToString() + "<br/>" + write2.ToString() + "<br/>";
+                    feedbackService.FeedbackPostMail(body, Convert.ToInt64(formCollection["FormId"]));
+                }
+                else
+                {
+                    TagBuilder text = new TagBuilder("text");
+                    text.InnerHtml.SetHtmlContent(item.FormFieldName);
+                    TagBuilder text2 = new TagBuilder("text");
+                    text2.InnerHtml.SetHtmlContent(item.Value);
+
+                    var write = new System.IO.StringWriter();
+                    text.WriteTo(write, HtmlEncoder.Default);
+                    var write2 = new System.IO.StringWriter();
+                    text2.WriteTo(write2, HtmlEncoder.Default);
+
+                    string body = write.ToString() + ":" + write2.ToString() + "<br/>";
+                    feedbackService.FeedbackPostMail(body, Convert.ToInt64(formCollection["FormId"]));
+                }
+            }
+            
+
+            return null;
+        }
+        
+
         public IActionResult Index(string slug)
         {
             if (slug != "")

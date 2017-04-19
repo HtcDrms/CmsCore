@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="1.14.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CmsCore.Data\CmsCore.Data.csproj" />
     <ProjectReference Include="..\CmsCore.Model\CmsCore.Model.csproj" />
   </ItemGroup>

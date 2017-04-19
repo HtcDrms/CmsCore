@@ -19,7 +19,6 @@ namespace CmsCore.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(string name)
         {
-
             var form = await GetForm(name);
             if (form == null)
             {
