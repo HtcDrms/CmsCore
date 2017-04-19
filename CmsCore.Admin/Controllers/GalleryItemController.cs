@@ -37,7 +37,8 @@ namespace CmsCore.Admin.Controllers
         {
             ViewBag.CategoryList = galleryItemCategoryService.GetGalleryItemCategories();
             ViewBag.GalleryList = new SelectList(galleryService.GetGalleries(), "Id", "Name");
-            return View();
+            var galleryItem = new GalleryItemViewModel();
+            return View(galleryItem);
         }
 
         [HttpPost]

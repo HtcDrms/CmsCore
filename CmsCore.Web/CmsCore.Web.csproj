@@ -13,6 +13,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\assets\libs\media-element\build\background.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\bigplay.fw.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\bigplay.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\bigplay.svg" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls-ted.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls-wmp-bg.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls-wmp.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls.fw.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\controls.svg" />
+    <Content Include="wwwroot\assets\libs\media-element\build\DO NOT CHANGE THESE FILES. USE -src- FOLDER.txt" />
+    <Content Include="wwwroot\assets\libs\media-element\build\flashmediaelement-cdn.swf" />
+    <Content Include="wwwroot\assets\libs\media-element\build\flashmediaelement-debug.swf" />
+    <Content Include="wwwroot\assets\libs\media-element\build\flashmediaelement.swf" />
+    <Content Include="wwwroot\assets\libs\media-element\build\jquery.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\jumpforward.png" />
+    <Content Include="wwwroot\assets\libs\media-element\build\loading.gif" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelement-and-player.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelement-and-player.min.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelement.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelement.min.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelementplayer.css" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelementplayer.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelementplayer.min.css" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mediaelementplayer.min.js" />
+    <Content Include="wwwroot\assets\libs\media-element\build\mejs-skins.css" />
+    <Content Include="wwwroot\assets\libs\media-element\build\silverlightmediaelement.xap" />
+    <Content Include="wwwroot\assets\libs\media-element\build\skipback.png" />
     <Content Include="wwwroot\images\anaokulu-kiz.png" />
     <Content Include="wwwroot\images\bilgiye-sevgi-katiyoruz.png" />
     <Content Include="wwwroot\images\blue-background.png" />

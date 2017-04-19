@@ -10,6 +10,7 @@ namespace CmsCore.Model.Entities
         public GalleryItemViewModel()
         {
             IsPublished = true;
+            Meta1 = "grid-item-height1";
         }
         [Required]
         public string Title { get; set; }
