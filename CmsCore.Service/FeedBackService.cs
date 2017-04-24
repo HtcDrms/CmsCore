@@ -21,8 +21,8 @@ namespace CmsCore.Service
         List<FeedbackValue> GetFeedbackValueByFeedbackId(long id);
         List<Feedback> GetFeedbacks(string User, int id);
         Feedback GetFeedback(int id);
-        List<FeedbackValue> FeedbackPost(IFormCollection collection, string filePath);
-        void FeedbackPostMail(string body,long id);
+        void FeedbackPost(IFormCollection collection, string filePath);
+        void FeedbackPostMail(string body, long id);
         void CreateFeedback(Feedback Feedback);
         void UpdateFeedback(Feedback Feedback);
         void DeleteFeedback(long id);
@@ -34,77 +34,54 @@ namespace CmsCore.Service
     {
         private readonly IFeedbackRepository feedbackRepository;
         private readonly IFormService formService;
+        private readonly ISettingService settingService;
         private readonly IUnitOfWork unitOfWork;
-        public FeedbackService(IFeedbackRepository FeedbackRepository, IUnitOfWork unitOfWork, IFormService formService)
+        public FeedbackService(IFeedbackRepository FeedbackRepository, IUnitOfWork unitOfWork, IFormService formService,ISettingService settingService)
         {
             this.feedbackRepository = FeedbackRepository;
             this.unitOfWork = unitOfWork;
             this.formService = formService;
+            this.settingService = settingService;
         }
         #region IFeedbackService Members
 
-        public List<FeedbackValue> FeedbackPost(IFormCollection collection, string filePath)
+        public void FeedbackPost(IFormCollection collection, string filePath)
         {
             int i = 3;
             Feedback feed_back = new Feedback();
-            
-            var aadad = collection["FormId"];
             var form = formService.GetForm(Convert.ToInt64(collection["FormId"]));
+            var body = "";
             foreach (var item in formService.GetFormFieldsByFormId(Convert.ToInt64(collection["FormId"])))
             {
                 var feedBackValue = new FeedbackValue();
-                
+
                 feedBackValue.FormFieldName = item.Name;
                 feedBackValue.FieldType = item.FieldType;
                 feedBackValue.FormFieldId = (int)item.Id;
                 feedBackValue.Position = item.Position;
-                feedBackValue.Value = item.Value;
                 feedBackValue.AddedBy = "username";
                 feedBackValue.AddedDate = DateTime.Now;
                 feedBackValue.ModifiedBy = "username";
                 feedBackValue.ModifiedDate = DateTime.Now;
-                if (item.FieldType.ToString() == "multipleChoice" || item.FieldType.ToString() == "radioButtons" || item.FieldType.ToString() == "singleChoice")
+                foreach (var item2 in collection)
                 {
-                    feedBackValue.Value = "";
-                    var choices = item.Value.Split(',');
-                    foreach (var choice in choices)
+                    if (item.Name == item2.Key)
                     {
-                        if (i < collection.Count && choice == collection[i.ToString()])
-                        {
-                            feedBackValue.Value += "(+)" + collection[i.ToString()] + ",";
-                            i++;
-                        }
-                        else if (i < collection.Count)
-                        {
-                            feedBackValue.Value += choice.ToString() + ",";
-                        }
-                    }
-                    feedBackValue.Value = feedBackValue.Value.Remove(feedBackValue.Value.Length - 1);
-                }
-                else if (item.FieldType.ToString() == "file")
-                {
-                    string FilePath = "File path string";
-                    string dosyaYolu = filePath;
-                    var yuklemeYeri = filePath;
-                }
-                else
-                {
-                    if (i < collection.Count)
-                    {
-                        //feedBackValue.Value = collection[i.ToString()];
-                        i++;
+                        feedBackValue.Value = item2.Value;
+                        body = body + item2.Key + " : " + item2.Value + "<br/>";
                     }
                 }
+
                 feed_back.FeedbackValues.Add(feedBackValue);
             }
             //feedBack.IP = GetUserIP();  // gönderen ip method u eklenecek
-            
+
             //var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress;
-            
-           
+
+
             feed_back.FormId = (int)form.Id;
             feed_back.FormName = form.FormName;
- 
+
             //feed_back.IP = remoteIpAddress.ToString();
             feed_back.SentDate = DateTime.Now;
             feed_back.UserName = "username";
@@ -116,10 +93,12 @@ namespace CmsCore.Service
             CreateFeedback(feed_back);
             SaveFeedback();
 
-            return feed_back.FeedbackValues.ToList();
+            FeedbackPostMail(body, form.Id);
+            //return feed_back.FeedbackValues.ToList();
+
         }
 
-        public void FeedbackPostMail(string body,long id)
+        public void FeedbackPostMail(string body, long id)
         {
             var form = formService.GetForm(id);
             if (form.EmailBcc != null || form.EmailCc != null || form.EmailTo != null)
@@ -149,13 +128,13 @@ namespace CmsCore.Service
                         message.To.Add(new MailboxAddress(item2.Trim(), item2.Trim()));
                     }
                 }
-                message.From.Add(new MailboxAddress("CMS Core", "ertyeni@gmail.com"));
+                message.From.Add(new MailboxAddress("CMS Core", settingService.GetSettingByName("Email").Value));
                 var bodyBuilder = new BodyBuilder();
                 message.Subject = "CMS Core " + form.FormName;
-               // foreach (var item in feed_back.FeedbackValues)
+                // foreach (var item in feed_back.FeedbackValues)
                 //{
-                    //message.Body += EmailString(item).ToString() + "<br/>";
-                    bodyBuilder.HtmlBody += body;
+                //message.Body += EmailString(item).ToString() + "<br/>";
+                bodyBuilder.HtmlBody += body;
                 //}
                 message.Body = bodyBuilder.ToMessageBody();
                 try
@@ -165,17 +144,15 @@ namespace CmsCore.Service
                         client.Connect("smtp.gmail.com", 587, false);
                         client.AuthenticationMechanisms.Remove("XOAUTH2");
                         // Note: since we don't have an OAuth2 token, disable 	// the XOAUTH2 authentication mechanism.
-                        client.Authenticate("ertyeni@gmail.com", "48448300+");
+                        client.Authenticate(settingService.GetSettingByName("Email").Value, settingService.GetSettingByName("EmailPassword").Value));
                         client.Send(message);
                         client.Disconnect(true);
                     }
-
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-
             }
         }
 
