@@ -155,6 +155,11 @@ namespace CmsCore.Web
                     defaults: new { controller = "Home", action = "PostForm"});
 
                 routes.MapRoute(
+                    name: "Successful",
+                    template: "Home/Successful",
+                    defaults: new { controller = "Home", action = "Successful" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{slug}",
                     defaults: new { controller = "Home", action = "Index", slug = "anasayfa" });

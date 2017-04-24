@@ -144,7 +144,7 @@ namespace CmsCore.Service
                         client.Connect("smtp.gmail.com", 587, false);
                         client.AuthenticationMechanisms.Remove("XOAUTH2");
                         // Note: since we don't have an OAuth2 token, disable 	// the XOAUTH2 authentication mechanism.
-                        client.Authenticate(settingService.GetSettingByName("Email").Value, settingService.GetSettingByName("EmailPassword").Value));
+                        client.Authenticate(settingService.GetSettingByName("Email").Value, settingService.GetSettingByName("EmailPassword").Value);
                         client.Send(message);
                         client.Disconnect(true);
                     }

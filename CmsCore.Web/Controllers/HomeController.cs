@@ -30,51 +30,10 @@ namespace CmsCore.Web.Controllers
 
         [HttpPost]
         public IActionResult PostForm(IFormCollection formCollection)
-        {
-            string body = "";
+        {           
             feedbackService.FeedbackPost(formCollection, null);
-            //foreach (var item in feedbackvalue)
-            //{
-            //    if (item.FieldType.ToString() == "multipleChoice" || item.FieldType.ToString() == "singleChoice" || item.FieldType.ToString() == "radioButtons")
-            //    {
-            //        TagBuilder text = new TagBuilder("text");
-            //        text.InnerHtml.SetHtmlContent(item.FormFieldName);
-            //        TagBuilder list = new TagBuilder("ul");
-            //        var items = item.Value.Split(',');
-            //        string element = "";
-            //        foreach (var item2 in items)
-            //        {
-            //            TagBuilder singlechoice = new TagBuilder("li");
-            //            singlechoice.Attributes.Add("value", item2);
-            //            singlechoice.InnerHtml.SetHtmlContent(item2);
-            //            element += singlechoice.ToString() + "<br/>";
-            //        }
-            //        list.InnerHtml.SetHtmlContent(element);
-            //        var write = new System.IO.StringWriter();
-            //        text.WriteTo(write, HtmlEncoder.Default);
-            //        var write2 = new System.IO.StringWriter();
-            //        list.WriteTo(write2, HtmlEncoder.Default);
-            //        body = body + text.ToString() + "<br/>" + write2.ToString() + "<br/>";
-
-            //    }
-            //    else
-            //    {
-            //        TagBuilder text = new TagBuilder("text");
-            //        text.InnerHtml.SetHtmlContent(item.FormFieldName);
-            //        TagBuilder text2 = new TagBuilder("text");
-            //        text2.InnerHtml.SetHtmlContent(item.Value);
-            //        var write = new System.IO.StringWriter();
-            //        text.WriteTo(write, HtmlEncoder.Default);
-            //        var write2 = new System.IO.StringWriter();
-            //        text2.WriteTo(write2, HtmlEncoder.Default);
-            //        body = body + write.ToString() + ":" + write2.ToString() + "<br/>";
-
-            //    }
-            //}
-            //feedbackService.FeedbackPostMail(body, Convert.ToInt64(formCollection["FormId"]));
-            return RedirectToAction("Index");
+            return RedirectToAction("Successful");
         }
-
 
         public IActionResult Index(string slug)
         {
@@ -150,6 +109,10 @@ namespace CmsCore.Web.Controllers
         public IActionResult Page404()
         {
             return View();
+        }
+        public IActionResult Successful()
+        {
+            return View("Successful");
         }
         public IActionResult Error()
         {
