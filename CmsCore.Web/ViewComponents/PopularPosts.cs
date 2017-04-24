@@ -22,7 +22,7 @@ namespace CmsCore.Web.ViewComponents
         }
         public Task<List<Post>> Popular(int total, long id)
         {
-            return Task.FromResult(postService.PopulerPost(total,id).ToList());
+            return Task.FromResult(postService.PopulerPost(total,id).Where(w=>w.IsPublished==true).ToList());
         }
 
     }

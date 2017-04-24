@@ -26,7 +26,7 @@ namespace CmsCore.Web.ViewComponents
         }
         private Task<List<MenuItem>> GetItems(string menuLocation)
         {           
-           return Task.FromResult(menuService.GetMenuItemsByLocationName(menuLocation).ToList());
+           return Task.FromResult(menuService.GetMenuItemsByLocationName(menuLocation).Where(w=>w.IsPublished==true).ToList());
         }
     }
 }

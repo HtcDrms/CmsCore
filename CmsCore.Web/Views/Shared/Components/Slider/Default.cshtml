@@ -5,7 +5,7 @@
         <!-- ~/videos/3383465.mov -->
         <div class="section slider-banner set-height-top">
             @{ int index = 0;}
-            @foreach (var slide in Model.Slides)
+            @foreach (var slide in Model.Slides.Where(w=>w.IsPublished==true).ToList())
                     {
                         index++;
             <div class="slider-item">

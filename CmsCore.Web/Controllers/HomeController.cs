@@ -30,7 +30,7 @@ namespace CmsCore.Web.Controllers
 
         [HttpPost]
         public IActionResult PostForm(IFormCollection formCollection)
-        {           
+        {
             feedbackService.FeedbackPost(formCollection, null);
             return RedirectToAction("Successful");
         }
@@ -54,7 +54,7 @@ namespace CmsCore.Web.Controllers
             // get home page
 
             var homePage = pageService.GetPageBySlug(slug);
-            if (homePage == null)
+            if (homePage == null || homePage.IsPublished == false)
             {
                 var post = postService.GetPostBySlug(slug);
                 if (post == null)
@@ -63,7 +63,10 @@ namespace CmsCore.Web.Controllers
                 }
                 else
                 {
-
+                    if (homePage.IsPublished == false)
+                    {
+                        return View("Page404");
+                    }
                     PostViewModel postVM = new PostViewModel();
                     postVM.Id = post.Id;
                     postVM.Title = post.Title;
@@ -85,6 +88,10 @@ namespace CmsCore.Web.Controllers
             }
             else
             {
+                if (homePage.IsPublished == false)
+                {
+                    return View("Page404");
+                }
                 PageViewModel pageVM = new PageViewModel();
                 pageVM.Id = homePage.Id;
                 pageVM.Title = homePage.Title;

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Posts";
+    ViewData["Title"] = "Blog";
 }
 <!-- WRAPPER-->
 <div id="wrapper-content">
@@ -14,16 +14,14 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="news-page-wrapper">
-                                    @await Component.InvokeAsync("Posts")
-
-
+                                    @await Component.InvokeAsync("Posts",new { categoryNames = "Blog"})
                                 </div>
                                 <div class="col-md-3 sidebar layout-right">
                                     <div class="row">
                                         <div class="recent-post-widget widget col-sm-6 col-md-12 col-xs-6 sd380">
                                             <div class="title-widget">Son Yazılar</div>
                                             <div class="content-widget">
-                                                @await Component.InvokeAsync("LatestPostsOnRightSection", new { categoryNames = "", count = 4, id = (long)-1 })
+                                                @await Component.InvokeAsync("LatestPostsOnRightSection", new { categoryNames = "Blog", count = 4, id = (long)-1 })
                                             </div>
                                         </div>
                                         <div class="popular-course-widget widget col-sm-6 col-md-12 col-xs-6 sd380">

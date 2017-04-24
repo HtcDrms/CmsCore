@@ -23,7 +23,7 @@ namespace CmsCore.Web.ViewComponents
         }
         private Task<List<Post>> GetItems(string categoryNames, int count)
         {
-            List<Post> posts = postService.GetPostsByCategoryNames(categoryNames, count).ToList();
+            List<Post> posts = postService.GetPostsByCategoryNames(categoryNames, count).Where(w=>w.IsPublished==true).ToList();
             return Task.FromResult(posts);
         }
     }
