@@ -35,6 +35,7 @@ namespace CmsCore.Web.Controllers
             return RedirectToAction("Successful");
         }
 
+        
         public IActionResult Index(string slug)
         {
             if (slug != "")
@@ -63,7 +64,7 @@ namespace CmsCore.Web.Controllers
                 }
                 else
                 {
-                    if (homePage.IsPublished == false)
+                    if (homePage == null || homePage.IsPublished == false)
                     {
                         return View("Page404");
                     }

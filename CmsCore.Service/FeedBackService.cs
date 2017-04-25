@@ -92,7 +92,7 @@ namespace CmsCore.Service
 
             CreateFeedback(feed_back);
             SaveFeedback();
-
+            body = body + "<br>" + "Gönderilme Tarihi : " + DateTime.Now;
             FeedbackPostMail(body, form.Id);
             //return feed_back.FeedbackValues.ToList();
 

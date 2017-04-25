@@ -9,9 +9,10 @@ using CmsCore.Model.Entities;
 namespace CmsCore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170425080357_Added-Media-Filepath-column")]
+    partial class AddedMediaFilepathcolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -160,15 +161,11 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<long?>("TemplateId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FormId");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("TemplateId");
 
                     b.ToTable("Forms");
                 });
@@ -1174,10 +1171,6 @@ namespace CmsCore.Data.Migrations
                     b.HasOne("CmsCore.Model.Entities.Language", "Language")
                         .WithMany("Forms")
                         .HasForeignKey("LanguageId");
-
-                    b.HasOne("CmsCore.Model.Entities.Template", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId");
                 });
 
             modelBuilder.Entity("CmsCore.Model.Entities.FormField", b =>

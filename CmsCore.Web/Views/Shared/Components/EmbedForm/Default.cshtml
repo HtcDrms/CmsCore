@@ -11,8 +11,16 @@
                     <input type="hidden" value="@Model.Id" name="FormId" />
                     @foreach (FormField item in Model.FormFields)
                     { <div class="formField">
-                        <formField form-field="item" required="false" read_only="false" show-placeholder="true" />
-                        @Html.ValidationMessage(item.Name, "", new { @class = "text-danger" })
+                        @if (item.Required)
+                        {
+                            <formField form-field="item" required="true" read_only="false" show-placeholder="true" />
+                            @Html.ValidationMessage(item.Name, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                        <formField form-field="item" read_only="false" show-placeholder="true" />
+                        }
+                        
 
                     </div>
                     }

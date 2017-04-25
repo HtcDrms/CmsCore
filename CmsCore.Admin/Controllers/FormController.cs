@@ -18,13 +18,16 @@ namespace CmsCore.Admin.Controllers
     {
         private readonly IFormService formService;
         private readonly IFormFieldService formFieldService;
-        public FormController(IFormService formService, IFormFieldService formFieldService){
+        private readonly ITemplateService templateService;
+        public FormController(IFormService formService, IFormFieldService formFieldService,ITemplateService templateService){
             this.formService = formService;
             this.formFieldService = formFieldService;
+            this.templateService = templateService;
         }
         // GET: Form
         public ActionResult Create(){
             var form = new FormViewModel();
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name");
             return View(form);
         }
         [HttpPost]
@@ -38,13 +41,15 @@ namespace CmsCore.Admin.Controllers
                 frm.ClosingDescription = form.ClosingDescription;
                 frm.EmailTo = form.EmailTo;
                 frm.EmailCc = form.EmailCc;
-                frm.EmailBcc = form.EmailBcc;  
+                frm.EmailBcc = form.EmailBcc;
+                frm.TemplateId = form.TemplateId;
                 frm.GoogleAnalyticsCode = form.GoogleAnalyticsCode;
                 frm.IsPublished = form.IsPublished;
                 formService.CreateForm(frm);
                 formService.SaveForm();
                 return RedirectToAction("Index");
             }
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name");
             return View(form);
         }
         public ActionResult Details(long id){
@@ -77,6 +82,7 @@ namespace CmsCore.Admin.Controllers
         public ActionResult Edit(long id) {
             var frm = formService.GetForm(id);
             if (frm != null){
+                ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name");
                 var formViewModel = new FormViewModel();
                 formViewModel.Id = frm.Id;
                 formViewModel.FormName = frm.FormName;
@@ -116,6 +122,7 @@ namespace CmsCore.Admin.Controllers
                 formService.SaveForm();
                 return RedirectToAction("Index");
             }
+            ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name");
             ViewBag.Forms = new SelectList(formService.GetForms(), "Id", "FormName");
             ViewBag.FormFields = new SelectList(formFieldService.GetFormFields(), "Id", "Name");
             return View(form);

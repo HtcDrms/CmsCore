@@ -19,6 +19,7 @@ namespace CmsCore.Web.Helpers
         public bool read_only { get; set; }
         public bool showPlaceholder { get; set; }
         public bool showLabel { get; set; }
+        public string cssClass { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
 
@@ -63,7 +64,7 @@ namespace CmsCore.Web.Helpers
                         textbox.Attributes.Add("value", "");
                     }
                 }
-                textbox.MergeAttribute("class", "form-control spinner");
+                textbox.MergeAttribute("class", "form-control " + this.cssClass);
                 textbox.Attributes.Add("width", "100%");
                 if (read_only == true)
                 {
@@ -113,7 +114,7 @@ namespace CmsCore.Web.Helpers
                         textboxArea.Attributes.Add("value", "");
                     }
                 }
-                textboxArea.MergeAttribute("class", "form-control spinner");
+                textboxArea.MergeAttribute("class", "form-control spinner " + this.cssClass);
                 textboxArea.Attributes.Add("width", "100%");
                 if (read_only == true)
                 {
@@ -123,7 +124,7 @@ namespace CmsCore.Web.Helpers
                 var writer = new System.IO.StringWriter();
                 textboxArea.WriteTo(writer, HtmlEncoder.Default);
 
-                output.PostContent.SetHtmlContent("<br/>" + writer.ToString());
+                output.PostContent.SetHtmlContent(writer.ToString());
             }
             else if (formField.FieldType == FieldType.dropdownMenu)
             {
@@ -181,7 +182,7 @@ namespace CmsCore.Web.Helpers
                 {
                     list.Attributes.Add("disabled", "disabled");
                 }
-                list.Attributes.Add("class", "form-control");
+                list.Attributes.Add("class", "form-control " + this.cssClass);
                 
                 var writer = new System.IO.StringWriter();
                 list.WriteTo(writer, HtmlEncoder.Default);
@@ -205,10 +206,18 @@ namespace CmsCore.Web.Helpers
                     TagBuilder multiplechoice = new TagBuilder("input");
                     multiplechoice.Attributes.Add("type", "checkbox");
                     multiplechoice.Attributes.Add("class", "");
-                    multiplechoice.Attributes.Add("name", formField.Name + i.ToString());
+                    //multiplechoice.Attributes.Add("name", formField.Name + i.ToString());
+                    multiplechoice.Attributes.Add("name", items.Count()>1?formField.Name+i.ToString():formField.Name);
+                    if (required==true)
+                    {
+                        multiplechoice.Attributes.Add("required", "required");
+                        multiplechoice.Attributes.Add("data-val", "true");
+                        multiplechoice.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
+                    }
                     if (item.ToString().Length > 3)
                     {
-                        if (item.ToString().Remove(3, item.Length - 3) == "(+)")
+                        
+                         if (item.ToString().Remove(3, item.Length - 3) == "(+)")
                         {
                             multiplechoice.Attributes.Add("value", item.ToString().Remove(0, 3));
                             multiplechoice.Attributes.Add("checked", "checked");
@@ -247,7 +256,7 @@ namespace CmsCore.Web.Helpers
                 TagBuilder email = new TagBuilder("input");
                 email.Attributes.Add("type", "email");
                 email.Attributes.Add("multiple", "true");
-                email.Attributes.Add("class", "form-control spinner");
+                email.Attributes.Add("class", "form-control spinner " + this.cssClass);
                 if (showPlaceholder)
                 {
                     email.Attributes.Add("placeholder", formField.Name);
@@ -297,7 +306,7 @@ namespace CmsCore.Web.Helpers
                 //var items = formInfo.Value.Split(',');
                 TagBuilder email = new TagBuilder("input");
                 email.Attributes.Add("type", "tel");
-                email.Attributes.Add("class", "form-control spinner");
+                email.Attributes.Add("class", "form-control spinner " + this.cssClass);
                 if (showPlaceholder)
                 {
                     email.Attributes.Add("placeholder", formField.Name);
@@ -461,7 +470,7 @@ namespace CmsCore.Web.Helpers
                         date.Attributes.Add("value", "");
                     }
                 }
-                date.Attributes.Add("class", "form-control spinner");
+                date.Attributes.Add("class", "form-control spinner " + this.cssClass);
                 date.Attributes.Add("name", formField.Name);
                 if (read_only == true)
                 {
@@ -516,7 +525,7 @@ namespace CmsCore.Web.Helpers
                     url.Attributes.Add("readonly", "readonly");
                 }
                 url.Attributes.Add("width", "100%");
-                url.Attributes.Add("class", "form-control spinner");
+                url.Attributes.Add("class", "form-control spinner" + this.cssClass);
                 url.Attributes.Add("name", formField.Name);
 
                 var writer = new System.IO.StringWriter();
@@ -565,7 +574,7 @@ namespace CmsCore.Web.Helpers
                 {
                     number.Attributes.Add("readonly", "readonly");
                 }
-                number.Attributes.Add("class", "form-control spinner");
+                number.Attributes.Add("class", "form-control spinner" + this.cssClass);
                 number.Attributes.Add("width", "100%");
                 number.Attributes.Add("name", formField.Name);
 
@@ -616,7 +625,7 @@ namespace CmsCore.Web.Helpers
                 {
                     time.Attributes.Add("readonly", "readonly");
                 }
-                time.Attributes.Add("class", "form-control spinner");
+                time.Attributes.Add("class", "form-control spinner "  + this.cssClass);
                 time.Attributes.Add("name", formField.Name);
 
                 var writer = new System.IO.StringWriter();

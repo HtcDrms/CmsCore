@@ -44,10 +44,10 @@ namespace CmsCore.Admin.Controllers
                     media.Title = mediaVM.Title;
                     media.FileName = uploadedFile.FileName;
                     media.Description = mediaVM.Description;
-                    media.Size = mediaVM.Size;
-                    media.AddedBy = "Cevdet";
+                    media.Size = (uploadedFile.Length/1024)/1024;
+                    media.AddedBy = User.Identity.Name ?? "username";
                     media.AddedDate = DateTime.Now;
-                    media.ModifiedBy = "CEVDET";
+                    media.ModifiedBy = User.Identity.Name ?? "username";
                     media.ModifiedDate = DateTime.Now;
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
@@ -58,9 +58,10 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\";
-                        string dosyaYolu = Path.GetFileName(uploadedFile.FileName);
-                        var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
+                        string FilePath = ViewBag.UploadPath + "\\media\\" +DateTime.Now.Month+DateTime.Now.Year+"\\";
+                        string dosyaismi = Path.GetFileName(uploadedFile.FileName);
+                        var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
+                        media.FilePath = yuklemeYeri;
                         try
                         {
                             if (!Directory.Exists(FilePath))
@@ -73,10 +74,10 @@ namespace CmsCore.Admin.Controllers
                                 uploadedFile.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
                             }
                             mediaService.CreateMedia(media);
-                            mediaService.SaveMedia();
+                            mediaService.SaveMedia();                            
                             return RedirectToAction("Index");
                         }
-                        catch (Exception) { }
+                        catch (Exception exc) { }
                     }
                     else
                     {
@@ -111,7 +112,7 @@ namespace CmsCore.Admin.Controllers
                 if (uploadedFile != null)
                 {
 
-                    media.ModifiedBy = User.Identity.Name ?? "CEVDET";
+                    media.ModifiedBy = User.Identity.Name ?? "username";
                     media.ModifiedDate = DateTime.Now;
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
@@ -120,11 +121,13 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".jpg"
                     || Path.GetExtension(uploadedFile.FileName) == ".gif"
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
+                    || Path.GetExtension(uploadedFile.FileName) == ".jpeg"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\";
-                        string dosyaYolu = Path.GetFileName(uploadedFile.FileName);
-                        var yuklemeYeri = Path.Combine(FilePath + dosyaYolu);
+                        string FilePath = ViewBag.AssetsUrl + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
+                        string dosyaismi = Path.GetFileName(uploadedFile.FileName);
+                        var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
+                        media.FilePath = yuklemeYeri;
                         try
                         {
                             if (!Directory.Exists(FilePath))
@@ -153,7 +156,25 @@ namespace CmsCore.Admin.Controllers
             return View(media);
         }
 
-        public IActionResult Delete(long id)
+        public IActionResult Details(long id)
+        {
+            var media = mediaService.GetMedia(id);
+            MediaViewModel mediaVM = new MediaViewModel();
+            mediaVM.Id = media.Id;
+            mediaVM.Title = media.Title;
+            mediaVM.Description = media.Description;
+            mediaVM.FileName = media.FileName;
+            mediaVM.FilePath = media.FilePath;
+            mediaVM.ModifiedDate = media.ModifiedDate;
+            mediaVM.ModifiedBy = media.ModifiedBy;
+            mediaVM.AddedBy = media.AddedBy;
+            mediaVM.AddedDate = media.AddedDate;
+            mediaVM.Size = media.Size;
+
+            return View(mediaVM);
+        }
+        
+            public IActionResult Delete(long id)
         {
             mediaService.DeleteMedia(id);
             mediaService.SaveMedia();

@@ -1,0 +1,62 @@
+﻿@model MediaViewModel
+@{
+    ViewData["Title"] = "Create File";
+}
+<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<script src="~/js/generate-slug.js"> </script><br />
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li><a asp-controller="Media" asp-action="Index" class="nav-link">Files</a><i class="fa fa-circle"></i></li>
+        <li><span>New File</span></li>
+    </ul>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12 ">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase ">Create New File</span>
+                </div>
+            </div>
+
+            <form asp-controller="Media" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12">
+                        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <legend>@Html.DisplayNameFor(model => model.Title)</legend>
+                            @Html.DisplayFor(model=>model.Title)                               
+                        </div>
+                        <div class="form-group">
+                            <legend>@Html.DisplayNameFor(model => model.FilePath)</legend>
+                            @Html.Raw(Model.FilePath)
+                        </div>
+                        <div class="form-group">
+                            <legend>@Html.DisplayNameFor(model => model.FileName)</legend>
+                            @Html.Raw(Model.FileName)
+                        </div>
+                        <div class="form-group">
+                            <legend>@Html.DisplayNameFor(model => model.Description)</legend>
+                            @Html.Raw(Model.Description)
+                        </div>
+                        
+                        <div class="form-group">
+                            <legend>@Html.DisplayNameFor(model => model.Size)</legend>
+                            @Html.Raw(Model.Size) Mb
+                        </div>
+                        <div class="form-group">
+                            <a type="button" tabindex="11" class="btn default" href="/Media/Index">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

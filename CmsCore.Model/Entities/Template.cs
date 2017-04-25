@@ -19,5 +19,6 @@ namespace CmsCore.Model.Entities
         public virtual ICollection<TemplateSection> TemplateSections { get; set; }
         public virtual ICollection<Page> Pages { get; set; }
         public virtual ICollection<Slider> Sliders { get; set; }
+        public virtual ICollection<Form> Forms { get; set; }
     }
 }

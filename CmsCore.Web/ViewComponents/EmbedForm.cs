@@ -17,17 +17,17 @@ namespace CmsCore.Web.ViewComponents
             this.formService = formService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string name)
+        public async Task<IViewComponentResult> InvokeAsync(string name,string template)
         {
-            var form = await GetForm(name);
+            var form = await GetForm(name,template);
             if (form == null)
             {
                 form = new Form();
             }
-            return View("Default",form);
+            return View(template,form);
           
         }
-        private Task<CmsCore.Model.Entities.Form> GetForm(string formName)
+        private Task<CmsCore.Model.Entities.Form> GetForm(string formName,string template)
         {           
            return Task.FromResult(formService.GetForm(formName));
         }
