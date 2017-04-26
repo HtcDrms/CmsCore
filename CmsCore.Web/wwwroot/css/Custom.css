@@ -185,7 +185,16 @@ li.accordion {
     outline: none;
     transition: 0.4s;
 }
-
+.choose-course .icon-circle {
+    margin:initial;
+}
+.choose-course .item-4 .icon-circle {
+    margin:0 auto;
+    margin-right:10px;
+}
+.choose-course .icon-circle .icon-background {
+    z-index: 99;
+}
 .item-course.item-1 {
     padding-top: 220px;
 }
@@ -208,7 +217,7 @@ li.accordion {
 
 .item-course.item-2 {
     padding-top: 80px;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -229,7 +238,7 @@ li.accordion {
 }
 
 .item-course.item-3 {
-    text-align: center;
+    text-align: left;
 }
 
     .item-course.item-3 > .icon-circle {
@@ -248,11 +257,6 @@ li.accordion {
     color: rgb(63,174,72);
 }
 
-.item-course.item-4 {
-    padding-top: 40px;
-    padding-left: 50px;
-    text-align: center;
-}
 
     .item-course.item-4 > .icon-circle {
         zoom: 1.6;
@@ -268,7 +272,7 @@ li.accordion {
 
 .choose-course .item-4 .name-course a {
     color: rgb(0,130,190);
-    padding-left: 60px;
+    padding-left: 30px;
 }
 
 .choose-course .icon-circle .info .info-back a {
