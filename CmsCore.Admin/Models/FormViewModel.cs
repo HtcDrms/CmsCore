@@ -21,6 +21,9 @@ namespace CmsCore.Admin.Models
 
         public string EmailCc { get; set; }
 
+        public long? TemplateId { get; set; }
+        public virtual Template Template { get; set; }
+
         public string Description { get; set; }
 
         public string ClosingDescription { get; set; }

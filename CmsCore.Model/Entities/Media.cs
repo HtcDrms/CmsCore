@@ -11,5 +11,6 @@ namespace CmsCore.Model.Entities
         public string FileName { get; set; }
         public string Description { get; set; }
         public decimal Size { get; set; }
+        public string FilePath { get; set; }
     }
 }

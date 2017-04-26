@@ -14,6 +14,7 @@ namespace CmsCore.Model.EntityBuilders
         {
             entityBuilder.HasKey(a => a.Id);
             entityBuilder.HasOne(p => p.Language).WithMany(l => l.Forms).HasForeignKey(p => p.LanguageId).OnDelete(DeleteBehavior.Restrict);
+            entityBuilder.HasOne(e => e.Template).WithMany(t => t.Forms).HasForeignKey(p => p.TemplateId);
         }
     }
 }

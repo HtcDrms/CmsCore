@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
 using MailKit.Net.Smtp;
 using MailKit;
 using MimeKit;
@@ -180,7 +179,7 @@ namespace CmsCore.Admin.Controllers
                             message.To.Add(new MailboxAddress(item2.Trim(), item2.Trim()));
                         }
                     }
-                    message.From.Add(new MailboxAddress("CMS Core", "ertyeni@gmail.com"));
+                    message.From.Add(new MailboxAddress("CMS Core", settingService.GetSettingByName("Email").Value));
                     var bodyBuilder = new BodyBuilder();
                     message.Subject = "CMS Core " + feedBack.FormName;
                     foreach (var item in feed_back.FeedbackValues)
@@ -196,7 +195,7 @@ namespace CmsCore.Admin.Controllers
                             client.Connect("smtp.gmail.com", 587, false);
                             client.AuthenticationMechanisms.Remove("XOAUTH2");
                             // Note: since we don't have an OAuth2 token, disable 	// the XOAUTH2 authentication mechanism.
-                            client.Authenticate("ertyeni@gmail.com", "48448300+");
+                            client.Authenticate(settingService.GetSettingByName("Email").Value, settingService.GetSettingByName("EmailPassword").Value);
                             client.Send(message);
                             client.Disconnect(true);
                         }

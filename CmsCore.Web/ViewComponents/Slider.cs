@@ -33,8 +33,10 @@ namespace CmsCore.Web.ViewComponents
           
         }
         private Task<CmsCore.Model.Entities.Slider> GetSlider(string sliderName)
-        {           
-           return Task.FromResult(sliderService.GetSlider(sliderName));
+        {
+            var sl = sliderService.GetSlider(sliderName, true);
+            
+           return Task.FromResult(sliderService.GetSlider(sliderName,true));
         }
     }
 }

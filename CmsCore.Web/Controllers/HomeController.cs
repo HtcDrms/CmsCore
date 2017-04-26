@@ -8,6 +8,10 @@ using CmsCore.Web.Models;
 using CmsCore.Model.Entities;
 using Sakura.AspNetCore.Mvc;
 using Sakura.AspNetCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace CmsCore.Web.Controllers
 {
@@ -15,11 +19,20 @@ namespace CmsCore.Web.Controllers
     {
         private readonly IPageService pageService;
         private readonly IPostService postService;
-       
-        public HomeController(IPageService pageService, IPostService postService)
+        private readonly IFeedbackService feedbackService;
+
+        public HomeController(IPageService pageService, IPostService postService, IFeedbackService feedbackService)
         {
             this.pageService = pageService;
             this.postService = postService;
+            this.feedbackService = feedbackService;
+        }
+
+        [HttpPost]
+        public IActionResult PostForm(IFormCollection formCollection)
+        {
+            feedbackService.FeedbackPost(formCollection, null);
+            return RedirectToAction("Successful");
         }
 
         
@@ -40,9 +53,9 @@ namespace CmsCore.Web.Controllers
 
             }
             // get home page
-            
+
             var homePage = pageService.GetPageBySlug(slug);
-            if (homePage == null)
+            if (homePage == null || homePage.IsPublished == false)
             {
                 var post = postService.GetPostBySlug(slug);
                 if (post == null)
@@ -51,7 +64,10 @@ namespace CmsCore.Web.Controllers
                 }
                 else
                 {
-
+                    if (homePage == null || homePage.IsPublished == false)
+                    {
+                        return View("Page404");
+                    }
                     PostViewModel postVM = new PostViewModel();
                     postVM.Id = post.Id;
                     postVM.Title = post.Title;
@@ -67,12 +83,16 @@ namespace CmsCore.Web.Controllers
                     postVM.Photo = post.Photo;
                     postVM.ViewCount = post.ViewCount;
 
-                    
+
                     return View("Post", postVM);
                 }
             }
             else
             {
+                if (homePage.IsPublished == false)
+                {
+                    return View("Page404");
+                }
                 PageViewModel pageVM = new PageViewModel();
                 pageVM.Id = homePage.Id;
                 pageVM.Title = homePage.Title;
@@ -97,6 +117,10 @@ namespace CmsCore.Web.Controllers
         public IActionResult Page404()
         {
             return View();
+        }
+        public IActionResult Successful()
+        {
+            return View("Successful");
         }
         public IActionResult Error()
         {

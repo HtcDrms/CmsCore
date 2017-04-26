@@ -153,11 +153,18 @@ namespace CmsCore.Data
                 new Slide { Title = "Image", SliderId=1, Photo = "946468297image-slider-2.jpg", CallToActionUrl = "#", IsPublished = true, DisplayTexts = false, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
+        private static void AddSetting(ApplicationDbContext context)
+        {
+            context.AddRange(
+                new Setting { Name="Email",Value="ertyeni@gmail.com",AddedBy="username",AddedDate=DateTime.Now,ModifiedBy="username",ModifiedDate=DateTime.Now},
+                new Setting { Name = "EmailPassword", Value = "###", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                );
+        }
 
         private static void AddForms(ApplicationDbContext context)
         {
             context.AddRange(
-                new Form { FormName = "Sizi Arayalım", EmailTo="mdemirci@outlook.com", LanguageId=1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Form { FormName = "Sizi Arayalım", EmailTo="ertyeni@gmail.com", LanguageId=1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
 

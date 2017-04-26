@@ -12,6 +12,7 @@ namespace CmsCore.Service
     {
         IEnumerable<Page> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Page> GetPages();
+        IEnumerable<Page> ChildPagesWeb(long id);
         Page GetPage(long id);
         Page GetPageBySlug(string slug);
         IEnumerable<Page> ChildPages(long id);
@@ -56,6 +57,21 @@ namespace CmsCore.Service
         public IEnumerable<Page> ChildPages(long id)
         {
             var childs = pagesRepository.GetById(id,"ChildPages").ChildPages;
+            return childs;
+        }
+        
+        public IEnumerable<Page> ChildPagesWeb(long id)
+        {
+            Page page = GetPage(id);
+            IEnumerable<Page> childs;
+            if (page.ParentPageId==null)
+            {
+                childs = pagesRepository.GetById(id, "ChildPages").ChildPages;
+            }
+            else
+            {
+               childs= pagesRepository.GetAll().Where(w => w.ParentPageId == page.ParentPageId).ToList();
+            }
             return childs;
         }
 

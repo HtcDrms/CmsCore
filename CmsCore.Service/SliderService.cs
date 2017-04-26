@@ -13,7 +13,7 @@ namespace CmsCore.Service
         IEnumerable<Slider> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Slider> GetSliders();
         Slider GetSlider(long id);
-        Slider GetSlider(string name);
+        Slider GetSlider(string name, bool? status);
         List<Slide> GetSlidesBySliderId(long id);
         void CreateSlider(Slider slider);
         void UpdateSlider(Slider slider);
@@ -41,7 +41,7 @@ namespace CmsCore.Service
         }
         public List<Slide> GetSlidesBySliderId(long id)
         {
-            Slider slider = sliderRepository.GetById(id,"Slides");
+            Slider slider = sliderRepository.GetById(id, "Slides");
             return slider.Slides.OrderBy(c => c.Position).ToList();
         }
         public Slider GetSlider(long id)
@@ -49,11 +49,26 @@ namespace CmsCore.Service
             var slider = sliderRepository.GetById(id, "Template", "Slides");
             return slider;
         }
-        public Slider GetSlider(string name)
+        public Slider GetSlider(string name, bool? status)
         {
             name = name.ToLower();
-            var slider = sliderRepository.Get(s => s.Name.ToLower() == name,"Template","Slides");
-            return slider;
+            var slider = sliderRepository.Get(s => s.Name.ToLower() == name, "Template", "Slides");
+            if (status == null) { return slider; }
+            if (status.HasValue && status.Value == true)
+            {
+                if(slider != null && slider.IsPublished)
+                {
+                    return slider;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return slider;
+            }
         }
         public void CreateSlider(Slider slider)
         {

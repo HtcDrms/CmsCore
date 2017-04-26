@@ -24,6 +24,9 @@ namespace CmsCore.Model.Entities
 
         public string Description { get; set; }
 
+        public long? TemplateId { get; set; }
+        public virtual Template Template { get; set; }
+
         public string ClosingDescription { get; set; }
 
         public string GoogleAnalyticsCode { get; set; }

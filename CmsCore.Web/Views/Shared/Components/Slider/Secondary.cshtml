@@ -4,9 +4,9 @@
     <div id="homeSlider2" style="clear:both;">
         <div class="section slider-banner set-height-top" style="background:url('/images/background-gradient-gray.png') no-repeat whitesmoke">
             @{ int index = 0;}
-            @foreach (var slide in Model.Slides)
-                    {
-                        index++;
+            @foreach (var slide in Model.Slides.Where(w => w.IsPublished == true).ToList())
+            {
+                index++;
             <div class="slider-item">
 
                 <div class="slider-@index">

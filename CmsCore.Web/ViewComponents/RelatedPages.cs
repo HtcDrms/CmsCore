@@ -26,7 +26,7 @@ namespace CmsCore.Web.ViewComponents
 
         public Task<List<Page>> RelatedPage(long Id)
         {
-            return Task.FromResult(pageService.ChildPages(Id).ToList());
+            return Task.FromResult(pageService.ChildPagesWeb(Id).Where(w=>w.IsPublished==true).ToList());
         }
     }
 }

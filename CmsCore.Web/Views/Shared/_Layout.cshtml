@@ -9,7 +9,7 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+      
         <!-- Temps Files-->
         <script src="https://use.typekit.net/orp0qua.js"></script>
         <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
@@ -33,7 +33,7 @@
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        
         <!-- Temps Files-->
         <script src="https://use.typekit.net/orp0qua.js"></script>
         <script>try { Typekit.load({ async: true }); } catch (e) { }</script>
@@ -324,7 +324,7 @@
                 <div class="content" style="overflow:hidden!important">
                     @RenderBody()
                     <div id="floatingButton"><div class="embededForm" id="floatingForm" style="display:none">
-                                                 @await Component.InvokeAsync("EmbedForm", new { name = "Sizi Arayalım" })
+                                                 @await Component.InvokeAsync("EmbedForm", new { name = "Sizi Arayalım",template="Default" })
                                                  </div><a href="javascript:void(0);" onclick="$('#floatingForm').slideToggle('slow')" class="show">
                                                  <img src="~/images/telephone.png" style="float:left;" /><span style="display:inline-block;padding-top:1px;font-size:large">SİZİ ARAYALIM</span></a></div>
                     <!-- BUTTON BACK TO TOP-->

@@ -23,7 +23,7 @@ namespace CmsCore.Web.ViewComponents
         }
         private Task<List<CmsCore.Model.Entities.GalleryItem>> GetItems(string galleryName, int count)
         {
-            List<CmsCore.Model.Entities.GalleryItem> galleries = galleryService.GetGalleryItems(galleryName, count).ToList();
+            List<CmsCore.Model.Entities.GalleryItem> galleries = galleryService.GetGalleryItems(galleryName, count).Where(w=>w.IsPublished==true).ToList();
             return Task.FromResult(galleries);
         }
     }

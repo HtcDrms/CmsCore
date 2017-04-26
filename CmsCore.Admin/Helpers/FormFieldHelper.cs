@@ -181,6 +181,17 @@ namespace CmsCore.Admin.Helpers
                     multiplechoice.Attributes.Add("type", "checkbox");
                     multiplechoice.Attributes.Add("class", "");
                     multiplechoice.Attributes.Add("name", formField.Name + i.ToString());
+                    if (required == true)
+                    {
+                        
+                        multiplechoice.Attributes.Add("required", "required");
+                        if (formField.Value != null)
+                        {
+                            multiplechoice.Attributes.Add("value", item.ToString().Remove(0, 3));
+                        }
+                        multiplechoice.Attributes.Add("data-val", "true");
+                        multiplechoice.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
+                    }
                     if (item.ToString().Length > 3)
                     {
                         if (item.ToString().Remove(3, item.Length - 3) == "(+)")
@@ -188,6 +199,17 @@ namespace CmsCore.Admin.Helpers
                             multiplechoice.Attributes.Add("value", item.ToString().Remove(0, 3));
                             multiplechoice.Attributes.Add("checked", "checked");
                             multiplechoice.InnerHtml.SetHtmlContent(item.ToString().Remove(0, 3));
+                        }
+                        else if (required == true)
+                        {
+
+                            multiplechoice.Attributes.Add("required", "required");
+                            if (formField.Value != null)
+                            {
+                                multiplechoice.Attributes.Add("value", item.ToString().Remove(0, 3));
+                            }
+                            multiplechoice.Attributes.Add("data-val", "true");
+                            multiplechoice.Attributes.Add("data-val-required", "Lütfen bu alanı boş bırakmayınız.");
                         }
                         else
                         {

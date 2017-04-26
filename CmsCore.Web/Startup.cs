@@ -93,6 +93,7 @@ namespace CmsCore.Web
             services.AddTransient<ISliderRepository, SliderRepository>();
             services.AddTransient<ISlideRepository, SlideRepository>();
             services.AddTransient<IGalleryRepository, GalleryRepository>();
+            services.AddTransient<IFeedbackRepository, FeedbackRepository>();
 
 
             // services
@@ -120,6 +121,7 @@ namespace CmsCore.Web
             services.AddTransient<ISliderService, SliderService>();
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IGalleryService, GalleryService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -147,6 +149,16 @@ namespace CmsCore.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "PostForm",
+                    template: "Home/PostForm",
+                    defaults: new { controller = "Home", action = "PostForm"});
+
+                routes.MapRoute(
+                    name: "Successful",
+                    template: "Home/Successful",
+                    defaults: new { controller = "Home", action = "Successful" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{slug}",
