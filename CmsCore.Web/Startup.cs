@@ -122,6 +122,7 @@ namespace CmsCore.Web
             services.AddTransient<ISlideService, SlideService>();
             services.AddTransient<IGalleryService, GalleryService>();
             services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<ISearchService, SearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

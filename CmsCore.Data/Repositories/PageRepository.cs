@@ -1,4 +1,5 @@
 ﻿using CmsCore.Data.Infrastructure;
+using CmsCore.Model.Dtos;
 using CmsCore.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,22 @@ namespace CmsCore.Data.Repositories
         {
             slug = slug.ToLower();
             return Get(p => p.Slug == slug,"Template");
+        }
+
+        public List<SearchDto> Search(string words)
+        {
+            words = words.Trim();
+            var searchWords = words.Split(' ');
+            var query = DbContext.Pages.AsQueryable();
+            List<SearchDto> dto = new List<SearchDto>();
+            foreach (string word in searchWords)
+            {
+                if (word != null && word != "")
+                {
+                    dto = query.Where(w => w.IsPublished == true).Where(p => p.Body.Contains(word) || p.Title.Contains(word) || p.SeoDescription.Contains(word) || p.SeoKeywords.Contains(word) || p.SeoKeywords.Contains(word)).Select(s => new SearchDto { Title = s.Title, Slug = s.Slug,ViewCount=s.ViewCount }).ToList();
+                }
+            }
+            return dto;
         }
 
         public IEnumerable<Page> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords)
@@ -94,6 +111,7 @@ namespace CmsCore.Data.Repositories
     public interface IPageRepository : IRepository<Page>
     {
         Page GetBySlug(string slug);
+        List<SearchDto> Search(string words);
         IEnumerable<Page> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
 }

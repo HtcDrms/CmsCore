@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Bilgi Koleji Ara";
+}
+<div id="wrapper-content">
+    <!-- PAGE WRAPPER-->
+    <div id="page-wrapper">
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <!-- CONTENT-->
+            <div class="content">
+                <div class="section">
+                    <div class="search-input">
+                        <div class="container">
+                            <div class="search-input-wrapper">
+                                <form action="/ara" method="get">
+                                    <div class="form-group form-inline">
+                                        <input type="text" placeholder="Arayınız." name="query" class="form-input" />                                        
+                                        <button type="submit" class="form-submit btn btn-blue"><span>hızlı ara<i class="fa fa-search"></i></span></button>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section section-padding list-categories">
+                    <div class="container">
+                        <div class="list-categories-wrapper">
+                            <div class="list-categories-content row">
+                                <div class="customs-row">
+                                    @await Component.InvokeAsync("Search")
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BUTTON BACK TO TOP-->
+    <div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>
+</div>

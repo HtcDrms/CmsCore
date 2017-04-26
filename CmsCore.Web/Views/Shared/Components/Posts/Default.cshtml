@@ -6,7 +6,7 @@
     <div class="edugate-layout-1">
         <div class="edugate-image"><img src="@Html.Raw(item.Photo)" alt="" class="img-responsive" /></div>
         <div class="edugate-content">
-            <a href="news-detail.html" class="title">@item.Title</a>
+            <a href="/@item.Slug" class="title">@item.Title</a>
 
             <div class="info">
                 <div class="date-time item"><a href="#">@item.AddedDate.ToString().Substring(0, 10)</a></div>
