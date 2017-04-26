@@ -250,6 +250,7 @@
     // owl carousel for ....
     var shw_slider_carousel = function() {
          // owl carousel slider banner
+        if ($('.slider-banner').children().length>1) {
         $('.slider-banner').owlCarousel({
             margin: 0,
             loop: true,
@@ -269,56 +270,60 @@
                     items: 1
                 }
             }
-        });
+            });
+        }
 
          // owl carousel event-detail-list-staff
-        $('.event-detail-list-staff').owlCarousel({
-            margin: 30,
-            loop: true,
-            nav: false,
-            responsiveClass: true,
-            autoplay:true,
-            autoplayTimeout: 7000,
-            smartSpeed: 1000,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                480: {
-                    items: 2
-                },
-                600: {
-                    items: 2
-                },
-                768: {
-                    items: 3,
-                    margin: 15
-                },
-                1024: {
-                    items: 3
+        if ($('.event-detail-list-staff').children().length > 1) {
+            $('.event-detail-list-staff').owlCarousel({
+                margin: 30,
+                loop: true,
+                nav: false,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 7000,
+                smartSpeed: 1000,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    480: {
+                        items: 2
+                    },
+                    600: {
+                        items: 2
+                    },
+                    768: {
+                        items: 3,
+                        margin: 15
+                    },
+                    1024: {
+                        items: 3
+                    }
                 }
-            }
-        });
-
-        // owl carousel top courses
-        $('.top-courses-slider').owlCarousel({
-            margin: 30,
-            loop: true,
-            nav: false,
-            responsiveClass: true,
-            smartSpeed: 1000,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                1024: {
-                    items: 1
-                },
-                1025: {
-                    items: 2
+            });
+        }
+        if ($('.top-courses-slider').children().length > 1) {
+            // owl carousel top courses
+            $('.top-courses-slider').owlCarousel({
+                margin: 30,
+                loop: true,
+                nav: false,
+                responsiveClass: true,
+                smartSpeed: 1000,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    1024: {
+                        items: 1
+                    },
+                    1025: {
+                        items: 2
+                    }
                 }
-            }
-        });
+            });
+        }
         // button click slider top courses
         $('.group-btn-top-courses-slider .btn-prev').on('click', function(){
             $('.top-courses-slider .owl-prev').click();
@@ -328,6 +333,7 @@
         });
 
         // owl carousel slider logos
+        if ($('.carousel-logos').children().length > 1) {
         $('.carousel-logos').owlCarousel({
             margin: 115,
             loop: true,
@@ -367,8 +373,9 @@
                 }
             }
         });
-
+        }
         // owl carousel slider best staff
+        if ($('.best-staff-content').children().length > 1) {
         $('.best-staff-content').owlCarousel({
             margin: 30,
             loop: true,
@@ -396,7 +403,8 @@
                     items: 4
                 }
             }
-        });
+            });
+        }
         // button click slider best staff
         $('.best-staff .group-btn-slider .btn-prev').on('click', function(){
             $('.best-staff .owl-prev').click();
@@ -406,7 +414,8 @@
         });
 
         // responsive for section pricing when screen < 768
-        if ($(window).width() <= 768){
+        if ($(window).width() <= 768) {
+            if ($('.pricing-wrapper').children().length > 1) {
             $('.pricing-wrapper').owlCarousel({
                 margin: 15,
                 loop: true,
@@ -426,7 +435,8 @@
                     }
                 }
             });
-
+            }
+            if ($('.event-detail-content .row').children().length > 1) {
             $('.event-detail-content .row').owlCarousel({
                 margin: 15,
                 loop: true,
@@ -442,7 +452,8 @@
                         items: 2
                     }
                 }
-            });
+                });
+            }
         };
         // button click slider
         $('.pricing .group-btn-slider .btn-prev').on('click', function(){
@@ -453,7 +464,8 @@
         });
 
         // Responsive for Progress bar when screen < 767
-        if ($(window).width() <= 767){
+        if ($(window).width() <= 767) {
+            if ($('.progress-bar-wrapper .content').children().length > 1) {
             $('.progress-bar-wrapper .content').owlCarousel({
                 margin: 0,
                 loop: true,
@@ -476,7 +488,8 @@
                         items: 3
                     }
                 }
-            });
+                });
+            }
         };
         // button click slider
         $('.progress-bars .group-btn-slider .btn-prev').on('click', function(){
