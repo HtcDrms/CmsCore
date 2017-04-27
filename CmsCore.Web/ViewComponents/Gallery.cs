@@ -16,10 +16,10 @@ namespace CmsCore.Web.ViewComponents
             this.galleryService = galleryService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string name, int count = 10)
+        public async Task<IViewComponentResult> InvokeAsync(string name, int count = 10, string template = "Default")
         {
             var items = await GetItems(name, count);
-            return View(items);
+            return View(template, items);
         }
         private Task<List<CmsCore.Model.Entities.GalleryItem>> GetItems(string galleryName, int count)
         {

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<GalleryItem>
+<div class="gallery-widget widget">
+    <div class="title-widget">GALERİ</div>
+    <div class="content-widget">
+        <div class="gallery-list">
+            @foreach (GalleryItem item in Model)
+            {
+    <a href="javascript:void(0)" class="thumb"><img src="@item.Photo" alt="@item.Title" class="img-responsive" /></a>
+            }
+
+        </div>
+        <div class="clearfix"></div>
+        <a href="/galeri" class="view-more">Daha fazla fotoğraf&nbsp;<i class="fa fa-angle-double-right mls"></i></a>
+    </div>
+</div>
