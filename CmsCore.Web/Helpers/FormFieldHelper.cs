@@ -398,6 +398,7 @@ namespace CmsCore.Web.Helpers
                 {
                     TagBuilder singlechoice = new TagBuilder("input");
                     singlechoice.Attributes.Add("type", "radio");
+                    
                     singlechoice.Attributes.Add("name", formField.Name);
                     if (!firstItem) { 
                         singlechoice.Attributes.Add("style", "margin-left:5px;");
@@ -436,7 +437,7 @@ namespace CmsCore.Web.Helpers
                 }
                 var writer = new System.IO.StringWriter();
                 text.WriteTo(writer, HtmlEncoder.Default);
-                output.PostContent.SetHtmlContent(writer.ToString() + "<br/>" + element.ToString());
+                output.PostContent.SetHtmlContent(element.ToString());
             }
             else if (formField.FieldType == FieldType.datePicker)
             {
@@ -525,7 +526,7 @@ namespace CmsCore.Web.Helpers
                     url.Attributes.Add("readonly", "readonly");
                 }
                 url.Attributes.Add("width", "100%");
-                url.Attributes.Add("class", "form-control spinner" + this.cssClass);
+                url.Attributes.Add("class", "form-control spinner " + this.cssClass);
                 url.Attributes.Add("name", formField.Name);
 
                 var writer = new System.IO.StringWriter();
@@ -574,7 +575,7 @@ namespace CmsCore.Web.Helpers
                 {
                     number.Attributes.Add("readonly", "readonly");
                 }
-                number.Attributes.Add("class", "form-control spinner" + this.cssClass);
+                number.Attributes.Add("class", "form-control " + this.cssClass);
                 number.Attributes.Add("width", "100%");
                 number.Attributes.Add("name", formField.Name);
 

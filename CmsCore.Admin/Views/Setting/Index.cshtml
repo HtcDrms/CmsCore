@@ -19,12 +19,12 @@
         <li><span>Genel Ayarlar</span></li>
     </ul>
 </div>
+<br />
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm("Index", "Setting", null, FormMethod.Post))
         {
-            @Html.AntiForgeryToken()
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <h1 class="page-title">Genel Ayarlar</h1>
@@ -35,19 +35,31 @@
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Header Script:</span><br />
-                                    <textarea name="HeaderScript">@Model.FirstOrDefault(m => m.Name == "HeaderScript").Value</textarea>
+                                    <textarea class="form-control" name="HeaderScript">@Model.FirstOrDefault(m => m.Name == "HeaderScript").Value</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Google Analytics Kodu:</span><br />
-                                    <textarea name="GoogleAnalytics">@Model.FirstOrDefault(m => m.Name == "GoogleAnalytics").Value</textarea>
+                                    <textarea class="form-control" name="GoogleAnalytics">@Model.FirstOrDefault(m => m.Name == "GoogleAnalytics").Value</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Footer Script:</span><br />
-                                    <textarea name="FooterScript">@Model.FirstOrDefault(m => m.Name == "FooterScript").Value</textarea>
+                                    <textarea class="form-control" name="FooterScript">@Model.FirstOrDefault(m => m.Name == "FooterScript").Value</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="theme-option">
+                                    <span>Map Lat:</span><br />
+                                    <input class="form-control" type="text" name="MapLat" value="@Model.FirstOrDefault(m => m.Name == "MapLat").Value"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="theme-option">
+                                    <span>Map Lon:</span><br />
+                                    <input class="form-control" type="text" name="MapLon" value="@Model.FirstOrDefault(m => m.Name == "MapLon").Value" />
                                 </div>
                             </div>
                             <br />

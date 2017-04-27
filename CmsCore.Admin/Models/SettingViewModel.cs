@@ -12,6 +12,8 @@ namespace CmsCore.Admin.Models
         public string HeaderScript { get; set; }
         public string GoogleAnalytics { get; set; }
         public string FooterScript { get; set; }
+        public string MapLat { get; set; }
+        public string MapLon { get; set; }
         //MAIL
         public string SmtpUserName { get; set; }
         public string SmtpPassword { get; set; }

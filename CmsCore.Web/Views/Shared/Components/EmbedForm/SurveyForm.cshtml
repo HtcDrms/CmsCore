@@ -1,0 +1,38 @@
+﻿@model CmsCore.Model.Entities.Form
+@addTagHelper "CmsCore.Web.Helpers.FormFieldHelper, CmsCore.Web"
+<form class="bg-w-form contact-form" action="/Home/PostForm" method="post">
+    <div class="row">
+        @if (Model != null && Model.Id > 0)
+        {
+
+            <fieldset>
+                <input type="hidden" value="@Model.Id" name="FormId" />
+                @foreach (FormField item in Model.FormFields)
+                {
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label form-label">@item.Name<span class="highlight">*</span></label>
+                            @if (item.Required)
+                            {
+                                <formField form-field="item" required="true" css-class="form-input" read_only="false" show-placeholder="true" />
+                                @Html.ValidationMessage(item.Name, "", new { @class = "text-danger" })
+                            }
+                            else
+                            {
+                                <formField form-field="item" read_only="false" show-placeholder="true" />
+                            }
+
+                        </div>
+                    </div>
+                }
+            </fieldset>
+        }
+        else
+        {
+            <p> Form bulunamadı!</p>
+        }
+    </div>
+    <div class="contact-submit">
+        <button type="submit" class="btn btn-contact btn-green"><span>Gönder</span></button>
+    </div>
+</form>

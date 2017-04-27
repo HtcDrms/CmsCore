@@ -37,7 +37,15 @@ namespace CmsCore.Admin.Controllers
                 var footerScript = settingService.GetSettingByName("FooterScript");
                 footerScript.Value = settingVM.FooterScript;
                 settingService.UpdateSetting(footerScript);
-                
+
+                var mapLat = settingService.GetSettingByName("MapLat");
+                mapLat.Value = settingVM.MapLat;
+                settingService.UpdateSetting(mapLat);
+
+                var mapLon = settingService.GetSettingByName("MapLon");
+                mapLon.Value = settingVM.MapLon;
+                settingService.UpdateSetting(mapLon);
+
                 settingService.SaveSetting();
                 return RedirectToAction("Index");
                 }
