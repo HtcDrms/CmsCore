@@ -62,7 +62,16 @@ namespace CmsCore.Data
         private static void AddPages(ApplicationDbContext context)
         {
             context.AddRange(
-                new Page { Title = "Anasayfa", Slug = "anasayfa", TemplateId=3,LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Page { Title = "Anasayfa", Slug = "anasayfa", TemplateId=3,LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Haberler", Slug = "haberler", TemplateId = 6, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Blog", Slug = "blog", TemplateId = 7, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Ön Kayıt Formu", Slug = "on-kayit-formu", TemplateId = 10, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "İş Başvuru Formu", Slug = "is-basvuru-formu", TemplateId = 11, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Arama", Slug = "arama", TemplateId = 12, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Anket", Slug = "anket", TemplateId = 13, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Galeri", Slug = "galeri", TemplateId = 14, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Page { Title = "Site Haritası", Slug = "site-haritasi", TemplateId = 15, LanguageId = 1, IsPublished = true, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+
                 );
         }
         private static void AddPostCategories(ApplicationDbContext context)
@@ -133,10 +142,25 @@ namespace CmsCore.Data
             context.AddRange(
                 new Template { Name = "Default", ViewName="Default", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
                 new Template { Name = "Secondary", ViewName = "Secondary", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Index", ViewName = "Index", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Page", ViewName = "Page", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Post", ViewName = "Post", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Template { Name = "Posts", ViewName = "Posts", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Template { Name = "Anasayfa", ViewName = "Index", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Sayfa", ViewName = "Page", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Yazı", ViewName = "Post", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Yazılar", ViewName = "Posts", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Blog", ViewName = "Blog", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "İletişim", ViewName = "Contact", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "İletişim Formu", ViewName = "ContactForm", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Ön Kayıt Formu", ViewName = "PreRegistration", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "İş Başvuru Formu", ViewName = "JobRecourseForm", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Arama", ViewName = "Search", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Anket Formu", ViewName = "Survey", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Galeri", ViewName = "Gallery", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Template { Name = "Site Haritası", ViewName = "SiteMap", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+
+
+
+
+
+
                 );
         }
         private static void AddSliders(ApplicationDbContext context)

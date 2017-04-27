@@ -61,7 +61,7 @@ namespace CmsCore.Admin.Controllers
                         string FilePath = ViewBag.UploadPath + "\\media\\" +DateTime.Now.Month+DateTime.Now.Year+"\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
-                        media.FilePath = yuklemeYeri;
+                        media.FilePath = "uploads/"+DateTime.Now.Month+"-"+DateTime.Now.Year+"/";
                         try
                         {
                             if (!Directory.Exists(FilePath))
@@ -127,7 +127,7 @@ namespace CmsCore.Admin.Controllers
                         string FilePath = ViewBag.AssetsUrl + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
-                        media.FilePath = yuklemeYeri;
+                        media.FilePath = "uploads/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
                         try
                         {
                             if (!Directory.Exists(FilePath))
@@ -164,7 +164,7 @@ namespace CmsCore.Admin.Controllers
             mediaVM.Title = media.Title;
             mediaVM.Description = media.Description;
             mediaVM.FileName = media.FileName;
-            mediaVM.FilePath = media.FilePath;
+            mediaVM.FilePath = ViewBag.AssetsUrl+media.FilePath+media.FileName;
             mediaVM.ModifiedDate = media.ModifiedDate;
             mediaVM.ModifiedBy = media.ModifiedBy;
             mediaVM.AddedBy = media.AddedBy;
@@ -199,6 +199,7 @@ namespace CmsCore.Admin.Controllers
                              p.AddedBy.ToString(),
                              p.AddedDate.ToString(),
                              string.Empty };
+            
             return Json(new
             {
                 sEcho = param.sEcho,

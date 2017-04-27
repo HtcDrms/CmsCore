@@ -28,7 +28,7 @@ namespace CmsCore.Data.Repositories
             }
 
             var allMedias = query;
-            IEnumerable<Media> filteredMedias = allMedias;
+            IEnumerable<Media> filteredMedias = allMedias.OrderByDescending(p=>p.AddedDate);
             if (sortDirection == "asc")
             {
                 switch (sortColumnIndex)
