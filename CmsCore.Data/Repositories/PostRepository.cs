@@ -1,4 +1,5 @@
 ﻿using CmsCore.Data.Infrastructure;
+using CmsCore.Model.Dtos;
 using CmsCore.Model.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,21 @@ namespace CmsCore.Data.Repositories
             : base(dbContext) { }
 
 
+        public List<SearchDto> Search(string words)
+        {
+            words = words.Trim();
+            var searchWords = words.Split(' ');
+            var query = DbContext.Posts.AsQueryable();
+            List<SearchDto> dto = new List<SearchDto>();
+            foreach (string word in searchWords)
+            {
+                if (word != null && word != "")
+                {
+                  dto=query.Where(w=>w.IsPublished==true).Where(p => p.Body.Contains(word) || p.Title.Contains(word) || p.Description.Contains(word) || p.SeoDescription.Contains(word) || p.SeoKeywords.Contains(word) || p.SeoKeywords.Contains(word)).Select(s=>new SearchDto { Title=s.Title, Slug=s.Slug,Description=s.Description,ViewCount=s.ViewCount}).ToList();
+                }
+            }
+            return dto;
+        }
         public string GetCategoryName(long id)
         {
             var postcat=DbContext.PostCategories.ToList();
@@ -173,6 +189,7 @@ namespace CmsCore.Data.Repositories
         Post GetPostBySlug(string slug);
         void UpdatePostPostCategories(long postId, string SelectedCategories);
         string GetCategoryName(long id);
+        List<SearchDto> Search(string words);
         IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count);
         IEnumerable<Post> GetPostsByCategoryNames(string[] categories, int count,long? id);
         IEnumerable<Post> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);

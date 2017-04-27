@@ -231,7 +231,7 @@
     // set height and width
     var shw_set_height_width = function() {
         // set width for section search
-        $('.search-input .form-input').width($('.container').width() - ($('.form-select').width()*3) - 115 );
+        $('.search-input .form-input').width($('.container').width() - ($('.form-select').width()*3) - 255 );
 
         if ($(window).width() > 767) {
             // slider banner 1

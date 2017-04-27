@@ -64,7 +64,7 @@ namespace CmsCore.Web.Controllers
                 }
                 else
                 {
-                    if (homePage == null || homePage.IsPublished == false)
+                    if (post == null || post.IsPublished == false)
                     {
                         return View("Page404");
                     }

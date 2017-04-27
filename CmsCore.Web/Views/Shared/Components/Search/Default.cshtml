@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Sakura.AspNetCore.Mvc.PagedList
+@model Sakura.AspNetCore.IPagedList<CmsCore.Model.Dtos.SearchDto>
+@if (Model != null)
+{
+    @foreach (var item in Model)
+    {
+        <div class="edugate-layout-1">
+
+            <div class="edugate-content">
+                <a href="/@item.Slug" class="title">@item.Title</a>
+                <div class="description">
+                    @Html.Raw(item.Description)
+                </div>
+                <a href="/@item.Slug" class="btn btn-green"><span>Devamını oku...</span></a>
+            </div>
+        </div>
+
+
+
+    }
+    <div class="row">
+        <nav class="pagination col-md-12">
+            <ul class="pagination__list">
+                <pager resource='SearchDto' />
+            </ul>
+        </nav>
+    </div>
+}

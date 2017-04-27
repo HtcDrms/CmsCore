@@ -6564,14 +6564,14 @@ h5 {
 
     .search-input .form-input {
         width: 56% !important;
-        margin-right: 0
+        margin-right: 0;
+        margin-bottom:10px;
     }
 
     .search-input .form-submit {
         width: 160px;
         text-align: center;
         margin: 0 auto;
-        margin-top: 10px;
         float: none
     }
 
