@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Page>
+
+@foreach (var item in Model)
+{
+    <ul>
+      
+                <li>
+                    <a href="/@Html.Raw(item.Slug)" class="link title">@(item.Title)</a>
+                    @if (item.ChildPages != null)
+                    {
+                        @await Component.InvokeAsync("SiteMap",new { parentPageId=item.Id})
+                    }
+                </li>
+            
+    </ul>
+}

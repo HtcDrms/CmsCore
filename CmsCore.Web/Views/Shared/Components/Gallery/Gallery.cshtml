@@ -1,0 +1,6 @@
+﻿@model IEnumerable<GalleryItem>
+@foreach (var item in Model)
+{
+    <div data-category="@item.GalleryItemGalleryItemCategories" class="grid-item @Html.Raw(item.GalleryItemGalleryItemCategories)"><a href="courses-detail.html" class="link"><span class="content"><span class="content-title">@item.Title</span><span class="content-edu"><i class="icons fa fa-file-text"></i><span>@item.Title</span></span></span><img src="@Html.Raw(ViewBag.AssetsUrl)@Html.Raw(item.Photo)" alt="" /></a></div>
+   
+}
