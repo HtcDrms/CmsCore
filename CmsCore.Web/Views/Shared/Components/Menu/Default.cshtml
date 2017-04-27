@@ -4,8 +4,9 @@
 {
 
     <li @(item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0 ? "class=dropdown" : "")>
-        <a href="@item.Url" class="main-menu" @(!String.IsNullOrEmpty(item.Target) ? "target='" + item.Target + "'" : "")>
-            @item.Name@Html.Raw(item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0 ? "<span class='fa fa-angle-down icons-dropdown'></span>" : "")
+        <a href="#" class="main-menu" @(!String.IsNullOrEmpty(item.Target) ? "target='" + item.Target + "'" : "")>
+            @item.Name
+            @Html.Raw(item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0 ? "<span class='fa fa-angle-down icons-dropdown'></span>" : "")
         </a>
             @if (item.ChildMenuItems != null && item.ChildMenuItems.Count() > 0)
             {
