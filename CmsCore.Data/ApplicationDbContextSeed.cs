@@ -157,7 +157,12 @@ namespace CmsCore.Data
         {
             context.AddRange(
                 new Setting { Name="Email",Value="ertyeni@gmail.com",AddedBy="username",AddedDate=DateTime.Now,ModifiedBy="username",ModifiedDate=DateTime.Now},
-                new Setting { Name = "EmailPassword", Value = "###", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Setting { Name = "EmailPassword", Value = "###", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Setting { Name = "GoogleAnalytics", Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Setting { Name = "FooterScript", Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Setting { Name = "HeaderScript", Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Setting { Name = "MapLat", Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Setting { Name = "MapLon", Value = "", AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
 

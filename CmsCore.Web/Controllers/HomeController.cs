@@ -19,12 +19,14 @@ namespace CmsCore.Web.Controllers
     {
         private readonly IPageService pageService;
         private readonly IPostService postService;
+        private readonly ISettingService settingService;
         private readonly IFeedbackService feedbackService;
 
-        public HomeController(IPageService pageService, IPostService postService, IFeedbackService feedbackService)
+        public HomeController(IPageService pageService, IPostService postService, IFeedbackService feedbackService, ISettingService settingService)
         {
             this.pageService = pageService;
             this.postService = postService;
+            this.settingService = settingService;
             this.feedbackService = feedbackService;
         }
 
@@ -93,6 +95,8 @@ namespace CmsCore.Web.Controllers
                 {
                     return View("Page404");
                 }
+                ViewBag.MapLat = settingService.GetSettingByName("MapLat").Value;
+                ViewBag.MapLon = settingService.GetSettingByName("MapLon").Value;
                 PageViewModel pageVM = new PageViewModel();
                 pageVM.Id = homePage.Id;
                 pageVM.Title = homePage.Title;

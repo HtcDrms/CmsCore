@@ -19,9 +19,37 @@
                         </div>
                     </div>
                 </div>
-                <div id="map" class="section contact-map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.649868864954!2d29.026767015182685!3d40.9891471285511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab86f75b5800d%3A0x2d0fcf9b3fb8d79d!2sBili%C5%9Fim+E%C4%9Fitim+Merkezi!5e0!3m2!1str!2str!4v1493136508063" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe></div>
+                <div id="map_canvas" class="section contact-map">
+                </div>
             </div>
         </div>
         <!-- BUTTON BACK TO TOP-->
         <div id="back-top"><a href="#top"><i class="fa fa-angle-double-up"></i></a></div>
     </div>
+</div>
+@section scripts{
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAJyYNp6gK3IrXp_Xi3wPdmJNNvATrklpo"></script>
+<script type="text/javascript">
+    function initialize() {
+        var canvas = $("#map_canvas");
+        var latitude = @Html.Raw(ViewBag.MapLat);
+        var longitude = @Html.Raw(ViewBag.MapLon);
+        var latlng = new google.maps.LatLng(latitude, longitude);
+        var options = {
+            scrollwheel: false,
+            zoom: 16,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(canvas[0], options);
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            map: map
+        });
+    }
+    $(function () {
+        initialize();
+    });
+
+</script>
+}
