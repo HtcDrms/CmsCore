@@ -14,14 +14,14 @@
                     @if (!String.IsNullOrEmpty(slide.Video)) {
                     <video @(String.IsNullOrEmpty(slide.Photo)?"":"poster=\"" + (ViewBag.AssetsUrl) + "uploads/media/slide/" + slide.Photo+ "\"") width="100%" id="bgvid" playsinline autoplay muted loop>
                         <!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
-                        <source src="@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Video" type="video/webm">
-                        <source src="@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Video" type="video/mp4">
+                        
+                        <source src="@slide.Video" type="video/mp4">
                     </video>
                     }
                     else
                     {
                         
-                        <div class="slider-caption" @(slide.DisplayTexts?"style=\"background: url('@(ViewBag.AssetsUrl)uploads/media/slide/@slide.Photo') no-repeat whitesmoke; background-size:cover;\"":"")>
+                        <div class="slider-caption" @(slide.DisplayTexts?"style=background: url('@slide.Photo') no-repeat whitesmoke; background-size:cover;":"style=height:100%")>
                             @if (slide.DisplayTexts)
                             {
                             <div class="container">
@@ -35,7 +35,7 @@
                             }
                             else
                             {
-                                <a href="@slide.CallToActionUrl" style="background:url('http://assets.bilgikoleji.com/uploads/media/slide/946468297image-slider-2.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;width:100%;height:100%; display:block;"><span></span></a>
+                                <a href="@slide.CallToActionUrl" style="background:url('@slide.Photo');background-size:cover;background-position:center;background-repeat:no-repeat;width:100%;height:100%; display:block;"><span><img/></span></a>
                             }
                         </div>
                     }

@@ -175,8 +175,8 @@ namespace CmsCore.Data
         private static void AddSlides(ApplicationDbContext context)
         {
             context.AddRange(
-                new Slide { Title="Video", SliderId=1, Video= "13036596003383465.mov", CallToActionUrl="", IsPublished=true, DisplayTexts=false, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
-                new Slide { Title = "Image", SliderId=1, Photo = "946468297image-slider-2.jpg", CallToActionUrl = "#", IsPublished = true, DisplayTexts = false, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
+                new Slide { Title="Video", SliderId=1, Video= "http://assets.bilgikoleji.com/uploads/media/slide/13036596003383465.mov", CallToActionUrl="", IsPublished=true, DisplayTexts=false, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now },
+                new Slide { Title = "Image", SliderId=1, Photo = "http://assets.bilgikoleji.com/uploads/media/slide/946468297image-slider-2.jpg", CallToActionUrl = "#", IsPublished = true, DisplayTexts = false, AddedBy = "username", AddedDate = DateTime.Now, ModifiedBy = "username", ModifiedDate = DateTime.Now }
                 );
         }
         private static void AddSetting(ApplicationDbContext context)
