@@ -302,8 +302,8 @@ li.accordion {
     background-color: rgba(233,29,177,0.7);
    width:102.2px;
    height:102.2px;
-   bottom:8.4px;
-   margin-left:-51.1px;
+   margin-bottom:-4.3px;
+   margin-left:-50.5px;
 }
 
 .choose-course .item-1 .icon-circle .info .info-back:before {
@@ -353,8 +353,8 @@ li.accordion {
     background-color: rgba(63,174,72,0.7);
     width: 189.8px;
     height: 189.8px;
-    bottom: 15.6px;
-    margin-left: -94.9px;
+    margin-bottom:4.5px;
+    margin-left: -93px;
 }
 
 .choose-course .item-3 .icon-circle .info .info-back:before {
