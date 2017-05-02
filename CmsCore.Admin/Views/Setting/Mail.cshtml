@@ -28,31 +28,31 @@
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Kullanıcı Adı</span><br />
-                                    <input type="text" name="SmtpUserName" value="@Model.FirstOrDefault(m => m.Name == "SmtpUserName").Value">
+                                    <input type="text" name="SmtpUserName" value="@Model.FirstOrDefault(m => m.Name == "SmtpUserName").Value" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Şifre</span><br />
-                                    <input type="text" name="SmtpPassword" value="@Model.FirstOrDefault(m => m.Name == "SmtpPassword").Value">
+                                    <input type="text" name="SmtpPassword" value="@Model.FirstOrDefault(m => m.Name == "SmtpPassword").Value" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Host</span><br />
-                                    <input type="text" name="SmtpHost" value="@Model.FirstOrDefault(m => m.Name == "SmtpHost").Value">
+                                    <input type="text" name="SmtpHost" value="@Model.FirstOrDefault(m => m.Name == "SmtpHost").Value" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>Port</span><br />
-                                    <input type="text" name="SmtpPort" value="@Model.FirstOrDefault(m => m.Name == "SmtpPort").Value">
+                                    <input type="text" name="SmtpPort" value="@Model.FirstOrDefault(m => m.Name == "SmtpPort").Value" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="theme-option">
                                     <span>SSL</span><br />
-                                    <input type="checkbox" name="SmtpUseSSL" @if (Model.FirstOrDefault(m => m.Name == "SmtpUseSSL").Value == "on") { <text>checked </text>} value="on">@Model.FirstOrDefault(m => m.Name == "SmtpUseSSL").Value
+                                    <input type="checkbox" name="SmtpUseSSL" @if (Model.FirstOrDefault(m => m.Name == "SmtpUseSSL").Value == "on") { <text>checked </text>} value="on">
                                 </div>
                             </div>
                             <div class="form-group">
