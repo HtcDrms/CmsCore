@@ -14,7 +14,7 @@
                         <div class="contact-main-wrapper">                            
                             <div class="row contact-method">
                                 <h1 class="event-detail-title">@Model.Title</h1>
-                                @Html.Raw(Model.Body);
+                                @Html.Raw(Model.Body)
                                 @await Component.InvokeAsync("EmbedForm", new { name = "JobRecourseForm", template = "JobRecourseForm" })
                             </div>
                         </div>
