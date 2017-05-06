@@ -29,10 +29,14 @@ namespace CmsCore.Admin.Controllers
         }
         public IActionResult Create()
         {
-
+            if(HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return View("ModalCreate");
+            }
             return View();
-
+            
         }
+
         [HttpPost]
         public IActionResult Create(MediaViewModel mediaVM, IFormFile uploadedFile)
         {

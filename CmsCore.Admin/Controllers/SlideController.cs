@@ -137,7 +137,7 @@ namespace CmsCore.Admin.Controllers
             var result = from p in displayedPages
                          select new[] {
                              p.Id.ToString(),
-                             ("<img src='"+(!String.IsNullOrEmpty(p.Photo)?ViewBag.AssetsUrl+"uploads/media/slide/"+p.Photo.ToString():"")+"' width='100'>"),
+                             ("<img src='"+p.Photo+"' width='100'>"),
                              p.Title.ToString(),
                              (!String.IsNullOrEmpty(p.SubTitle)?p.SubTitle.ToString():""),
                              p.AddedBy.ToString(),

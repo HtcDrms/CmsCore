@@ -300,10 +300,10 @@ li.accordion {
 
 .choose-course .item-1 .icon-circle .icon-background {
     background-color: rgba(233,29,177,0.7);
-   width:102.2px;
-   height:102.2px;
-   margin-bottom:-4.3px;
-   margin-left:-50.5px;
+   width:91px;
+   height:91px;
+   margin-bottom:3px;
+   margin-left:-45px;
 }
 
 .choose-course .item-1 .icon-circle .info .info-back:before {
@@ -312,6 +312,7 @@ li.accordion {
 
 .choose-course .item-1 .name-course a {
     color: rgb(233,29,177);
+    font-size: large;
 }
 
 .item-course.item-2 {
@@ -327,7 +328,10 @@ li.accordion {
 
 .choose-course .item-2 .icon-circle .icon-background {
     background-color: rgba(248,156,36,0.7);
-    
+    width:141px;
+    height:141px;
+    margin-left:-70px;
+    margin-bottom:2.5px;    
 }
 
 .choose-course .item-2 .icon-circle .info .info-back:before {
@@ -336,6 +340,7 @@ li.accordion {
 
 .choose-course .item-2 .name-course a {
     color: rgb(248,156,36);
+    font-size: large;
 }
 
 .item-course.item-3 {
@@ -353,8 +358,8 @@ li.accordion {
     background-color: rgba(63,174,72,0.7);
     width: 189.8px;
     height: 189.8px;
-    margin-bottom:4.5px;
-    margin-left: -93px;
+    margin-bottom:3.5px;
+    margin-left: -94px;
 }
 
 .choose-course .item-3 .icon-circle .info .info-back:before {
@@ -363,6 +368,7 @@ li.accordion {
 
 .choose-course .item-3 .name-course a {
     color: rgb(63,174,72);
+    font-size: large;
 }
 
 
@@ -375,10 +381,10 @@ li.accordion {
 
 .choose-course .item-4 .icon-circle .icon-background {
     background-color: rgba(0,130,190,0.7);
-    width: 233.6px;
-    height: 233.6px;
-    margin-bottom:8px;
-    margin-left: -116.8px;
+    width: 240px;
+    height: 240px;
+    margin-bottom:4px;
+    margin-left: -120px;
 }
 
 .choose-course .item-4 .icon-circle .info .info-back:before {
@@ -387,6 +393,7 @@ li.accordion {
 
 .choose-course .item-4 .name-course a {
     color: rgb(0,130,190);
+    font-size: large;
 }
 
 .choose-course .icon-circle .info .info-back a {
@@ -511,6 +518,7 @@ header .header-main .edugate-dropdown-menu-1 li .link-page, header .header-main 
     }
     .name-course{
         margin-top:5px !important;
+        font-size:large;
     }
 
 }
