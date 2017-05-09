@@ -29,17 +29,20 @@ namespace CmsCore.Admin.Controllers
         }
         public IActionResult Create()
         {
-            if(HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return View("ModalCreate");
             }
             return View();
-            
+
         }
 
-        [HttpPost]
-        public IActionResult Create(MediaViewModel mediaVM, IFormFile uploadedFile)
+        
+        public JsonResult ModalCreate(MediaViewModel mediaVM,IFormFile uploadedFile)
         {
+            //IFormFileCollection uploadedFiles = Request.Form.Files;
+            //IFormFile uploadedFile = uploadedFiles[0];
+            IFormFile file = Request.Form.Files[0];
             if (ModelState.IsValid)
             {
                 if (uploadedFile != null)
@@ -48,7 +51,7 @@ namespace CmsCore.Admin.Controllers
                     media.Title = mediaVM.Title;
                     media.FileName = uploadedFile.FileName;
                     media.Description = mediaVM.Description;
-                    media.Size = (uploadedFile.Length/1024)/1024;
+                    media.Size = (uploadedFile.Length / 1024) / 1024;
                     media.AddedBy = User.Identity.Name ?? "username";
                     media.AddedDate = DateTime.Now;
                     media.ModifiedBy = User.Identity.Name ?? "username";
@@ -62,10 +65,10 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\" +DateTime.Now.Month+DateTime.Now.Year+"\\";
+                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
-                        media.FilePath = "uploads/"+DateTime.Now.Month+"-"+DateTime.Now.Year+"/";
+                        media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
                         try
                         {
                             if (!Directory.Exists(FilePath))
@@ -78,7 +81,62 @@ namespace CmsCore.Admin.Controllers
                                 uploadedFile.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
                             }
                             mediaService.CreateMedia(media);
-                            mediaService.SaveMedia();                            
+                            mediaService.SaveMedia();
+                            return Json(new { result =ViewBag.AssetsUrl+media.FilePath+dosyaismi});
+                        }
+                        catch (Exception exc) { }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("FileName", "Dosya uzantısı izin verilen uzantılardan olmalıdır.");
+                    }
+                }
+                else { ModelState.AddModelError("FileExist", "Lütfen bir dosya seçiniz!"); }
+            }
+            return Json(new { result = "false" });
+        }
+        [HttpPost]
+        public IActionResult Create(MediaViewModel mediaVM, IFormFile uploadedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uploadedFile != null)
+                {
+                    Media media = new Media();
+                    media.Title = mediaVM.Title;
+                    media.FileName = uploadedFile.FileName;
+                    media.Description = mediaVM.Description;
+                    media.Size = (uploadedFile.Length / 1024) / 1024;
+                    media.AddedBy = User.Identity.Name ?? "username";
+                    media.AddedDate = DateTime.Now;
+                    media.ModifiedBy = User.Identity.Name ?? "username";
+                    media.ModifiedDate = DateTime.Now;
+                    if (Path.GetExtension(uploadedFile.FileName) == ".doc"
+                    || Path.GetExtension(uploadedFile.FileName) == ".pdf"
+                    || Path.GetExtension(uploadedFile.FileName) == ".rtf"
+                    || Path.GetExtension(uploadedFile.FileName) == ".docx"
+                    || Path.GetExtension(uploadedFile.FileName) == ".jpg"
+                    || Path.GetExtension(uploadedFile.FileName) == ".gif"
+                    || Path.GetExtension(uploadedFile.FileName) == ".png"
+                     )
+                    {
+                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
+                        string dosyaismi = Path.GetFileName(uploadedFile.FileName);
+                        var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
+                        media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
+                        try
+                        {
+                            if (!Directory.Exists(FilePath))
+                            {
+                                Directory.CreateDirectory(FilePath);//Eğer klasör yoksa oluştur
+                                uploadedFile.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
+                            }
+                            else
+                            {
+                                uploadedFile.CopyTo(new FileStream(yuklemeYeri, FileMode.Create));
+                            }
+                            mediaService.CreateMedia(media);
+                            mediaService.SaveMedia();
                             return RedirectToAction("Index");
                         }
                         catch (Exception exc) { }
@@ -168,7 +226,7 @@ namespace CmsCore.Admin.Controllers
             mediaVM.Title = media.Title;
             mediaVM.Description = media.Description;
             mediaVM.FileName = media.FileName;
-            mediaVM.FilePath = ViewBag.AssetsUrl+media.FilePath+media.FileName;
+            mediaVM.FilePath = ViewBag.AssetsUrl + media.FilePath + media.FileName;
             mediaVM.ModifiedDate = media.ModifiedDate;
             mediaVM.ModifiedBy = media.ModifiedBy;
             mediaVM.AddedBy = media.AddedBy;
@@ -177,8 +235,8 @@ namespace CmsCore.Admin.Controllers
 
             return View(mediaVM);
         }
-        
-            public IActionResult Delete(long id)
+
+        public IActionResult Delete(long id)
         {
             mediaService.DeleteMedia(id);
             mediaService.SaveMedia();
@@ -203,7 +261,7 @@ namespace CmsCore.Admin.Controllers
                              p.AddedBy.ToString(),
                              p.AddedDate.ToString(),
                              string.Empty };
-            
+
             return Json(new
             {
                 sEcho = param.sEcho,

@@ -6,8 +6,7 @@
 @{
     Layout = null;
 }
-<script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-<script src="~/js/generate-slug.js"> </script><br />
+
 <div class="row">
     <div class="col-md-12 ">
         <!-- BEGIN SAMPLE FORM PORTLET-->
@@ -19,7 +18,7 @@
                 </div>
             </div>
 
-            <form asp-controller="Media" asp-action="ModalCreate" method="post" enctype="multipart/form-data">
+            <form enctype="multipart/form-data" id="modalForm" name="modalForm" method="post">
                 <div class="row">
                     <div class="col-md-12">
                     </div>
@@ -52,10 +51,48 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button onclick="filePath" tabindex="10" class="btn blue" id="modalSave">Kaydet</button>
+                        <button type="button" tabindex="10" class="btn blue" id="modalSave">Kaydet</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+        $.validator.unobtrusive.parse("#formVal");  
+        $("#modalSave").click(function () {
+            var data = new FormData(document.getElementById("modalForm"));
+            $.ajax({
+                url: "/Media/ModalCreate",
+                cache: false,
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.result == "false") {
+                    }
+                    else {
+                        var modal = $('.modal');
+                        modal.find('.modal-body').html('');
+                        modal.find('.modal-footer').html('');
+                        modal.find('.modal-body').append("<h1 class='text-success'>İşlem Başarılı</h1>")
+                        var delay = 1000;
+                        setTimeout(function () { $('.modal').modal('hide'); }, delay);
+                        $('#Photo').val(data.result)
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                        alert('Internal error: ' + jqXHR.responseText);
+                    } else {
+                        alert('Unexpected error.');
+                    }
+                }
+            });
+        });
+        });
+    
+</script>

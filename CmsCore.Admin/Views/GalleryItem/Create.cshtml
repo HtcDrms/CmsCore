@@ -58,7 +58,7 @@
                                     @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-1">
-                                    <input type="button" id="uploadModal" class="form-control btn-info" value="...">
+                                    <input type="button" id="uploadModal" class="form-control btn-info" value="Gözat">
                                 </div>
                             </div>
                             @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
@@ -99,8 +99,7 @@
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Kaydet</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -113,6 +112,7 @@
             $("#uploadModal").click(function () {
                 $.ajax({
                     cache: false,
+                    type:"GET",
                     url: "/Media/Create",
                     success: function (view) {
                         $('.modal-body').html(view);
@@ -124,13 +124,9 @@
                 });
             });
         });
-        $(function () {
-            $("#modalSave").click(function () {
-                alert($('#FileName').val());
-                
-            });
-        });
+        
     </script>
+
     <script>
 
         var handleSample = function () {
