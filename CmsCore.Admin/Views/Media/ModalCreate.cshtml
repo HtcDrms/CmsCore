@@ -6,62 +6,119 @@
 @{
     Layout = null;
 }
-
-<div class="row">
-    <div class="col-md-12 ">
-        <!-- BEGIN SAMPLE FORM PORTLET-->
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption font-dark">
-                    <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase ">Dosya Yükle</span>
-                </div>
-            </div>
-
-            <form enctype="multipart/form-data" id="modalForm" name="modalForm" method="post">
-                <div class="row">
-                    <div class="col-md-12">
+<style>
+    .mediaSelected {
+        background-color: lawngreen
+    }
+</style>
+<div id="myTabs">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">Yükle</a></li>
+        <li role="presentation"><a href="#browse" aria-controls="browse" role="tab" data-toggle="tab">Gözat</a></li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade in active" id="upload">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase ">Dosya Yükle</span>
                     </div>
                 </div>
-                <div class="portlet-body form">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label asp-for="Title"></label>
-                            <input type="text" asp-for="Title" class="form-control" tabindex="1" autofocus="autofocus" />
-                            <span class="text-danger" asp-validation-for="Title"></span>
+                <form enctype="multipart/form-data" id="modalForm" name="modalForm" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Description"></label>
-                            <input type="text" asp-for="Description" class="form-control" tabindex="2" />
-                            <span class="text-danger" asp-validation-for="Description"></span>
-                        </div>
-                        <div class="form-group">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="input-group input-large">
-                                    <span class="input-group-addon btn default btn-file">
-                                        <input type="file" id="FileName" name="uploadedFile">
-                                    </span>
+                    </div>
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label asp-for="Title"></label>
+                                <input type="text" asp-for="Title" class="form-control" tabindex="1" autofocus="autofocus" />
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <input type="text" asp-for="Description" class="form-control" tabindex="2" />
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="input-group input-large">
+                                        <span class="input-group-addon btn default btn-file">
+                                            <input type="file" id="FileName" name="uploadedFile">
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
+                                    <span class="text-danger" asp-validation-for="FileName"></span>
                                 </div>
-                                @Html.ValidationMessage("FileExist", new { @class = "text-danger" })
-                                <span class="text-danger" asp-validation-for="FileName"></span>
-                            </div>
-                            <div class="clearfix margin-top-10">
-                                <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.doc, .docx, .pdf, .rtf, .jpg, .gif</strong> ya da <strong>.png</strong> olmalıdır.
+                                <div class="clearfix margin-top-10">
+                                    <span class="label label-success">UYARI !</span> Dosyanın uzantısı <strong>.doc, .docx, .pdf, .rtf, .jpg, .gif</strong> ya da <strong>.png</strong> olmalıdır.
+                                </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <button type="button" tabindex="10" class="btn blue" id="modalSave">Upload</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <button type="button" tabindex="10" class="btn blue" id="modalSave">Kaydet</button>
+                </form>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="browse">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase ">Dosya Seç</span>
                     </div>
                 </div>
-            </form>
+                <div class="row form-inline">
+                    <input type="text" id="word" placeholder="ara" class="form-control col-md-4" />
+                    <select name="year" id="year" class="form-control col-md-2"></select>
+                    <select name="month" id="month" class="form-control col-md-2"></select>
+                    <select name="category" id="category" class="form-control col-md-2"><option selected>Image</option><option>Video</option><option>Document</option></select>
+                    <input type="button" id="search" onclick="" value="Ara" class="form-control btn-info col-md-2">
+                </div>
+                <br />
+
+                <div class="row" id="modal-gallery" style="max-height:300px; overflow-y:scroll;">
+                    @* col-sm-2 *@
+                </div>
+                <input type="hidden" value="" id="temp" />
+            </div>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function () {
+        $.validator.unobtrusive.parse("#formVal");
 
-        $.validator.unobtrusive.parse("#formVal");  
+        $(function monthandyearWrite() {
+            var modal = $('.modal');
+            var now = new Date();
+            for (var i = 1; i <= 12; i++) {
+                if (i == now.getMonth() + 1) {
+                    modal.find('#month').append("<option id='" + i + "' selected>" + i + "</option>")
+                } else {
+                    modal.find('#month').append("<option id='" + i + "'>" + i + "</option>")
+                }
+            }
+            for (var i = now.getFullYear(); i >= 2017; i--) {
+                if (i == now.getYear())
+                {
+                    modal.find('#year').append("<option id='" + i + "' selected>" + i + "</option>")
+                }
+                else
+                {
+                    modal.find('#year').append("<option id='" + i + "'>" + i + "</option>")
+                }
+            }
+        });
+
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
         $("#modalSave").click(function () {
             var data = new FormData(document.getElementById("modalForm"));
             $.ajax({
@@ -93,6 +150,56 @@
                 }
             });
         });
+    });
+
+</script>
+<script>
+    $("#search").click(function modalgallery() {
+        var modal = $('.modal');
+        var word = modal.find('#word').val();
+        var year = modal.find('#year').val();
+        var month = modal.find('#month').val();
+        var category = modal.find('#category').val();
+        modal.find('#modal-gallery').html('');
+        $.ajax({
+            url: "/Media/ModalGallery",
+            cache: false,
+            type: "POST",
+            data: { word, year, month, category},
+            success: function (data) {
+                $.each(data.result, function (k, v) {
+                    var modal = $('.modal');
+                    if (v.fileType == "Image")
+                    {
+                        modal.find('#modal-gallery').append("<div class='col-sm-2' style='text-align:center'><img class='img-thumbnail' onclick='imgSelect(this);' style='width:110px; height:80px; margin-top:10px;' src='@ViewBag.AssetsUrl" + v.filePath + v.fileName + "'/><figcaption style='font-size:10px;'>" + v.title.substring(0, 10) + "</figcaption></div>");
+
+                    }
+                    else if (v.fileType == "Document")
+                    {
+                        modal.find('#modal-gallery').append("<div class='col-sm-2' style='text-align:center'><img class='img-thumbnail' onclick='imgSelect(this);' style='width:100px; height:100px; margin-top:10px;' src='@ViewBag.AssetsUrl" +"/pages/img/logos/docx.png"+"'/><figcaption style='font-size:10px;'>"+v.title.substring(0,10)+"</figcaption></div>");
+                    }
+                    else
+                    {
+                        modal.find('#modal-gallery').append("<div class='col-sm-2' style='text-align:center'><video class='img-thumbnail' onclick='imgSelect(this);' style='width:110px; height:80px; margin-top:10px;'><source src='@ViewBag.AssetsUrl" + v.filePath + v.fileName + "' type='video/mp4' /></video><figcaption style='font-size:10px;'>" + v.title.substring(0, 10) + "</figcaption></div>");
+                    }
+                });
+            },
+            error: function () {
+                alert("Bilinmeyen bir hata oluştu!");
+            }
         });
-    
+    });
+</script>
+<script>
+
+    function imgSelect(par) {
+        $('#temp').val(par.src);
+        $("#browseSave").css("display", "inline");
+        $(".mediaSelected").removeClass("mediaSelected");
+        $(par).addClass("mediaSelected");
+    }
+    $("#browseSave").click(function () {
+        $('#Photo').val($('#temp').val());
+    });
+
 </script>

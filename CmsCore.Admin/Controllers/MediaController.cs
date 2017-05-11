@@ -37,7 +37,6 @@ namespace CmsCore.Admin.Controllers
 
         }
 
-        
         public JsonResult ModalCreate(MediaViewModel mediaVM,IFormFile uploadedFile)
         {
             //IFormFileCollection uploadedFiles = Request.Form.Files;
@@ -56,16 +55,30 @@ namespace CmsCore.Admin.Controllers
                     media.AddedDate = DateTime.Now;
                     media.ModifiedBy = User.Identity.Name ?? "username";
                     media.ModifiedDate = DateTime.Now;
+                    if(Path.GetExtension(uploadedFile.FileName) == ".jpg" || Path.GetExtension(uploadedFile.FileName) == ".jpeg"|| Path.GetExtension(uploadedFile.FileName) == ".png")
+                    {
+                        media.FileType = "Image";
+                    }
+                    else if(Path.GetExtension(uploadedFile.FileName) == ".mp4" || Path.GetExtension(uploadedFile.FileName) == ".gif")
+                    {
+                        media.FileType = "Video";
+                    }
+                    else
+                    {
+                        media.FileType = "Document";
+                    }
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
                     || Path.GetExtension(uploadedFile.FileName) == ".rtf"
                     || Path.GetExtension(uploadedFile.FileName) == ".docx"
                     || Path.GetExtension(uploadedFile.FileName) == ".jpg"
+                    || Path.GetExtension(uploadedFile.FileName) == ".jpeg"
                     || Path.GetExtension(uploadedFile.FileName) == ".gif"
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
+                    || Path.GetExtension(uploadedFile.FileName) == ".mp4"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
+                        string FilePath = ViewBag.UploadPath + DateTime.Now.Month+"-" + DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
                         media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
@@ -95,6 +108,13 @@ namespace CmsCore.Admin.Controllers
             }
             return Json(new { result = "false" });
         }
+
+        public JsonResult ModalGallery(string word, int year, int month, string category)
+        {
+            var mediagallery = mediaService.MediaGallery(word, year, month,category);
+            return Json(new { result = mediagallery });
+        }
+
         [HttpPost]
         public IActionResult Create(MediaViewModel mediaVM, IFormFile uploadedFile)
         {
@@ -111,6 +131,18 @@ namespace CmsCore.Admin.Controllers
                     media.AddedDate = DateTime.Now;
                     media.ModifiedBy = User.Identity.Name ?? "username";
                     media.ModifiedDate = DateTime.Now;
+                    if (Path.GetExtension(uploadedFile.FileName) == ".jpg" || Path.GetExtension(uploadedFile.FileName) == ".jpeg" || Path.GetExtension(uploadedFile.FileName) == ".png")
+                    {
+                        media.FileType = "Image";
+                    }
+                    else if (Path.GetExtension(uploadedFile.FileName) == ".mp4" || Path.GetExtension(uploadedFile.FileName) == ".gif")
+                    {
+                        media.FileType = "Video";
+                    }
+                    else
+                    {
+                        media.FileType = "Document";
+                    }
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
                     || Path.GetExtension(uploadedFile.FileName) == ".rtf"
@@ -120,7 +152,7 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
+                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month +"-"+ DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
                         media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
@@ -176,6 +208,18 @@ namespace CmsCore.Admin.Controllers
 
                     media.ModifiedBy = User.Identity.Name ?? "username";
                     media.ModifiedDate = DateTime.Now;
+                    if (Path.GetExtension(uploadedFile.FileName) == ".jpg" || Path.GetExtension(uploadedFile.FileName) == ".jpeg" || Path.GetExtension(uploadedFile.FileName) == ".png")
+                    {
+                        media.FileType = "Image";
+                    }
+                    else if (Path.GetExtension(uploadedFile.FileName) == ".mp4" || Path.GetExtension(uploadedFile.FileName) == ".gif")
+                    {
+                        media.FileType = "Video";
+                    }
+                    else
+                    {
+                        media.FileType = "Document";
+                    }
                     if (Path.GetExtension(uploadedFile.FileName) == ".doc"
                     || Path.GetExtension(uploadedFile.FileName) == ".pdf"
                     || Path.GetExtension(uploadedFile.FileName) == ".rtf"
@@ -189,7 +233,7 @@ namespace CmsCore.Admin.Controllers
                         string FilePath = ViewBag.AssetsUrl + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
-                        media.FilePath = "uploads/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
+                        media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
                         try
                         {
                             if (!Directory.Exists(FilePath))
