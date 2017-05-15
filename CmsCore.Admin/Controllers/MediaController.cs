@@ -152,7 +152,7 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".png"
                      )
                     {
-                        string FilePath = ViewBag.UploadPath + "\\media\\" + DateTime.Now.Month +"-"+ DateTime.Now.Year + "\\";
+                        string FilePath = ViewBag.UploadPath + DateTime.Now.Month +"-"+ DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
                         media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
@@ -230,7 +230,7 @@ namespace CmsCore.Admin.Controllers
                     || Path.GetExtension(uploadedFile.FileName) == ".jpeg"
                      )
                     {
-                        string FilePath = ViewBag.AssetsUrl + "\\media\\" + DateTime.Now.Month + DateTime.Now.Year + "\\";
+                        string FilePath = ViewBag.AssetsUrl + DateTime.Now.Month + DateTime.Now.Year + "\\";
                         string dosyaismi = Path.GetFileName(uploadedFile.FileName);
                         var yuklemeYeri = Path.Combine(FilePath, dosyaismi);
                         media.FilePath = "uploads/media/" + DateTime.Now.Month + "-" + DateTime.Now.Year + "/";
