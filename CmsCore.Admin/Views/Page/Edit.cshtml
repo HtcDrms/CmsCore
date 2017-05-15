@@ -83,35 +83,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="pageparentdiv" class="postbox ">
-                                    <div class="inside">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                @*<select asp-for="ParentPageId"
-                                                        asp-items="(IEnumerable<SelectListItem>)ViewBag.ParentPages" class="form-control">
-                                                    <option value="">Parent Pages</option>
-                                                </select>
-                                                <span class="text-danger" asp-validation-for="ParentPageId"></span>*@
-                                                @Html.DropDownListFor(m => m.ParentPageId,(IEnumerable<SelectListItem>)ViewBag.ParentPages,"Parent Page",new {@class="form-control", @tabindex = "5" })
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <select asp-for="ParentPageId" tabindex="4"
+                                            asp-items="(IEnumerable<SelectListItem>)ViewBag.ParentPages" class="form-control">
+                                        <option value="">Parent Page</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="ParentPageId"></span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="pageparentdiv" class="postbox ">
-                                    <div class="inside">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                @Html.DropDownListFor(m => m.TemplateId, (IEnumerable<SelectListItem>)ViewBag.Templates, "Template", new { @class = "form-control", @tabindex = "6" })
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                    <select asp-for="TemplateId" tabindex="5"
+                                            asp-items="(IEnumerable<SelectListItem>)ViewBag.Templates" class="form-control">
+                                        <option value="">Template</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TemplateId"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <select asp-for="LanguageId" tabindex="6"
+                                            asp-items="(IEnumerable<SelectListItem>)ViewBag.Languages" class="form-control"></select>
+                                    <span class="text-danger" asp-validation-for="LanguageId"></span>
                                 </div>
                             </div>
                         </div>

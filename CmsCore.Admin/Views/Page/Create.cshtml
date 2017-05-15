@@ -68,19 +68,25 @@
                         </div>
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <select asp-for="ParentPageId" tabindex="4"
                                             asp-items="(IEnumerable<SelectListItem>)ViewBag.ParentPages" class="form-control">
                                         <option value="">Parent Page</option>
                                     </select>
                                     <span class="text-danger" asp-validation-for="ParentPageId"></span>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <select asp-for="TemplateId" tabindex="5"
                                             asp-items="(IEnumerable<SelectListItem>)ViewBag.Templates" class="form-control">
                                         <option value="">Template</option>
                                     </select>
                                     <span class="text-danger" asp-validation-for="TemplateId"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <select asp-for="LanguageId" tabindex="6"
+                                            asp-items="(IEnumerable<SelectListItem>)ViewBag.Languages" class="form-control">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="LanguageId"></span>
                                 </div>
                             </div>
                         </div>

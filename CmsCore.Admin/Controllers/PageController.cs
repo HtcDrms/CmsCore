@@ -18,10 +18,12 @@ namespace CmsCore.Admin.Controllers
     {
         private readonly IPageService pageService;
         private readonly ITemplateService templateService;
-        public PageController(IPageService pageService, ITemplateService templateService)
+        private readonly ILanguageService languageService;
+        public PageController(IPageService pageService, ITemplateService templateService, ILanguageService languageService)
         {
             this.pageService = pageService;
             this.templateService = templateService;
+            this.languageService = languageService;
         }
 
         // GET: /<controller>/
@@ -37,6 +39,7 @@ namespace CmsCore.Admin.Controllers
             var pageVM = new PageViewModel();
             ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title");
             ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", pageVM.TemplateId);
+            ViewBag.Languages = new SelectList(languageService.GetLanguages(), "Id", "Name", pageVM.LanguageId);
             return View(pageVM);
         }
         [HttpPost]
@@ -55,6 +58,7 @@ namespace CmsCore.Admin.Controllers
                 page.SeoTitle = pageVM.SeoTitle;
                 page.SeoKeywords = pageVM.SeoKeywords;
                 page.SeoDescription = pageVM.SeoDescription;
+                page.LanguageId = pageVM.LanguageId;
                 page.AddedBy = "Nex";
                 page.AddedDate = DateTime.Now;
                 page.ModifiedBy = "Nex";
@@ -65,6 +69,7 @@ namespace CmsCore.Admin.Controllers
             }
             ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title", pageVM.ParentPageId);
             ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", pageVM.TemplateId);
+            ViewBag.Languages = new SelectList(languageService.GetLanguages(), "Id", "Name", pageVM.LanguageId);
             return View(pageVM);
         }
 
@@ -73,12 +78,14 @@ namespace CmsCore.Admin.Controllers
             var page = pageService.GetPage(id);
             ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title", page.ParentPageId);
             ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", page.TemplateId);
+            ViewBag.Languages = new SelectList(languageService.GetLanguages(), "Id", "Name", page.LanguageId);
             PageViewModel pageVM = new PageViewModel();
             pageVM.Id = page.Id;
             pageVM.Title = page.Title;
             pageVM.Slug = page.Slug;
             pageVM.Body = page.Body;
             pageVM.IsPublished = page.IsPublished;
+            pageVM.LanguageId = page.LanguageId;
             pageVM.ParentPageId = page.ParentPageId;
             pageVM.TemplateId = page.TemplateId;
             pageVM.ModifiedDate = page.ModifiedDate;
@@ -103,6 +110,7 @@ namespace CmsCore.Admin.Controllers
                 page.Body = pageVM.Body;
                 page.IsPublished = pageVM.IsPublished;
                 page.ParentPageId = pageVM.ParentPageId;
+                page.LanguageId = pageVM.LanguageId;
                 page.TemplateId = pageVM.TemplateId;
                 page.ModifiedDate = DateTime.Now;
                 page.ModifiedBy = User.Identity.Name??"Anonim";
@@ -115,6 +123,7 @@ namespace CmsCore.Admin.Controllers
             }
             ViewBag.ParentPages = new SelectList(pageService.GetPages(), "Id", "Title", pageVM.ParentPageId);
             ViewBag.Templates = new SelectList(templateService.GetTemplates(), "Id", "Name", pageVM.TemplateId);
+            ViewBag.Languages = new SelectList(languageService.GetLanguages(), "Id", "Name", pageVM.LanguageId);
             return View(pageVM);
         }
 

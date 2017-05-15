@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CmsCore.Admin.Models
 {
-    public class PageViewModel:BaseEntity
+    public class PageViewModel : BaseEntity
     {
         public PageViewModel()
         {
@@ -15,7 +15,8 @@ namespace CmsCore.Admin.Models
             ViewCount = 0;
             ChildPages = new HashSet<PageViewModel>();
             TemplateId = 4;
-           
+            LanguageId = 1;
+
         }
         [Required]
         [MaxLength(200)]
@@ -39,5 +40,8 @@ namespace CmsCore.Admin.Models
 
         public long? TemplateId { get; set; }
         public virtual Template Template { get; set; }
+
+        public long LanguageId { get; set; }
+        public virtual Language Language { get; set; }
     }
 }
