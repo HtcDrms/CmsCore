@@ -61,9 +61,14 @@
                             <span class="text-danger" asp-validation-for="Slug"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Photo"></label>
-                            <input type="text" asp-for="Photo" class="form-control" />
-                            <span class="text-danger" asp-validation-for="Photo"></span>
+                            @Html.DisplayNameFor(model => model.Photo)
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" id="uploadModal" type="button">...</button>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-body">
                             <label asp-for="Body"></label>
@@ -79,15 +84,15 @@
                             </div>
                         </div>
                         @*<div class="form-group">
-                            <label asp-for="Description"></label>
-                            <p>
-                                <textarea asp-for="Description" tabindex="3"></textarea>
-                                <span class="text-danger" asp-validation-for="Description"></span>
-                                <script type="text/javascript">
-                                    CKEDITOR.replace('Description');
-                                </script>
-                            </p>
-                        </div>*@
+                                <label asp-for="Description"></label>
+                                <p>
+                                    <textarea asp-for="Description" tabindex="3"></textarea>
+                                    <span class="text-danger" asp-validation-for="Description"></span>
+                                    <script type="text/javascript">
+                                        CKEDITOR.replace('Description');
+                                    </script>
+                                </p>
+                            </div>*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Description)
                             @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
@@ -95,12 +100,12 @@
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Meta1)
-                            @Html.TextBoxFor(model => model.Meta1, new { @class = "form-control" } )
+                            @Html.TextBoxFor(model => model.Meta1, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Meta1, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Meta2)
-                            @Html.TextBoxFor(model => model.Meta2, new { @class = "form-control" } )
+                            @Html.TextBoxFor(model => model.Meta2, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Meta2, "", new { @class = "text-danger" })
                         </div>
                         <br />
@@ -145,11 +150,44 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Dosya Yükle</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal" style="display:none;" id="browseSave">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts {
 
     <script src="@(ViewBag.AssetsUrl)global/plugins/jstree/dist/jstree.js"></script>
     <script>
-
+        $(function () {
+            $("#uploadModal").click(function () {
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "/Media/Create",
+                    success: function (view) {
+                        $('.modal-body').html(view);
+                        $('.modal').modal();
+                    },
+                    error: function (err) {
+                        alert("bilinmeyen bir hata oluştu!" + err);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
         var handleSample = function () {
             $('#tree').jstree({
                 'plugins': ["wholerow", "checkbox"],

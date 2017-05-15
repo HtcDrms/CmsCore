@@ -13,6 +13,7 @@ namespace CmsCore.Service
         IEnumerable<Media> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
         IEnumerable<Media> GetMedias();
         Media GetMedia(long id);
+        IEnumerable<Media> MediaGallery(string word, int? year, int? month,string category);
         void CreateMedia(Media media);
         void UpdateMedia(Media media);
         void DeleteMedia(long id);
@@ -34,6 +35,10 @@ namespace CmsCore.Service
         {
             var medias = mediaRepository.GetAll();
             return medias;
+        }
+        public IEnumerable<Media> MediaGallery(string word, int? year, int? month,string category)
+        {
+            return mediaRepository.MediaGallery(word, year, month,category);
         }
         public Media GetMedia(long id)
         {

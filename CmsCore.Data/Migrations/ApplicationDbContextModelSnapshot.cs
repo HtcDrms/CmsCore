@@ -451,6 +451,8 @@ namespace CmsCore.Data.Migrations
 
                     b.Property<string>("FilePath");
 
+                    b.Property<string>("FileType");
+
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
@@ -1176,7 +1178,7 @@ namespace CmsCore.Data.Migrations
                         .HasForeignKey("LanguageId");
 
                     b.HasOne("CmsCore.Model.Entities.Template", "Template")
-                        .WithMany()
+                        .WithMany("Forms")
                         .HasForeignKey("TemplateId");
                 });
 

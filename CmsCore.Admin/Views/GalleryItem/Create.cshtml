@@ -53,13 +53,11 @@
                         </div>
                         <div class="form-group">
                             @Html.DisplayNameFor(model => model.Photo)
-                            <div class="row">
-                                <div class="col-md-11">
-                                    @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
-                                </div>
-                                <div class="col-sm-1">
-                                    <input type="button" id="uploadModal" class="form-control btn-info" value="...">
-                                </div>
+                            <div class="input-group">
+                                @Html.TextBoxFor(model => model.Photo, new { @class = "form-control" })
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" id="uploadModal" type="button">...</button>
+                                </span>
                             </div>
                             @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
                         </div>
@@ -89,22 +87,22 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Dosya Yükle</h4>
             </div>
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Kaydet</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal" style="display:none;" id="browseSave">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script src="@(ViewBag.AssetsUrl)global/plugins/jstree/dist/jstree.js"></script>
@@ -113,6 +111,7 @@
             $("#uploadModal").click(function () {
                 $.ajax({
                     cache: false,
+                    type:"GET",
                     url: "/Media/Create",
                     success: function (view) {
                         $('.modal-body').html(view);
@@ -123,14 +122,9 @@
                     }
                 });
             });
-        });
-        $(function () {
-            $("#modalSave").click(function () {
-                alert($('#FileName').val());
-                
-            });
-        });
+        });        
     </script>
+
     <script>
 
         var handleSample = function () {

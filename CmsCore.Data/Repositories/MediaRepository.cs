@@ -82,10 +82,20 @@ namespace CmsCore.Data.Repositories
             totalDisplayRecords = filteredMedias.Count();
             return displayedMedias.ToList();
         }
-
+        public IEnumerable<Media> MediaGallery(string word, int? year, int? month,string category)
+        {
+            var mediagallery = DbContext.Medias.Where(w => w.AddedDate.Year == year && w.AddedDate.Month == month && w.FileType==category).ToList();
+            
+            if (!string.IsNullOrEmpty(word))
+            {
+                mediagallery = mediagallery.Where(w => w.Title.Contains(word) || w.Description.Contains(word) || w.FileName.Contains(word)).ToList();
+            }
+            return mediagallery;
+        }
     }
     public interface IMediaRepository : IRepository<Media>
     {
+        IEnumerable<Media> MediaGallery(string word, int? year, int? month,string category);
         IEnumerable<Media> Search(string search, int sortColumnIndex, string sortDirection, int displayStart, int displayLength, out int totalRecords, out int totalDisplayRecords);
     }
 }
